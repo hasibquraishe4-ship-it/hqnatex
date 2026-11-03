@@ -735,7 +735,7 @@ export function TroubleTicketList({
             selected.opened_at
               ? new Date(
                   selected.opened_at,
-                ).toLocaleString()
+                ).toLocaleString("en-GB-u-ca-gregory")
               : "",
           ],
           [
@@ -743,7 +743,7 @@ export function TroubleTicketList({
             selected.closed_at
               ? new Date(
                   selected.closed_at,
-                ).toLocaleString()
+                ).toLocaleString("en-GB-u-ca-gregory")
               : "",
           ],
           [

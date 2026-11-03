@@ -799,7 +799,7 @@ export function DecommissionRecordList({
                           ? new Date(
                               row.released_at,
                             )
-                              .toLocaleString()
+                              .toLocaleString("en-GB-u-ca-gregory")
                           : "—"}
                       </td>
 
@@ -964,7 +964,7 @@ export function DecommissionRecordList({
                       ? new Date(
                           selected.released_at,
                         )
-                          .toLocaleString()
+                          .toLocaleString("en-GB-u-ca-gregory")
                       : "",
                   ],
                   [

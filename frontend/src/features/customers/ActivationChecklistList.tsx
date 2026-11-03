@@ -978,7 +978,7 @@ export function ActivationChecklistList({
                       ? new Date(
                           selected.checked_at,
                         )
-                          .toLocaleString()
+                          .toLocaleString("en-GB-u-ca-gregory")
                       : "—",
                   ],
                   [

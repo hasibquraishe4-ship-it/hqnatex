@@ -505,7 +505,7 @@ let capabilities:
         row.created_at
           ? new Date(
               row.created_at,
-            ).toLocaleDateString()
+            ).toLocaleDateString("en-GB-u-ca-gregory")
           : "—",
       sortable: true,
       sortKey: "created_at",

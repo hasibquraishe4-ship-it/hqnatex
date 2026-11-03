@@ -76,7 +76,7 @@ function displayDateTime(
     return value;
   }
 
-  return parsed.toLocaleString();
+  return parsed.toLocaleString("en-GB-u-ca-gregory");
 }
 
 function valueOrDash(

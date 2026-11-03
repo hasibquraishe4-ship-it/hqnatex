@@ -603,7 +603,7 @@ export function FieldVisitList({ session }: Props) {
                     </td>
                     <td className="py-3 px-4 font-mono text-xs text-slate-500 dark:text-slate-400">
                       {row.visited_at
-                        ? new Date(row.visited_at).toLocaleString()
+                        ? new Date(row.visited_at).toLocaleString("en-GB-u-ca-gregory")
                         : "—"}
                     </td>
                     <td className="py-3 px-4">{getResultBadge(row.result)}</td>
@@ -728,7 +728,7 @@ export function FieldVisitList({ session }: Props) {
                     </div>
                     <div className="text-xs font-mono text-slate-700 dark:text-slate-300 mt-1">
                       {selected.visited_at
-                        ? new Date(selected.visited_at).toLocaleString()
+                        ? new Date(selected.visited_at).toLocaleString("en-GB-u-ca-gregory")
                         : "—"}
                     </div>
                   </div>
@@ -778,13 +778,13 @@ export function FieldVisitList({ session }: Props) {
                   <div>
                     {c.created}:{" "}
                     {selected.created_at
-                      ? new Date(selected.created_at).toLocaleString()
+                      ? new Date(selected.created_at).toLocaleString("en-GB-u-ca-gregory")
                       : "—"}
                   </div>
                   <div>
                     {c.updated}:{" "}
                     {selected.updated_at
-                      ? new Date(selected.updated_at).toLocaleString()
+                      ? new Date(selected.updated_at).toLocaleString("en-GB-u-ca-gregory")
                       : "—"}
                   </div>
                   <div className="col-span-2 truncate">

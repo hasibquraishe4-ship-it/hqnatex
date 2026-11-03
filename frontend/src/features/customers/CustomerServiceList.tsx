@@ -1197,7 +1197,7 @@ export function CustomerServiceList({
         row.started_at
           ? new Date(
               row.started_at,
-            ).toLocaleDateString()
+            ).toLocaleDateString("en-GB-u-ca-gregory")
           : "—",
       sortable: true,
       sortKey:
@@ -1210,7 +1210,7 @@ export function CustomerServiceList({
         row.ended_at
           ? new Date(
               row.ended_at,
-            ).toLocaleDateString()
+            ).toLocaleDateString("en-GB-u-ca-gregory")
           : "—",
       sortable: true,
       sortKey:

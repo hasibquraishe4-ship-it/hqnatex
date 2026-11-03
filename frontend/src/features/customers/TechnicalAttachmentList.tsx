@@ -1032,7 +1032,7 @@ export function TechnicalAttachmentList({
                     selected.created_at
                       ? new Date(
                           selected.created_at,
-                        ).toLocaleString()
+                        ).toLocaleString("en-GB-u-ca-gregory")
                       : "",
                   ],
                 ].map(

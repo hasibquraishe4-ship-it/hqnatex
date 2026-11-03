@@ -613,12 +613,7 @@ export function InstallationWorkOrderList({
     }
 
     try {
-      return new Intl.DateTimeFormat(
-        lang === "fa"
-          ? "fa-AF"
-          : lang === "ps"
-            ? "ps-AF"
-            : "en-GB",
+      return new Intl.DateTimeFormat("en-GB-u-ca-gregory",
         {
           year: "numeric",
           month: "2-digit",
@@ -628,7 +623,7 @@ export function InstallationWorkOrderList({
         },
       ).format(date);
     } catch {
-      return date.toLocaleString();
+      return date.toLocaleString("en-GB-u-ca-gregory");
     }
   }
 

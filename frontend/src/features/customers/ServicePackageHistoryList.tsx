@@ -239,7 +239,7 @@ export function ServicePackageHistoryList({
         row.created_at
           ? new Date(
               row.created_at,
-            ).toLocaleString()
+            ).toLocaleString("en-GB-u-ca-gregory")
           : "—",
       sortable: true,
       sortKey: "created_at",

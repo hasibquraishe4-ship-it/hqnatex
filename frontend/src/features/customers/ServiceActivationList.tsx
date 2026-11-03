@@ -556,12 +556,7 @@ export function ServiceActivationList({
     }
 
     try {
-      return new Intl.DateTimeFormat(
-        lang === "fa"
-          ? "fa-AF"
-          : lang === "ps"
-            ? "ps-AF"
-            : "en-GB",
+      return new Intl.DateTimeFormat("en-GB-u-ca-gregory",
         {
           year: "numeric",
           month: "2-digit",
@@ -571,7 +566,7 @@ export function ServiceActivationList({
         },
       ).format(date);
     } catch {
-      return date.toLocaleString();
+      return date.toLocaleString("en-GB-u-ca-gregory");
     }
   }
 
@@ -1517,7 +1512,7 @@ function DateTimeField({
   const [focused, setFocused] = useState(false);
   const date = value ? new Date(value) : null;
   const display = date && !Number.isNaN(date.getTime())
-    ? new Intl.DateTimeFormat(language, { dateStyle: "medium", timeStyle: "short" }).format(date)
+    ? new Intl.DateTimeFormat("en-GB-u-ca-gregory", { dateStyle: "medium", timeStyle: "short" }).format(date)
     : "";
   return (
     <label className="space-y-1.5">
@@ -1527,7 +1522,7 @@ function DateTimeField({
 
       <div className="activation-local-date" data-editing={focused}>
       <input
-        lang={language}
+        lang="en-US-u-ca-gregory"
         aria-label={label}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
