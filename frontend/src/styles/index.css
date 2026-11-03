@@ -13256,3 +13256,10 @@ html, body { background: var(--hq-ui-bg) !important; color: var(--hq-ui-text); }
  .hq-shell.hq-shared-shell .subscriber-project-form dialog { border-radius:16px!important; }
  .hq-shell.hq-shared-shell .subscriber-project-form .subscriber-dialog-footer { padding:12px 14px; }
 }
+
+/* Keep activation fields scrollable above the fixed action bar. */
+.hq-shell.hq-shared-shell .activation-project-form .subscriber-dialog-body { display:flex; flex-direction:column; overflow:hidden; }
+.hq-shell.hq-shared-shell .activation-project-form .subscriber-dialog-body > form.subscriber-dialog-form { flex:1 1 auto; height:100%; max-height:100%; min-height:0; overflow:hidden; }
+.hq-shell.hq-shared-shell .activation-project-form .subscriber-form-fields { flex:1 1 auto; min-height:0; overflow-y:auto; align-content:start; overscroll-behavior:contain; padding:2px 2px 12px; }
+.hq-shell.hq-shared-shell .activation-project-form .subscriber-form-footer { margin-top:0; }
+.hq-shell.hq-shared-shell .activation-project-form .activation-date-display { direction:ltr; justify-content:flex-start; text-align:left; unicode-bidi:isolate; }
