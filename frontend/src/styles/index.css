@@ -13263,3 +13263,118 @@ html, body { background: var(--hq-ui-bg) !important; color: var(--hq-ui-text); }
 .hq-shell.hq-shared-shell .activation-project-form .subscriber-form-fields { flex:1 1 auto; min-height:0; overflow-y:auto; align-content:start; overscroll-behavior:contain; padding:2px 2px 12px; }
 .hq-shell.hq-shared-shell .activation-project-form .subscriber-form-footer { margin-top:0; }
 .hq-shell.hq-shared-shell .activation-project-form .activation-date-display { direction:ltr; justify-content:flex-start; text-align:left; unicode-bidi:isolate; }
+
+/* Dialog size follows the marked reference area across subscriber/service forms. */
+.hq-shell.hq-shared-shell .subscriber-project-form dialog[open],
+.hq-shell.hq-shared-shell .activation-project-form dialog[open] {
+  inset-block-start:12vh!important;
+  inset-block-end:auto!important;
+  inset-inline-start:12px!important;
+  inset-inline-end:clamp(160px,12.8vw,210px)!important;
+  width:auto!important;
+  height:min(84dvh,720px)!important;
+  max-width:none!important;
+  max-height:calc(100dvh - 24px)!important;
+  margin:0!important;
+}
+@media(max-width:639px) {
+ .hq-shell.hq-shared-shell .subscriber-project-form dialog[open],
+ .hq-shell.hq-shared-shell .activation-project-form dialog[open] {
+   inset:8px!important;
+   width:auto!important;
+   height:calc(100dvh - 16px)!important;
+   max-height:calc(100dvh - 16px)!important;
+ }
+}
+
+/* SUBSCRIBERS_WORKSPACE_MATCH_V1 */
+.hq-subscriber-module,
+.hq-subscriber-dashboard {
+  color: #183a54;
+}
+.hq-subscriber-dashboard .subscriber-summary-card,
+.hq-subscriber-dashboard .hq-subscriber-recent,
+.hq-subscriber-dashboard .module-hub-header {
+  border: 1px solid #ffffff88;
+  border-radius: 20px;
+  background: rgba(235,247,255,.72);
+  box-shadow: 0 12px 40px #072c4b18;
+  backdrop-filter: blur(22px);
+}
+.hq-subscriber-dashboard .subscriber-summary-card,
+.hq-subscriber-dashboard .hq-subscriber-recent {
+  color: #183a54;
+}
+.hq-subscriber-dashboard .subscriber-summary-card :is(.text-slate-100,.text-white),
+.hq-subscriber-dashboard .hq-subscriber-recent :is(.text-slate-200,.text-white) {
+  color: #183a54 !important;
+}
+.hq-subscriber-dashboard .hq-subscriber-recent thead tr {
+  background: rgba(215,237,249,.82) !important;
+  color: #294e69 !important;
+}
+.hq-subscriber-dashboard .hq-subscriber-recent tbody tr {
+  background: rgba(255,255,255,.48) !important;
+  color: #183a54;
+}
+.hq-subscriber-dashboard .hq-subscriber-recent tbody tr:hover {
+  background: rgba(255,255,255,.78) !important;
+}
+.hq-subscriber-dashboard .module-hub-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.hq-subscriber-dashboard .module-hub-card {
+  min-height: 82px;
+}
+@media (max-width: 1023px) {
+  .hq-subscriber-dashboard .module-hub-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+  .hq-subscriber-dashboard .module-hub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 359px) {
+  .hq-subscriber-dashboard .module-hub-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Correct physical dialog edges for the right-side RTL sidebar reference. */
+.hq-shell.hq-shared-shell .subscriber-project-form[dir="rtl"] dialog[open],
+.hq-shell.hq-shared-shell .activation-project-form[dir="rtl"] dialog[open] {
+  left:12px!important;
+  right:clamp(160px,12.8vw,210px)!important;
+}
+.hq-shell.hq-shared-shell .subscriber-project-form[dir="ltr"] dialog[open],
+.hq-shell.hq-shared-shell .activation-project-form[dir="ltr"] dialog[open] {
+  left:clamp(160px,12.8vw,210px)!important;
+  right:12px!important;
+}
+.hq-shell.hq-shared-shell .activation-project-form dialog[open] { height:min(84dvh,720px)!important; }
+.hq-shell.hq-shared-shell .activation-project-form .wp-body { display:flex; flex-direction:column; overflow:hidden!important; }
+.hq-shell.hq-shared-shell .activation-project-form .wp-body > .wp-grid { flex:1 1 auto; min-height:0; overflow-y:auto; align-content:start; overscroll-behavior:contain; }
+@media(max-width:639px) {
+ .hq-shell.hq-shared-shell .subscriber-project-form[dir="rtl"] dialog[open],
+ .hq-shell.hq-shared-shell .subscriber-project-form[dir="ltr"] dialog[open],
+ .hq-shell.hq-shared-shell .activation-project-form[dir="rtl"] dialog[open],
+ .hq-shell.hq-shared-shell .activation-project-form[dir="ltr"] dialog[open] { left:8px!important; right:8px!important; }
+}
+
+/* Match the project dialog viewport geometry (full available height and sidebar inset). */
+.hq-shell.hq-shared-shell .subscriber-project-form dialog[open],
+.hq-shell.hq-shared-shell .activation-project-form dialog[open] {
+  inset-block-start:12px!important;
+  inset-block-end:12px!important;
+  inset-inline-start:calc(var(--wp-modal-sidebar, 260px) + 12px)!important;
+  inset-inline-end:12px!important;
+  width:auto!important;
+  height:auto!important;
+  max-height:none!important;
+  margin:0!important;
+}
+@media(max-width:639px) {
+ .hq-shell.hq-shared-shell .subscriber-project-form dialog[open],
+ .hq-shell.hq-shared-shell .activation-project-form dialog[open] {
+   inset:8px!important;
+   height:auto!important;
+   max-height:none!important;
+ }
+}

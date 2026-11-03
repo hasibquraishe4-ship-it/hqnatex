@@ -151,20 +151,16 @@ export function SubscribersServicesModule({
         className="
           inline-flex items-center
           gap-2
-          rounded-xl
-          border border-slate-700/60
-          bg-white/60
-          px-4 py-2
-          text-xs font-bold
-          text-slate-600
-          shadow-sm
+          rounded-[10px]
+          border border-[#91bddb66]
+          bg-[rgba(255,255,255,.5)]
+          px-4 py-2.5
+          text-sm font-bold
+          text-[#183a54]
+          shadow-[0_6px_16px_rgba(7,44,75,.10)]
           transition-all
-          hover:border-cyan-400/40
-          hover:text-cyan-700
-          dark:border-white/10
-          dark:bg-white/5
-          dark:text-slate-400
-          dark:hover:text-cyan-300
+          hover:border-[#167deb66]
+          hover:text-[#167deb]
         "
       >
         <ArrowLeft
