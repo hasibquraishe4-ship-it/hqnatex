@@ -1,0 +1,2 @@
+"""HQNATEX backend application package."""
+

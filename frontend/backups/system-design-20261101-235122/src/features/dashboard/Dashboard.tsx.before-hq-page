@@ -1,0 +1,825 @@
+// HQNATEX_DASHBOARD_INFORMATION_ARCHITECTURE_IMPLEMENTATION_V1_1
+
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+
+import {
+  Activity,
+  Building2,
+  CircleDollarSign,
+  RadioTower,
+  RefreshCw,
+  ShoppingCart,
+  Users,
+  Wallet,
+  WifiOff,
+} from "lucide-react";
+
+import { fetchers, type Session } from "../../lib/api";
+import { useTranslation } from "../../lib/i18n";
+
+type Props = {
+  session: Session;
+};
+
+type DashboardStats = {
+  sales?: {
+    today?: number;
+    month?: number;
+  };
+  customers?: {
+    active?: number;
+    active_services?: number;
+    suspended_services?: number;
+    outstanding?: number;
+  };
+  revenue?: {
+    gross?: number;
+    company_share?: number;
+    partner_share?: number;
+    agency_share?: number;
+  };
+  finance?: {
+    cash_bank?: number | null;
+    cash_bank_available?: boolean;
+  };
+  system?: {
+    timestamp?: string;
+    company_id?: string | null;
+  };
+};
+
+type Tone =
+  | "cyan"
+  | "blue"
+  | "emerald"
+  | "amber"
+  | "rose"
+  | "violet";
+
+type MetricCardProps = {
+  title: string;
+  value: string;
+  icon: ReactNode;
+  tone?: Tone;
+  loading?: boolean;
+};
+
+type DonutItem = {
+  label: string;
+  value: number;
+  colorClass: string;
+  dotClass: string;
+};
+
+const UI = {
+  en: {
+    title: "Executive Dashboard",
+    subtitle: "Real-time enterprise performance across your company",
+    live: "Live operational data",
+    refresh: "Refresh",
+
+    salesToday: "Sales Today",
+    salesMonth: "Sales This Month",
+    activeCustomers: "Active Customers",
+    activeServices: "Active Services",
+    suspendedServices: "Suspended Services",
+    outstanding: "Outstanding Receivables",
+
+    revenueDistribution: "Revenue Distribution",
+    serviceHealth: "Service Health",
+    salesPerformance: "Sales Performance",
+
+    grossRevenue: "Gross Revenue",
+    companyShare: "Company Share",
+    partnerShare: "Partner Share",
+    agencyShare: "Agency Share",
+
+    financeSnapshot: "Finance Snapshot",
+    cashBank: "Cash & Bank",
+    unavailable: "Not available",
+    ledgerUnavailable: "Ledger balance is not exposed by the current dashboard API",
+
+    active: "Active",
+    suspended: "Suspended",
+    today: "Today",
+    month: "Month",
+
+    loadFailed: "Unable to load dashboard data.",
+    updated: "Last updated",
+    source: "Real API",
+  },
+
+  fa: {
+    title: "داشبورد مدیریتی",
+    subtitle: "نمای یکپارچه و زنده از عملکرد شرکت",
+    live: "اطلاعات عملیاتی زنده",
+    refresh: "تازه‌سازی",
+
+    salesToday: "فروش امروز",
+    salesMonth: "فروش ماه جاری",
+    activeCustomers: "مشتریان فعال",
+    activeServices: "خدمات فعال",
+    suspendedServices: "خدمات تعلیق‌شده",
+    outstanding: "مطالبات باقی‌مانده",
+
+    revenueDistribution: "توزیع عواید",
+    serviceHealth: "وضعیت خدمات",
+    salesPerformance: "عملکرد فروش",
+
+    grossRevenue: "عواید ناخالص",
+    companyShare: "سهم شرکت",
+    partnerShare: "سهم شریک",
+    agencyShare: "سهم نمایندگی",
+
+    financeSnapshot: "خلاصه مالی",
+    cashBank: "نقدینگی و بانک",
+    unavailable: "در دسترس نیست",
+    ledgerUnavailable: "موجودی دفترکل هنوز از API داشبورد ارائه نمی‌شود",
+
+    active: "فعال",
+    suspended: "تعلیق‌شده",
+    today: "امروز",
+    month: "ماه جاری",
+
+    loadFailed: "بارگذاری اطلاعات داشبورد ناموفق بود.",
+    updated: "آخرین بروزرسانی",
+    source: "API واقعی",
+  },
+
+  ps: {
+    title: "اجرائیوي ډشبورډ",
+    subtitle: "د شرکت د فعالیتونو ژوندی او یوځای لید",
+    live: "ژوندي عملیاتي معلومات",
+    refresh: "تازه کول",
+
+    salesToday: "د نن ورځې پلور",
+    salesMonth: "د روانې میاشتې پلور",
+    activeCustomers: "فعال پیرودونکي",
+    activeServices: "فعال خدمتونه",
+    suspendedServices: "ځنډول شوي خدمتونه",
+    outstanding: "پاتې ترلاسه کېدونکي",
+
+    revenueDistribution: "د عوایدو وېش",
+    serviceHealth: "د خدمتونو وضعیت",
+    salesPerformance: "د پلور فعالیت",
+
+    grossRevenue: "ناخالص عواید",
+    companyShare: "د شرکت ونډه",
+    partnerShare: "د شریک ونډه",
+    agencyShare: "د نمایندګۍ ونډه",
+
+    financeSnapshot: "مالي لنډیز",
+    cashBank: "نغدې او بانک",
+    unavailable: "شتون نه لري",
+    ledgerUnavailable: "د لیجر بیلانس لا د ډشبورډ API له لارې نه وړاندې کېږي",
+
+    active: "فعال",
+    suspended: "ځنډول شوی",
+    today: "نن",
+    month: "روانه میاشت",
+
+    loadFailed: "د ډشبورډ معلومات بار نه شول.",
+    updated: "وروستی تازه کول",
+    source: "ریښتینی API",
+  },
+} as const;
+
+const TONES = {
+  cyan: {
+    icon: "text-cyan-300 bg-cyan-400/10 border-cyan-400/20",
+    dot: "bg-cyan-400",
+  },
+  blue: {
+    icon: "text-blue-300 bg-blue-400/10 border-blue-400/20",
+    dot: "bg-blue-400",
+  },
+  emerald: {
+    icon: "text-emerald-300 bg-emerald-400/10 border-emerald-400/20",
+    dot: "bg-emerald-400",
+  },
+  amber: {
+    icon: "text-amber-300 bg-amber-400/10 border-amber-400/20",
+    dot: "bg-amber-400",
+  },
+  rose: {
+    icon: "text-rose-300 bg-rose-400/10 border-rose-400/20",
+    dot: "bg-rose-400",
+  },
+  violet: {
+    icon: "text-violet-300 bg-violet-400/10 border-violet-400/20",
+    dot: "bg-violet-400",
+  },
+} as const;
+
+function numeric(value: unknown): number {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function count(value: unknown): string {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0,
+  }).format(numeric(value));
+}
+
+function money(value: unknown): string {
+  return `AFN ${new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 2,
+  }).format(numeric(value))}`;
+}
+
+function formattedTime(
+  value: string | undefined,
+  language: "en" | "fa" | "ps",
+): string {
+  if (!value) return "—";
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "—";
+  }
+
+  const locale =
+    language === "fa"
+      ? "fa-AF"
+      : language === "ps"
+        ? "ps-AF"
+        : "en-US";
+
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+}
+
+function MetricCard({
+  title,
+  value,
+  icon,
+  tone = "cyan",
+  loading = false,
+}: MetricCardProps) {
+  const style = TONES[tone];
+
+  return (
+    <section className="kpi-card-3d hq-kpi-card relative flex min-w-0 flex-col justify-between">
+      <div className="flex items-start justify-between gap-3">
+        <div
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${style.icon}`}
+        >
+          {icon}
+        </div>
+
+        <span className={`mt-1 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
+      </div>
+
+      <div className="mt-3 min-w-0">
+        <p className="truncate text-[10px] font-black uppercase tracking-[0.08em] text-slate-400">
+          {title}
+        </p>
+
+        <p className="mt-1 truncate text-[1.25rem] font-black leading-none tracking-tight text-white">
+          {loading ? "…" : value}
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function DonutChart({
+  items,
+  centerValue,
+  centerLabel,
+}: {
+  items: DonutItem[];
+  centerValue: string;
+  centerLabel: string;
+}) {
+  const radius = 40;
+  const circumference = 2 * Math.PI * radius;
+
+  const total = items.reduce(
+    (sum, item) => sum + Math.max(0, item.value),
+    0,
+  );
+
+  let consumed = 0;
+
+  return (
+    <div className="flex flex-col items-center gap-4 lg:flex-row">
+      <div className="relative h-36 w-36 shrink-0">
+        <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="10"
+            className="text-slate-700/35"
+          />
+
+          {total > 0 &&
+            items.map((item, index) => {
+              const safe = Math.max(0, item.value);
+              const length = (safe / total) * circumference;
+              const offset = consumed;
+              consumed += length;
+
+              return (
+                <circle
+                  key={`${item.label}-${index}`}
+                  cx="50"
+                  cy="50"
+                  r={radius}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="10"
+                  strokeLinecap="round"
+                  strokeDasharray={`${length} ${circumference - length}`}
+                  strokeDashoffset={-offset}
+                  className={item.colorClass}
+                />
+              );
+            })}
+        </svg>
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+          <span className="max-w-[88px] truncate text-base font-black text-white">
+            {centerValue}
+          </span>
+
+          <span className="mt-1 text-[8px] font-bold uppercase tracking-wider text-slate-500">
+            {centerLabel}
+          </span>
+        </div>
+      </div>
+
+      <div className="w-full min-w-0 space-y-2">
+        {items.map((item, index) => {
+          const percent =
+            total > 0
+              ? (item.value / total) * 100
+              : 0;
+
+          return (
+            <div
+              key={`${item.label}-${index}`}
+              className="flex items-center justify-between gap-3 rounded-xl border border-slate-700/30 bg-slate-950/20 px-3 py-2"
+            >
+              <div className="flex min-w-0 items-center gap-2">
+                <span className={`h-2 w-2 shrink-0 rounded-full ${item.dotClass}`} />
+
+                <span className="truncate text-[10px] font-bold text-slate-300">
+                  {item.label}
+                </span>
+              </div>
+
+              <div className="shrink-0 text-end">
+                <p className="text-[10px] font-black text-white">
+                  {count(item.value)}
+                </p>
+
+                <p className="text-[8px] text-slate-500">
+                  {percent.toFixed(1)}%
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ComparisonBar({
+  label,
+  value,
+  max,
+  className,
+}: {
+  label: string;
+  value: number;
+  max: number;
+  className: string;
+}) {
+  const width =
+    max > 0
+      ? Math.min(100, Math.max(0, (value / max) * 100))
+      : 0;
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[10px] font-bold text-slate-400">
+          {label}
+        </span>
+
+        <span className="text-[11px] font-black text-white">
+          {money(value)}
+        </span>
+      </div>
+
+      <div className="h-2 overflow-hidden rounded-full bg-slate-700/35">
+        <div
+          className={`h-full rounded-full transition-all duration-500 ${className}`}
+          style={{
+            width: `${width}%`,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export function Dashboard({
+  session,
+}: Props) {
+  const { language } = useTranslation();
+  const ui = UI[language] ?? UI.en;
+
+  const [stats, setStats] =
+    useState<DashboardStats | null>(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState("");
+
+  const load = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const data =
+        await fetchers.dashboard(session);
+
+      setStats(data as DashboardStats);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : ui.loadFailed,
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, [session, ui.loadFailed]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const salesToday =
+    numeric(stats?.sales?.today);
+
+  const salesMonth =
+    numeric(stats?.sales?.month);
+
+  const activeCustomers =
+    numeric(stats?.customers?.active);
+
+  const activeServices =
+    numeric(stats?.customers?.active_services);
+
+  const suspendedServices =
+    numeric(stats?.customers?.suspended_services);
+
+  const outstanding =
+    numeric(stats?.customers?.outstanding);
+
+  const grossRevenue =
+    numeric(stats?.revenue?.gross);
+
+  const companyShare =
+    numeric(stats?.revenue?.company_share);
+
+  const partnerShare =
+    numeric(stats?.revenue?.partner_share);
+
+  const agencyShare =
+    numeric(stats?.revenue?.agency_share);
+
+  const hasStats =
+    stats !== null;
+
+  const revenueItems =
+    useMemo<DonutItem[]>(
+      () => [
+        {
+          label: ui.companyShare,
+          value: companyShare,
+          colorClass: "text-cyan-400",
+          dotClass: "bg-cyan-400",
+        },
+        {
+          label: ui.partnerShare,
+          value: partnerShare,
+          colorClass: "text-blue-500",
+          dotClass: "bg-blue-500",
+        },
+        {
+          label: ui.agencyShare,
+          value: agencyShare,
+          colorClass: "text-violet-400",
+          dotClass: "bg-violet-400",
+        },
+      ],
+      [
+        agencyShare,
+        companyShare,
+        partnerShare,
+        ui.agencyShare,
+        ui.companyShare,
+        ui.partnerShare,
+      ],
+    );
+
+  const serviceItems =
+    useMemo<DonutItem[]>(
+      () => [
+        {
+          label: ui.active,
+          value: activeServices,
+          colorClass: "text-emerald-400",
+          dotClass: "bg-emerald-400",
+        },
+        {
+          label: ui.suspended,
+          value: suspendedServices,
+          colorClass: "text-rose-500",
+          dotClass: "bg-rose-500",
+        },
+      ],
+      [
+        activeServices,
+        suspendedServices,
+        ui.active,
+        ui.suspended,
+      ],
+    );
+
+  const salesMax =
+    Math.max(
+      salesToday,
+      salesMonth,
+      1,
+    );
+
+  return (
+    <div className="dashboard-command-center space-y-3 pb-7">
+      <section className="dashboard-hero hq-enterprise-panel premium-panel flex flex-col gap-3 px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="min-w-0">
+          <h1 className="dashboard-title text-2xl font-black tracking-tight text-white">
+            {ui.title}
+          </h1>
+
+          <p className="mt-1 text-sm text-slate-400">
+            {ui.subtitle}
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+
+            <span className="text-[10px] font-black uppercase tracking-[0.08em] text-emerald-300">
+              {ui.live}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => void load()}
+            disabled={loading}
+            className="flex h-9 items-center gap-2 rounded-xl border border-slate-700/40 bg-slate-950/20 px-3 text-[10px] font-black text-slate-300 transition hover:border-cyan-400/30 hover:text-cyan-300 disabled:opacity-50"
+          >
+            <RefreshCw
+              className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`}
+            />
+
+            {ui.refresh}
+          </button>
+        </div>
+      </section>
+
+      {error && (
+        <div className="rounded-xl border border-rose-500/25 bg-rose-500/10 px-4 py-3 text-xs font-semibold text-rose-300">
+          {error}
+        </div>
+      )}
+
+      <div className="dashboard-kpi-grid grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <MetricCard
+          title={ui.salesToday}
+          value={hasStats ? money(salesToday) : "—"}
+          icon={<ShoppingCart className="h-5 w-5" />}
+          tone="cyan"
+          loading={loading}
+        />
+
+        <MetricCard
+          title={ui.salesMonth}
+          value={hasStats ? money(salesMonth) : "—"}
+          icon={<CircleDollarSign className="h-5 w-5" />}
+          tone="blue"
+          loading={loading}
+        />
+
+        <MetricCard
+          title={ui.activeCustomers}
+          value={hasStats ? count(activeCustomers) : "—"}
+          icon={<Users className="h-5 w-5" />}
+          tone="emerald"
+          loading={loading}
+        />
+
+        <MetricCard
+          title={ui.activeServices}
+          value={hasStats ? count(activeServices) : "—"}
+          icon={<RadioTower className="h-5 w-5" />}
+          tone="cyan"
+          loading={loading}
+        />
+
+        <MetricCard
+          title={ui.suspendedServices}
+          value={hasStats ? count(suspendedServices) : "—"}
+          icon={<WifiOff className="h-5 w-5" />}
+          tone="rose"
+          loading={loading}
+        />
+
+        <MetricCard
+          title={ui.outstanding}
+          value={hasStats ? money(outstanding) : "—"}
+          icon={<Wallet className="h-5 w-5" />}
+          tone="amber"
+          loading={loading}
+        />
+      </div>
+
+      <div className="grid gap-3 xl:grid-cols-3">
+        <section className="hq-enterprise-panel premium-panel min-w-0 rounded-[1.35rem] p-4">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h2 className="text-sm font-black text-white">
+              {ui.revenueDistribution}
+            </h2>
+
+            <Activity className="h-4 w-4 text-cyan-400" />
+          </div>
+
+          <DonutChart
+            items={revenueItems}
+            centerValue={hasStats ? money(grossRevenue) : "—"}
+            centerLabel={ui.grossRevenue}
+          />
+        </section>
+
+        <section className="hq-enterprise-panel premium-panel min-w-0 rounded-[1.35rem] p-4">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h2 className="text-sm font-black text-white">
+              {ui.serviceHealth}
+            </h2>
+
+            <RadioTower className="h-4 w-4 text-emerald-400" />
+          </div>
+
+          <DonutChart
+            items={serviceItems}
+            centerValue={
+              hasStats
+                ? count(activeServices + suspendedServices)
+                : "—"
+            }
+            centerLabel={ui.serviceHealth}
+          />
+        </section>
+
+        <section className="hq-enterprise-panel premium-panel min-w-0 rounded-[1.35rem] p-4">
+          <div className="mb-6 flex items-center justify-between gap-3">
+            <h2 className="text-sm font-black text-white">
+              {ui.salesPerformance}
+            </h2>
+
+            <ShoppingCart className="h-4 w-4 text-blue-400" />
+          </div>
+
+          <div className="space-y-6">
+            <ComparisonBar
+              label={ui.today}
+              value={salesToday}
+              max={salesMax}
+              className="bg-cyan-400"
+            />
+
+            <ComparisonBar
+              label={ui.month}
+              value={salesMonth}
+              max={salesMax}
+              className="bg-blue-500"
+            />
+          </div>
+
+          <div className="mt-8 grid grid-cols-2 gap-2">
+            <div className="rounded-xl border border-cyan-400/15 bg-cyan-400/5 p-3">
+              <p className="text-[9px] font-bold uppercase tracking-wider text-cyan-400">
+                {ui.today}
+              </p>
+
+              <p className="mt-1 truncate text-sm font-black text-white">
+                {hasStats ? money(salesToday) : "—"}
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-blue-400/15 bg-blue-400/5 p-3">
+              <p className="text-[9px] font-bold uppercase tracking-wider text-blue-400">
+                {ui.month}
+              </p>
+
+              <p className="mt-1 truncate text-sm font-black text-white">
+                {hasStats ? money(salesMonth) : "—"}
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section className="hq-enterprise-panel premium-panel rounded-[1.35rem] p-4">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <div>
+            <h2 className="text-sm font-black text-white">
+              {ui.financeSnapshot}
+            </h2>
+
+            <p className="mt-1 text-[10px] text-slate-500">
+              {ui.source}
+            </p>
+          </div>
+
+          <Building2 className="h-4 w-4 text-violet-400" />
+        </div>
+
+        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-5">
+          {[
+            [ui.grossRevenue, grossRevenue, "text-slate-400"],
+            [ui.companyShare, companyShare, "text-cyan-400"],
+            [ui.partnerShare, partnerShare, "text-blue-400"],
+            [ui.agencyShare, agencyShare, "text-violet-400"],
+          ].map(([label, value, color]) => (
+            <div
+              key={String(label)}
+              className="rounded-xl border border-slate-700/30 bg-slate-950/20 p-3"
+            >
+              <p className={`text-[9px] font-black uppercase tracking-wider ${String(color)}`}>
+                {String(label)}
+              </p>
+
+              <p className="mt-1 truncate text-base font-black text-white">
+                {hasStats ? money(Number(value)) : "—"}
+              </p>
+            </div>
+          ))}
+
+          <div className="rounded-xl border border-amber-400/15 bg-amber-400/5 p-3">
+            <p className="text-[9px] font-black uppercase tracking-wider text-amber-400">
+              {ui.cashBank}
+            </p>
+
+            <p className="mt-1 truncate text-base font-black text-white">
+              {stats?.finance?.cash_bank_available
+                ? money(stats.finance.cash_bank)
+                : ui.unavailable}
+            </p>
+
+            {!stats?.finance?.cash_bank_available && (
+              <p className="mt-1 text-[9px] leading-3 text-slate-500">
+                {ui.ledgerUnavailable}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-[9px] font-semibold text-slate-500">
+        <span>{ui.source}</span>
+
+        <span>
+          {ui.updated}:{" "}
+          {formattedTime(
+            stats?.system?.timestamp,
+            language,
+          )}
+        </span>
+      </div>
+    </div>
+  );
+}

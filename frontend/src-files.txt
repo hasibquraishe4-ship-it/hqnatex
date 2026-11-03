@@ -1,0 +1,157 @@
+Folder PATH listing for volume New Volume
+Volume serial number is 62E5-3509
+H:\HQNATEX\FRONTEND\SRC
+¦   App.tsx
+¦   main.tsx
+¦   vite-env.d.ts
+¦   
++---components
+¦       AppShell.tsx
+¦       DataTable.tsx
+¦       KPICard.tsx
+¦       ModuleHub.tsx
+¦       ModuleTabs.tsx
+¦       PageHeader.tsx
+¦       
++---config
+¦       moduleRegistry.ts
+¦       
++---features
+¦   +---accounting
+¦   ¦       AccountingModule.tsx
+¦   ¦       
+¦   +---audit
+¦   ¦       AuditLogList.tsx
+¦   ¦       
+¦   +---billing
+¦   ¦       InvoiceList.tsx
+¦   ¦       PaymentList.tsx
+¦   ¦       ReceivableList.tsx
+¦   ¦       
+¦   +---callcenter
+¦   ¦       CallCenterAgents.tsx
+¦   ¦       CallCenterFollowUps.tsx
+¦   ¦       CallCenterModule.tsx
+¦   ¦       CallCenterQuality.tsx
+¦   ¦       CallCenterReports.tsx
+¦   ¦       CallCenterSettings.tsx
+¦   ¦       CallCenterSupervisor.tsx
+¦   ¦       
+¦   +---customers
+¦   ¦       ActivationChecklistList.tsx
+¦   ¦       ActiveServiceCatalogExplorer.tsx
+¦   ¦       CustomerEquipmentAssignmentList.tsx
+¦   ¦       CustomerList.tsx
+¦   ¦       CustomerModule.tsx
+¦   ¦       CustomerServiceList.tsx
+¦   ¦       CustomerTechnicalValueList.tsx
+¦   ¦       DecommissionRecordList.tsx
+¦   ¦       FieldVisitList.tsx
+¦   ¦       InstallationWorkOrderList.tsx
+¦   ¦       IPAssignmentList.tsx
+¦   ¦       ProvisioningJobList.tsx
+¦   ¦       RadiusAccountList.tsx
+¦   ¦       ServiceActivationList.tsx
+¦   ¦       ServiceAgencyHistoryList.tsx
+¦   ¦       ServiceChangeRequestList.tsx
+¦   ¦       ServicePackageHistoryList.tsx
+¦   ¦       ServiceStatusHistoryList.tsx
+¦   ¦       SubscribersServicesDashboard.tsx
+¦   ¦       SubscribersServicesModule.tsx
+¦   ¦       TechnicalAttachmentList.tsx
+¦   ¦       TechnicalTestResultList.tsx
+¦   ¦       TroubleTicketList.tsx
+¦   ¦       
+¦   +---dashboard
+¦   ¦       Dashboard.tsx
+¦   ¦       
+¦   +---equipment
+¦   ¦       EquipmentAssetsModule.tsx
+¦   ¦       
+¦   +---finance
+¦   ¦       AccountList.tsx
+¦   ¦       AccountsPayableView.tsx
+¦   ¦       AccountsReceivableView.tsx
+¦   ¦       AgencyList.tsx
+¦   ¦       AgencySettlementsView.tsx
+¦   ¦       BranchList.tsx
+¦   ¦       CashBankView.tsx
+¦   ¦       ChartOfAccountsView.tsx
+¦   ¦       CompanyList.tsx
+¦   ¦       ExpensesView.tsx
+¦   ¦       FinanceAccountingModule.tsx
+¦   ¦       FinanceCommandCenter.tsx
+¦   ¦       FinanceDashboardView.tsx
+¦   ¦       FinanceRelationshipsModal.tsx
+¦   ¦       FinanceTypes.ts
+¦   ¦       FinancialPeriodsView.tsx
+¦   ¦       FinancialReportsView.tsx
+¦   ¦       GeneralLedgerView.tsx
+¦   ¦       JournalEntriesView.tsx
+¦   ¦       OrganizationModule.tsx
+¦   ¦       TaxesView.tsx
+¦   ¦       
+¦   +---hr
+¦   ¦       HRPayrollModule.tsx
+¦   ¦       
+¦   +---network
+¦   ¦       NetworkReadiness.tsx
+¦   ¦       
+¦   +---noc
+¦   ¦       ResourceList.tsx
+¦   ¦       
+¦   +---partners
+¦   ¦       PartnerList.tsx
+¦   ¦       
+¦   +---revenue
+¦   ¦       AgencySettlementList.tsx
+¦   ¦       RevenueAllocationList.tsx
+¦   ¦       RevenueList.tsx
+¦   ¦       ShareRuleList.tsx
+¦   ¦       
+¦   +---sales
+¦   ¦       SaleList.tsx
+¦   ¦       
+¦   +---services
+¦   ¦       PackageList.tsx
+¦   ¦       ServiceCategoryList.tsx
+¦   ¦       ServiceList.tsx
+¦   ¦       ServiceModule.tsx
+¦   ¦       ServiceTechnologyList.tsx
+¦   ¦       TechnicalFieldList.tsx
+¦   ¦       TechnologyList.tsx
+¦   ¦       
+¦   +---settings
+¦   ¦       BackgroundBrandingPanel.tsx
+¦   ¦       backgroundContract.ts
+¦   ¦       GlobalBackgroundController.tsx
+¦   ¦       PermissionList.tsx
+¦   ¦       RoleList.tsx
+¦   ¦       SecurityModule.tsx
+¦   ¦       Settings.tsx
+¦   ¦       UserList.tsx
+¦   ¦       
+¦   +---system
+¦   ¦       SystemStatus.tsx
+¦   ¦       
+¦   +---warehouse
+¦   ¦       WarehouseProcurementModule.tsx
+¦   ¦       
+¦   +---workspace
+¦           ProjectsModule.tsx
+¦           WorkspaceExtraModule.tsx
+¦           WorkspaceModule.tsx
+¦           
++---i18n
+¦       en.ts
+¦       fa.ts
+¦       index.ts
+¦       ps.ts
+¦       
++---lib
+¦       api.ts
+¦       i18n.tsx
+¦       
++---styles
+        index.css
+        

@@ -1,0 +1,481 @@
+[
+  {
+    "file": "src\\features\\audit\\AuditLogList.tsx",
+    "button": 1
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "button": 2,
+    "table": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "header": 1,
+    "button": 17,
+    "filter": 1,
+    "select": 5,
+    "date": 1,
+    "table": 1,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\callcenter\\CallCenterAgents.tsx",
+    "table": 1
+  },
+  {
+    "file": "src\\features\\callcenter\\CallCenterFollowUps.tsx",
+    "button": 15,
+    "filter": 1,
+    "select": 3,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\callcenter\\CallCenterModule.tsx",
+    "button": 41,
+    "select": 5,
+    "filter": 2,
+    "table": 2,
+    "header": 3
+  },
+  {
+    "file": "src\\features\\callcenter\\CallCenterQuality.tsx",
+    "select": 2,
+    "button": 4,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\callcenter\\CallCenterSettings.tsx",
+    "header": 1,
+    "button": 2
+  },
+  {
+    "file": "src\\features\\customers\\ActivationChecklistList.tsx",
+    "Field": 1,
+    "select": 4,
+    "header": 1,
+    "button": 9,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\ActiveServiceCatalogExplorer.tsx",
+    "button": 5
+  },
+  {
+    "file": "src\\features\\customers\\CustomerEquipmentAssignmentList.tsx",
+    "Field": 1,
+    "header": 1,
+    "button": 9,
+    "table": 1,
+    "select": 5,
+    "date": 2
+  },
+  {
+    "file": "src\\features\\customers\\CustomerList.tsx",
+    "header": 1,
+    "button": 7,
+    "modal": 1,
+    "select": 4,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\customers\\CustomerModule.tsx",
+    "button": 1
+  },
+  {
+    "file": "src\\features\\customers\\CustomerServiceList.tsx",
+    "header": 1,
+    "button": 13,
+    "select": 12,
+    "filter": 1,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\customers\\CustomerTechnicalValueList.tsx",
+    "header": 1
+  },
+  {
+    "file": "src\\features\\customers\\DecommissionRecordList.tsx",
+    "Field": 1,
+    "header": 1,
+    "button": 9,
+    "table": 1,
+    "select": 3
+  },
+  {
+    "file": "src\\features\\customers\\FieldVisitList.tsx",
+    "Field": 1,
+    "header": 2,
+    "button": 11,
+    "filter": 1,
+    "select": 6,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\InstallationWorkOrderList.tsx",
+    "header": 1,
+    "button": 10,
+    "select": 5,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\IPAssignmentList.tsx",
+    "header": 1,
+    "button": 10,
+    "select": 6,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\ProvisioningJobList.tsx",
+    "header": 1,
+    "button": 10,
+    "select": 5,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\RadiusAccountList.tsx",
+    "header": 1,
+    "button": 10,
+    "table": 1,
+    "select": 3
+  },
+  {
+    "file": "src\\features\\customers\\ServiceActivationList.tsx",
+    "header": 1,
+    "button": 10,
+    "select": 5,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\ServiceAgencyHistoryList.tsx",
+    "header": 1,
+    "table": 1,
+    "button": 5
+  },
+  {
+    "file": "src\\features\\customers\\ServiceChangeRequestList.tsx",
+    "header": 1,
+    "button": 7,
+    "select": 2,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\customers\\SubscribersServicesDashboard.tsx",
+    "button": 2,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\SubscribersServicesModule.tsx",
+    "button": 4
+  },
+  {
+    "file": "src\\features\\customers\\TechnicalAttachmentList.tsx",
+    "header": 1,
+    "button": 9,
+    "table": 1,
+    "filter": 1,
+    "select": 5
+  },
+  {
+    "file": "src\\features\\customers\\TechnicalTestResultList.tsx",
+    "header": 1,
+    "button": 8,
+    "select": 4,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\customers\\TroubleTicketList.tsx",
+    "Field": 1,
+    "header": 1,
+    "button": 9,
+    "table": 1,
+    "select": 6
+  },
+  {
+    "file": "src\\features\\dashboard\\Dashboard.tsx",
+    "header": 5,
+    "button": 1
+  },
+  {
+    "file": "src\\features\\equipment\\EquipmentAssetsModule.tsx",
+    "header": 2,
+    "button": 3,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "header": 1,
+    "button": 7,
+    "select": 4,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\finance\\AccountsReceivableView.tsx",
+    "header": 1,
+    "button": 6,
+    "table": 1,
+    "filter": 1,
+    "select": 1,
+    "date": 1
+  },
+  {
+    "file": "src\\features\\finance\\AgencyList.tsx",
+    "header": 1,
+    "button": 7,
+    "filter": 1,
+    "modal": 1,
+    "select": 3,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "button": 2
+  },
+  {
+    "file": "src\\features\\finance\\BranchList.tsx",
+    "header": 1,
+    "button": 7,
+    "filter": 1,
+    "modal": 1,
+    "select": 2,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "button": 1
+  },
+  {
+    "file": "src\\features\\finance\\CompanyList.tsx",
+    "header": 1,
+    "button": 7,
+    "filter": 1,
+    "modal": 1,
+    "select": 1,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\finance\\FinanceCommandCenter.tsx",
+    "header": 1,
+    "button": 6,
+    "select": 4
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "button": 5
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "header": 1,
+    "button": 2
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "button": 5,
+    "header": 1,
+    "date": 2
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "header": 1,
+    "button": 4,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "header": 1,
+    "button": 6,
+    "select": 1,
+    "date": 2,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\finance\\JournalEntriesView.tsx",
+    "header": 1,
+    "button": 6,
+    "table": 1,
+    "filter": 1,
+    "date": 1,
+    "select": 2
+  },
+  {
+    "file": "src\\features\\finance\\OrganizationModule.tsx",
+    "button": 1
+  },
+  {
+    "file": "src\\features\\hr\\HRPayrollModule.tsx",
+    "table": 2,
+    "button": 17,
+    "select": 2,
+    "header": 2
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "button": 8,
+    "header": 1,
+    "select": 1
+  },
+  {
+    "file": "src\\features\\noc\\ResourceList.tsx",
+    "header": 1,
+    "button": 3
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "header": 1,
+    "button": 7,
+    "select": 2,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\revenue\\AgencySettlementList.tsx",
+    "button": 13,
+    "header": 1,
+    "select": 1,
+    "date": 2,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "button": 2,
+    "table": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "header": 1,
+    "button": 7,
+    "select": 3,
+    "date": 2,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "header": 1,
+    "button": 18,
+    "select": 8,
+    "date": 1,
+    "table": 1,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\services\\PackageList.tsx",
+    "header": 1,
+    "button": 14,
+    "select": 4,
+    "table": 1,
+    "date": 2,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "header": 1,
+    "button": 7,
+    "modal": 1,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "header": 1,
+    "button": 7,
+    "select": 5,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\services\\ServiceModule.tsx",
+    "button": 1
+  },
+  {
+    "file": "src\\features\\services\\ServiceTechnologyList.tsx",
+    "button": 9,
+    "table": 1,
+    "select": 3
+  },
+  {
+    "file": "src\\features\\services\\TechnicalFieldList.tsx",
+    "header": 1,
+    "button": 7,
+    "select": 3,
+    "Field": 1,
+    "Detail": 1
+  },
+  {
+    "file": "src\\features\\services\\TechnologyList.tsx",
+    "header": 1,
+    "button": 7,
+    "table": 1,
+    "select": 1,
+    "Field": 1
+  },
+  {
+    "file": "src\\features\\settings\\BackgroundBrandingPanel.tsx",
+    "select": 2,
+    "button": 3
+  },
+  {
+    "file": "src\\features\\settings\\PermissionList.tsx",
+    "header": 1
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "header": 1,
+    "button": 4
+  },
+  {
+    "file": "src\\features\\settings\\SecurityModule.tsx",
+    "button": 1
+  },
+  {
+    "file": "src\\features\\settings\\Settings.tsx",
+    "button": 4
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "header": 1,
+    "button": 5,
+    "filter": 1,
+    "select": 1
+  },
+  {
+    "file": "src\\features\\warehouse\\WarehouseProcurementModule.tsx",
+    "table": 1,
+    "header": 1,
+    "button": 1
+  },
+  {
+    "file": "src\\features\\workspace\\ProjectsModule.tsx",
+    "select": 4,
+    "pagination": 1,
+    "button": 10,
+    "filter": 1,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "button": 9,
+    "select": 2,
+    "table": 1
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceModule.tsx",
+    "select": 4,
+    "pagination": 1,
+    "button": 14,
+    "filter": 1,
+    "table": 1,
+    "header": 1
+  }
+]

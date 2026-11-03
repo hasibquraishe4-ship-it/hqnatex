@@ -1,0 +1,132 @@
+[
+  {
+    "lang": "fa",
+    "width": 1366,
+    "buttons": [
+      {
+        "x": 39,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 87,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 135,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      }
+    ],
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "lang": "ps",
+    "width": 1366,
+    "buttons": [
+      {
+        "x": 39,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 87,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 135,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      }
+    ],
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "lang": "en",
+    "width": 1366,
+    "buttons": [
+      {
+        "x": 1287,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 1239,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 1191,
+        "y": 195,
+        "width": 40,
+        "height": 42
+      }
+    ],
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "lang": "fa",
+    "width": 390,
+    "buttons": [
+      {
+        "x": -267.375,
+        "y": 189,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": -219.375,
+        "y": 189,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": -171.375,
+        "y": 189,
+        "width": 40,
+        "height": 42
+      }
+    ],
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "lang": "en",
+    "width": 390,
+    "buttons": [
+      {
+        "x": 705.375,
+        "y": 189,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 657.375,
+        "y": 189,
+        "width": 40,
+        "height": 42
+      },
+      {
+        "x": 609.375,
+        "y": 189,
+        "width": 40,
+        "height": 42
+      }
+    ],
+    "overflow": false,
+    "errors": []
+  }
+]

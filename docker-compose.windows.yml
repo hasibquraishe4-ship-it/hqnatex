@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: hqnatex_core
+      POSTGRES_USER: hqnatex_core
+      POSTGRES_PASSWORD: hqnatex_local_test
+    ports: ["55432:5432"]
+    volumes: ["hqnatex_pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hqnatex_core -d hqnatex_core"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    ports: ["56379:6379"]
+  core:
+    build: ./core
+    environment:
+      DJANGO_SECRET_KEY: local-test-change-this
+      DJANGO_DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: 127.0.0.1,localhost,core
+      HQNATEX_DB_NAME: hqnatex_core
+      HQNATEX_DB_USER: hqnatex_core
+      HQNATEX_DB_PASSWORD: hqnatex_local_test
+      HQNATEX_DB_HOST: postgres
+      HQNATEX_DB_PORT: "5432"
+      HQNATEX_SEED_PASSWORD: Test@12345
+      HQNATEX_PLATFORM_ADMIN_EMAIL: platform.admin@hqnatex.local
+    depends_on:
+      postgres: {condition: service_healthy}
+    ports: ["8000:8000"]
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    depends_on: [core]
+    ports: ["5173:5173"]
+volumes:
+  hqnatex_pgdata:

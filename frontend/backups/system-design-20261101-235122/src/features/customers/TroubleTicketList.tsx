@@ -1,0 +1,1754 @@
+import {
+  type FormEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+import {
+  customerTicketApi,
+  fetchers,
+  type Session,
+} from "../../lib/api";
+
+import {
+  useTranslation,
+} from "../../lib/i18n";
+
+type Props = {
+  session: Session;
+};
+
+type Ticket = {
+  id: string;
+  ticket_number?: string;
+  customer: string;
+  customer_name?: string;
+  customer_service?: string | null;
+  service?: string | null;
+  service_identifier?: string;
+  category?: string;
+  priority?: string;
+  status?: string;
+  subject: string;
+  description?: string;
+  assigned_team?: string;
+  assigned_user?: string;
+  opened_at?: string | null;
+  closed_at?: string | null;
+  resolution?: string;
+  notes?: string;
+  created_at?: string;
+  updated_at?: string;
+};
+
+type CustomerOption = {
+  id: string;
+  display_name?: string;
+  name?: string;
+  customer_code?: string;
+  code?: string;
+};
+
+type CustomerServiceOption = {
+  id: string;
+  customer?: string;
+  customer_id?: string;
+  customer_name?: string;
+  service?: string;
+  service_id?: string;
+  service_name?: string;
+  identifier?: string;
+  service_identifier?: string;
+  status?: string;
+};
+
+type ServiceOption = {
+  id: string;
+  code?: string;
+  name?: string;
+  name_english?: string;
+  english_name?: string;
+};
+
+type FormState = {
+  ticket_number: string;
+  customer: string;
+  customer_service: string;
+  service: string;
+  category: string;
+  priority: string;
+  status: string;
+  subject: string;
+  description: string;
+  assigned_team: string;
+  assigned_user: string;
+  opened_at: string;
+  closed_at: string;
+  resolution: string;
+  notes: string;
+};
+
+type ModalMode =
+  | "create"
+  | "view"
+  | "edit"
+  | null;
+
+type Notice = {
+  type: "success" | "error";
+  message: string;
+};
+
+const PAGE_SIZE = 25;
+
+const CATEGORIES = [
+  "technical",
+  "billing",
+  "service_request",
+  "complaint",
+  "inquiry",
+] as const;
+
+const PRIORITIES = [
+  "low",
+  "medium",
+  "high",
+  "urgent",
+] as const;
+
+const STATUSES = [
+  "open",
+  "in_progress",
+  "resolved",
+  "closed",
+  "cancelled",
+] as const;
+
+const EMPTY_FORM: FormState = {
+  ticket_number: "",
+  customer: "",
+  customer_service: "",
+  service: "",
+  category: "",
+  priority: "",
+  status: "",
+  subject: "",
+  description: "",
+  assigned_team: "",
+  assigned_user: "",
+  opened_at: "",
+  closed_at: "",
+  resolution: "",
+  notes: "",
+};
+
+const copy = {
+  en: {
+    title: "Trouble Tickets",
+    subtitle:
+      "Track customer faults, incidents, priority, assignment and resolution.",
+    newTicket: "New trouble ticket",
+    create: "Create trouble ticket",
+    edit: "Edit trouble ticket",
+    details: "Trouble ticket details",
+    search: "Search tickets...",
+    ticketNumber: "Ticket number",
+    customer: "Customer",
+    customerService: "Customer service",
+    service: "Service",
+    serviceIdentifier: "Service identifier",
+    category: "Category",
+    priority: "Priority",
+    status: "Status",
+    subject: "Subject",
+    description: "Description",
+    assignedTeam: "Assigned team",
+    assignedUser: "Assigned user",
+    openedAt: "Opened at",
+    closedAt: "Closed at",
+    resolution: "Resolution",
+    notes: "Notes",
+    actions: "Actions",
+    view: "View",
+    editAction: "Edit",
+    save: "Save",
+    cancel: "Cancel",
+    select: "Select",
+    loading: "Loading...",
+    noRecords: "No trouble tickets found.",
+    created: "Trouble ticket created successfully.",
+    updated: "Trouble ticket updated successfully.",
+    loadFailed: "Unable to load trouble tickets.",
+    saveFailed: "Unable to save trouble ticket.",
+    required: "Customer and subject are required.",
+    previous: "Previous",
+    next: "Next",
+    page: "Page",
+    records: "records",
+    technical: "Technical",
+    billing: "Billing",
+    service_request: "Service Request",
+    complaint: "Complaint",
+    inquiry: "Inquiry",
+    low: "Low",
+    medium: "Medium",
+    high: "High",
+    urgent: "Urgent",
+    open: "Open",
+    in_progress: "In Progress",
+    resolved: "Resolved",
+    closed: "Closed",
+    cancelled: "Cancelled",
+  },
+
+  fa: {
+    title: "خرابی‌ها و مشکلات",
+    subtitle:
+      "ثبت و پیگیری خرابی خدمات، اولویت، مسئول رسیدگی و نتیجه رفع مشکل.",
+    newTicket: "ثبت مشکل جدید",
+    create: "ثبت تیکت خرابی",
+    edit: "ویرایش تیکت خرابی",
+    details: "جزئیات تیکت خرابی",
+    search: "جستجوی تیکت‌ها...",
+    ticketNumber: "شماره تیکت",
+    customer: "مشترک",
+    customerService: "خدمت مشترک",
+    service: "خدمت",
+    serviceIdentifier: "شناسه خدمت",
+    category: "کتگوری",
+    priority: "اولویت",
+    status: "وضعیت",
+    subject: "موضوع",
+    description: "توضیحات",
+    assignedTeam: "تیم مسئول",
+    assignedUser: "مسئول رسیدگی",
+    openedAt: "زمان بازشدن",
+    closedAt: "زمان بسته‌شدن",
+    resolution: "راه‌حل / نتیجه",
+    notes: "یادداشت",
+    actions: "عملیات",
+    view: "مشاهده",
+    editAction: "ویرایش",
+    save: "ذخیره",
+    cancel: "انصراف",
+    select: "انتخاب کنید",
+    loading: "در حال بارگذاری...",
+    noRecords: "هیچ تیکت خرابی ثبت نشده است.",
+    created: "تیکت خرابی با موفقیت ثبت شد.",
+    updated: "تیکت خرابی با موفقیت ویرایش شد.",
+    loadFailed: "تیکت‌های خرابی بارگذاری نشد.",
+    saveFailed: "ذخیره تیکت خرابی انجام نشد.",
+    required: "انتخاب مشترک و موضوع الزامی است.",
+    previous: "قبلی",
+    next: "بعدی",
+    page: "صفحه",
+    records: "رکورد",
+    technical: "تخنیکی",
+    billing: "مالی / بلینگ",
+    service_request: "درخواست خدمت",
+    complaint: "شکایت",
+    inquiry: "پرسش",
+    low: "پایین",
+    medium: "متوسط",
+    high: "بالا",
+    urgent: "فوری",
+    open: "باز",
+    in_progress: "در حال رسیدگی",
+    resolved: "حل‌شده",
+    closed: "بسته‌شده",
+    cancelled: "لغوشده",
+  },
+
+  ps: {
+    title: "تخنیکي ستونزې",
+    subtitle:
+      "د خدمتونو ستونزې، لومړیتوب، مسؤل کس او د حل پایلې ثبت او تعقیب کړئ.",
+    newTicket: "نوې ستونزه ثبت کړئ",
+    create: "د ستونزې ټکټ ثبتول",
+    edit: "د ستونزې ټکټ سمول",
+    details: "د ستونزې ټکټ جزئیات",
+    search: "د ټکټونو لټون...",
+    ticketNumber: "د ټکټ شمېره",
+    customer: "پېرودونکی",
+    customerService: "د پېرودونکي خدمت",
+    service: "خدمت",
+    serviceIdentifier: "د خدمت پېژند",
+    category: "کټګوري",
+    priority: "لومړیتوب",
+    status: "حالت",
+    subject: "موضوع",
+    description: "تشریح",
+    assignedTeam: "مسؤل ټیم",
+    assignedUser: "مسؤل کاروونکی",
+    openedAt: "د پرانیستلو وخت",
+    closedAt: "د تړلو وخت",
+    resolution: "حل / پایله",
+    notes: "یادښت",
+    actions: "عملیات",
+    view: "کتل",
+    editAction: "سمول",
+    save: "خوندي کول",
+    cancel: "لغوه",
+    select: "انتخاب کړئ",
+    loading: "بارېږي...",
+    noRecords: "د ستونزې ټکټ نشته.",
+    created: "ټکټ په بریالیتوب ثبت شو.",
+    updated: "ټکټ په بریالیتوب تازه شو.",
+    loadFailed: "ټکټونه بار نه شول.",
+    saveFailed: "ټکټ خوندي نه شو.",
+    required: "پېرودونکی او موضوع اجباري دي.",
+    previous: "مخکینی",
+    next: "بل",
+    page: "پاڼه",
+    records: "ریکارډونه",
+    technical: "تخنیکي",
+    billing: "بلینګ",
+    service_request: "د خدمت غوښتنه",
+    complaint: "شکایت",
+    inquiry: "پوښتنه",
+    low: "ټیټ",
+    medium: "منځنی",
+    high: "لوړ",
+    urgent: "عاجل",
+    open: "پرانیستی",
+    in_progress: "د حل په حال کې",
+    resolved: "حل شوی",
+    closed: "تړل شوی",
+    cancelled: "لغوه شوی",
+  },
+} as const;
+
+function toLocalDateTime(
+  value?: string | null,
+) {
+  if (!value) return "";
+
+  const date = new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime(),
+    )
+  ) {
+    return value.slice(0, 16);
+  }
+
+  const offset =
+    date.getTimezoneOffset();
+
+  return new Date(
+    date.getTime()
+      - offset * 60000,
+  )
+    .toISOString()
+    .slice(0, 16);
+}
+
+function Field({
+  label,
+  required,
+  span,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  span?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <label
+      className={
+        span
+          ? "block space-y-2 md:col-span-2"
+          : "block space-y-2"
+      }
+    >
+      <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+        {label}
+
+        {required && (
+          <span className="ms-1 text-rose-500">
+            *
+          </span>
+        )}
+      </span>
+
+      {children}
+    </label>
+  );
+}
+
+export function TroubleTicketList({
+  session,
+}: Props) {
+  const {
+    t,
+    language,
+  } = useTranslation();
+
+  const c =
+    copy[
+      language as keyof typeof copy
+    ] ?? copy.en;
+
+  const [
+    rows,
+    setRows,
+  ] = useState<Ticket[]>([]);
+
+  const [
+    customers,
+    setCustomers,
+  ] = useState<CustomerOption[]>([]);
+
+  const [
+    customerServices,
+    setCustomerServices,
+  ] = useState<
+    CustomerServiceOption[]
+  >([]);
+
+  const [
+    services,
+    setServices,
+  ] = useState<ServiceOption[]>([]);
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
+
+  const [
+    saving,
+    setSaving,
+  ] = useState(false);
+
+  const [
+    page,
+    setPage,
+  ] = useState(1);
+
+  const [
+    count,
+    setCount,
+  ] = useState(0);
+
+  const [
+    search,
+    setSearch,
+  ] = useState("");
+
+  const [
+    modalMode,
+    setModalMode,
+  ] = useState<ModalMode>(
+    null,
+  );
+
+  const [
+    selected,
+    setSelected,
+  ] = useState<Ticket | null>(
+    null,
+  );
+
+  const [
+    form,
+    setForm,
+  ] = useState<FormState>({
+    ...EMPTY_FORM,
+  });
+
+  const [
+    notice,
+    setNotice,
+  ] = useState<Notice | null>(
+    null,
+  );
+
+  const totalPages =
+    Math.max(
+      1,
+      Math.ceil(
+        count / PAGE_SIZE,
+      ),
+    );
+
+  const choiceLabel = (
+    value?: string,
+  ) => {
+    if (!value) return "—";
+
+    const localized =
+      c[
+        value as keyof typeof c
+      ];
+
+    return typeof localized ===
+      "string"
+      ? localized
+      : value;
+  };
+
+  const load = async () => {
+    setLoading(true);
+
+    try {
+      const data =
+        await fetchers
+          .customerTickets(
+            session,
+            `?page=${page}&page_size=${PAGE_SIZE}`,
+          );
+
+      setRows(
+        data.results ?? [],
+      );
+
+      setCount(
+        data.count ?? 0,
+      );
+    } catch (error) {
+      setNotice({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : c.loadFailed,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadLookups = async () => {
+    try {
+      const [
+        customerData,
+        customerServiceData,
+        serviceData,
+      ] = await Promise.all([
+        fetchers.customers(
+          session,
+          "?page_size=500",
+        ),
+
+        fetchers.customerServices(
+          session,
+          "?page_size=500",
+        ),
+
+        fetchers.services(
+          session,
+          "?page_size=500",
+        ),
+      ]);
+
+      setCustomers(
+        customerData.results ?? [],
+      );
+
+      setCustomerServices(
+        customerServiceData.results ?? [],
+      );
+
+      setServices(
+        serviceData.results ?? [],
+      );
+    } catch (error) {
+      setNotice({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : c.loadFailed,
+      });
+    }
+  };
+
+  useEffect(() => {
+    void load();
+  }, [page]);
+
+  useEffect(() => {
+    void loadLookups();
+  }, []);
+
+  const filteredRows =
+    useMemo(() => {
+      const q =
+        search
+          .trim()
+          .toLowerCase();
+
+      if (!q) return rows;
+
+      return rows.filter(
+        (row) =>
+          [
+            row.ticket_number,
+            row.customer_name,
+            row.service_identifier,
+            row.subject,
+            row.category,
+            row.priority,
+            row.status,
+            row.assigned_team,
+            row.assigned_user,
+          ]
+            .filter(Boolean)
+            .some(
+              (value) =>
+                String(value)
+                  .toLowerCase()
+                  .includes(q),
+            ),
+      );
+    }, [
+      rows,
+      search,
+    ]);
+
+  const filteredCustomerServices =
+    useMemo(
+      () =>
+        customerServices.filter(
+          (item) => {
+            if (!form.customer) {
+              return true;
+            }
+
+            const owner =
+              item.customer
+              ?? item.customer_id;
+
+            if (!owner) {
+              return true;
+            }
+
+            return String(owner)
+              ===
+              String(
+                form.customer,
+              );
+          },
+        ),
+      [
+        customerServices,
+        form.customer,
+      ],
+    );
+
+  const openCreate = () => {
+    setSelected(null);
+    setForm({
+      ...EMPTY_FORM,
+    });
+    setNotice(null);
+    setModalMode("create");
+  };
+
+  const openView = (
+    row: Ticket,
+  ) => {
+    setSelected(row);
+    setModalMode("view");
+  };
+
+  const openEdit = (
+    row: Ticket,
+  ) => {
+    setSelected(row);
+
+    setForm({
+      ticket_number:
+        row.ticket_number ?? "",
+      customer:
+        row.customer ?? "",
+      customer_service:
+        row.customer_service ?? "",
+      service:
+        row.service ?? "",
+      category:
+        row.category ?? "",
+      priority:
+        row.priority ?? "",
+      status:
+        row.status ?? "",
+      subject:
+        row.subject ?? "",
+      description:
+        row.description ?? "",
+      assigned_team:
+        row.assigned_team ?? "",
+      assigned_user:
+        row.assigned_user ?? "",
+      opened_at:
+        toLocalDateTime(
+          row.opened_at,
+        ),
+      closed_at:
+        toLocalDateTime(
+          row.closed_at,
+        ),
+      resolution:
+        row.resolution ?? "",
+      notes:
+        row.notes ?? "",
+    });
+
+    setModalMode("edit");
+  };
+
+  const closeModal = () => {
+    if (saving) return;
+
+    setModalMode(null);
+    setSelected(null);
+  };
+
+  const handleCustomerService = (
+    id: string,
+  ) => {
+    const item =
+      customerServices.find(
+        (entry) =>
+          String(entry.id)
+          === String(id),
+      );
+
+    setForm(
+      (current) => ({
+        ...current,
+        customer_service: id,
+        customer:
+          item?.customer
+          ?? item?.customer_id
+          ?? current.customer,
+        service:
+          item?.service
+          ?? item?.service_id
+          ?? current.service,
+      }),
+    );
+  };
+
+  const submit = async (
+    event:
+      FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+
+    if (
+      !form.customer
+      || !form.subject.trim()
+    ) {
+      setNotice({
+        type: "error",
+        message: c.required,
+      });
+
+      return;
+    }
+
+    const payload:
+      Record<
+        string,
+        unknown
+      > = {
+        customer:
+          form.customer,
+        subject:
+          form.subject.trim(),
+      };
+
+    const optionalText = [
+      "ticket_number",
+      "category",
+      "priority",
+      "status",
+      "description",
+      "assigned_team",
+      "assigned_user",
+      "resolution",
+      "notes",
+    ] as const;
+
+    for (
+      const key
+      of optionalText
+    ) {
+      const value =
+        form[key].trim();
+
+      if (value) {
+        payload[key] =
+          value;
+      }
+    }
+
+    payload.customer_service =
+      form.customer_service
+        ? form.customer_service
+        : null;
+
+    payload.service =
+      form.service
+        ? form.service
+        : null;
+
+    payload.opened_at =
+      form.opened_at
+        ? form.opened_at
+        : null;
+
+    payload.closed_at =
+      form.closed_at
+        ? form.closed_at
+        : null;
+
+    setSaving(true);
+    setNotice(null);
+
+    try {
+      if (
+        modalMode === "edit"
+        && selected
+      ) {
+        await customerTicketApi
+          .update(
+            session,
+            selected.id,
+            payload,
+          );
+      } else {
+        await customerTicketApi
+          .create(
+            session,
+            payload,
+          );
+      }
+
+      await load();
+
+      setModalMode(null);
+      setSelected(null);
+
+      setForm({
+        ...EMPTY_FORM,
+      });
+
+      setNotice({
+        type: "success",
+        message:
+          modalMode === "edit"
+            ? c.updated
+            : c.created,
+      });
+    } catch (error) {
+      setNotice({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : c.saveFailed,
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const customerLabel = (
+    item: CustomerOption,
+  ) =>
+    item.display_name
+    || item.name
+    || item.customer_code
+    || item.code
+    || item.id;
+
+  const serviceLabel = (
+    item: ServiceOption,
+  ) =>
+    [
+      item.code,
+      item.name_english
+      || item.english_name
+      || item.name,
+    ]
+      .filter(Boolean)
+      .join(" — ")
+    || item.id;
+
+  const detailItems =
+    selected
+      ? [
+          [
+            c.ticketNumber,
+            selected.ticket_number,
+          ],
+          [
+            c.customer,
+            selected.customer_name
+            || selected.customer,
+          ],
+          [
+            c.serviceIdentifier,
+            selected.service_identifier,
+          ],
+          [
+            c.category,
+            choiceLabel(
+              selected.category,
+            ),
+          ],
+          [
+            c.priority,
+            choiceLabel(
+              selected.priority,
+            ),
+          ],
+          [
+            c.status,
+            choiceLabel(
+              selected.status,
+            ),
+          ],
+          [
+            c.subject,
+            selected.subject,
+          ],
+          [
+            c.description,
+            selected.description,
+          ],
+          [
+            c.assignedTeam,
+            selected.assigned_team,
+          ],
+          [
+            c.assignedUser,
+            selected.assigned_user,
+          ],
+          [
+            c.openedAt,
+            selected.opened_at
+              ? new Date(
+                  selected.opened_at,
+                ).toLocaleString()
+              : "",
+          ],
+          [
+            c.closedAt,
+            selected.closed_at
+              ? new Date(
+                  selected.closed_at,
+                ).toLocaleString()
+              : "",
+          ],
+          [
+            c.resolution,
+            selected.resolution,
+          ],
+          [
+            c.notes,
+            selected.notes,
+          ],
+        ]
+      : [];
+
+  return (
+    <div className="space-y-5">
+      <div className="rounded-[28px] border border-slate-200/80 bg-white/70 p-5 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.045]">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">
+              {
+                t.customersServicesUi
+                  .tabFaults
+              }
+            </div>
+
+            <h2 className="mt-1 text-2xl font-black text-slate-100 dark:text-slate-100">
+              {c.title}
+            </h2>
+
+            <p className="mt-1 max-w-3xl text-sm text-slate-500 dark:text-slate-400">
+              {c.subtitle}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={openCreate}
+            className="rounded-2xl border border-cyan-300/20 bg-cyan-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-cyan-500/10 transition hover:-translate-y-0.5 dark:text-slate-950"
+          >
+            {c.newTicket}
+          </button>
+        </div>
+      </div>
+
+      {notice && (
+        <div
+          className={
+            notice.type ===
+            "success"
+              ? "rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-sm text-emerald-700 dark:text-emerald-300"
+              : "rounded-2xl border border-rose-400/20 bg-rose-400/10 p-4 text-sm text-rose-700 dark:text-rose-300"
+          }
+        >
+          {notice.message}
+        </div>
+      )}
+
+      <div className="rounded-[28px] border border-slate-200/80 bg-white/70 p-4 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.035]">
+        <input
+          value={search}
+          onChange={(event) =>
+            setSearch(
+              event.target.value,
+            )
+          }
+          placeholder={c.search}
+          className="ticket-input"
+        />
+      </div>
+
+      <div className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/70 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.035]">
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead className="border-b border-slate-700/60 bg-slate-50/70 text-xs uppercase tracking-wide text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">
+              <tr>
+                <th className="px-4 py-3 text-start">
+                  {c.ticketNumber}
+                </th>
+
+                <th className="px-4 py-3 text-start">
+                  {c.customer}
+                </th>
+
+                <th className="px-4 py-3 text-start">
+                  {c.subject}
+                </th>
+
+                <th className="px-4 py-3 text-start">
+                  {c.category}
+                </th>
+
+                <th className="px-4 py-3 text-start">
+                  {c.priority}
+                </th>
+
+                <th className="px-4 py-3 text-start">
+                  {c.status}
+                </th>
+
+                <th className="px-4 py-3 text-start">
+                  {c.actions}
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="px-4 py-12 text-center text-slate-400"
+                  >
+                    {c.loading}
+                  </td>
+                </tr>
+              ) : filteredRows.length ===
+                0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="px-4 py-12 text-center text-slate-500"
+                  >
+                    {c.noRecords}
+                  </td>
+                </tr>
+              ) : (
+                filteredRows.map(
+                  (row) => (
+                    <tr
+                      key={row.id}
+                      className="border-b border-slate-800/70 text-slate-700 last:border-0 hover:bg-cyan-50/30 dark:border-white/[0.06] dark:text-slate-200 dark:hover:bg-white/[0.025]"
+                    >
+                      <td className="px-4 py-3 font-mono text-xs text-cyan-700 dark:text-cyan-300">
+                        {
+                          row.ticket_number
+                          || "—"
+                        }
+                      </td>
+
+                      <td className="px-4 py-3">
+                        {
+                          row.customer_name
+                          || row.customer
+                          || "—"
+                        }
+                      </td>
+
+                      <td className="px-4 py-3 font-semibold">
+                        {row.subject}
+                      </td>
+
+                      <td className="px-4 py-3">
+                        {
+                          choiceLabel(
+                            row.category,
+                          )
+                        }
+                      </td>
+
+                      <td className="px-4 py-3">
+                        {
+                          choiceLabel(
+                            row.priority,
+                          )
+                        }
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <span className="rounded-full border border-slate-700/60 bg-slate-900/55 px-2.5 py-1 text-xs font-bold dark:border-white/10 dark:bg-white/[0.05]">
+                          {
+                            choiceLabel(
+                              row.status,
+                            )
+                          }
+                        </span>
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              openView(row)
+                            }
+                            className="rounded-xl border border-slate-700/60 px-3 py-1.5 text-xs font-bold dark:border-white/10"
+                          >
+                            {c.view}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              openEdit(row)
+                            }
+                            className="rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-3 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300"
+                          >
+                            {
+                              c.editAction
+                            }
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ),
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="flex items-center justify-between gap-4 border-t border-slate-700/60 px-4 py-3 text-xs text-slate-500 dark:border-white/10 dark:text-slate-400">
+          <div>
+            {c.page} {page}
+            {" / "}
+            {totalPages}
+            {" · "}
+            {count} {c.records}
+          </div>
+
+          <div className="flex gap-2">
+            <button
+              type="button"
+              disabled={
+                page <= 1
+              }
+              onClick={() =>
+                setPage(
+                  (current) =>
+                    Math.max(
+                      1,
+                      current - 1,
+                    ),
+                )
+              }
+              className="rounded-xl border border-slate-700/60 px-3 py-2 disabled:opacity-40 dark:border-white/10"
+            >
+              {c.previous}
+            </button>
+
+            <button
+              type="button"
+              disabled={
+                page >= totalPages
+              }
+              onClick={() =>
+                setPage(
+                  (current) =>
+                    Math.min(
+                      totalPages,
+                      current + 1,
+                    ),
+                )
+              }
+              className="rounded-xl border border-slate-700/60 px-3 py-2 disabled:opacity-40 dark:border-white/10"
+            >
+              {c.next}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {modalMode && (
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
+          <div className="max-h-[94vh] w-full max-w-5xl overflow-y-auto rounded-[28px] border border-white/10 bg-slate-950/40 p-6 shadow-2xl dark:bg-slate-950">
+            <div className="mb-6 flex items-start justify-between gap-4">
+              <h3 className="text-xl font-black text-slate-100 dark:text-white">
+                {modalMode ===
+                "create"
+                  ? c.create
+                  : modalMode ===
+                      "edit"
+                    ? c.edit
+                    : c.details}
+              </h3>
+
+              <button
+                type="button"
+                onClick={closeModal}
+                disabled={saving}
+                className="rounded-xl border border-slate-700/60 px-3 py-2 text-slate-500 dark:border-white/10 dark:text-slate-400"
+              >
+                ×
+              </button>
+            </div>
+
+            {modalMode ===
+              "view"
+              && selected ? (
+              <div className="grid gap-4 md:grid-cols-2">
+                {detailItems.map(
+                  (
+                    [
+                      label,
+                      value,
+                    ],
+                  ) => (
+                    <div
+                      key={label}
+                      className="rounded-2xl border border-slate-700/60 bg-slate-50/60 p-4 dark:border-white/10 dark:bg-white/[0.035]"
+                    >
+                      <div className="text-xs text-slate-500">
+                        {label}
+                      </div>
+
+                      <div className="mt-1 break-words text-sm font-semibold text-slate-100 dark:text-slate-100">
+                        {value || "—"}
+                      </div>
+                    </div>
+                  ),
+                )}
+
+                <div className="md:col-span-2 flex justify-end border-t border-slate-700/60 pt-4 dark:border-white/10">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openEdit(
+                        selected,
+                      )
+                    }
+                    className="rounded-xl bg-cyan-500 px-5 py-2 text-sm font-black text-white dark:text-slate-950"
+                  >
+                    {c.editAction}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form
+                onSubmit={submit}
+                className="space-y-5"
+              >
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Field
+                    label={c.customer}
+                    required
+                  >
+                    <select
+                      value={form.customer}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            customer:
+                              event.target
+                                .value,
+                            customer_service:
+                              "",
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    >
+                      <option value="">
+                        {c.select}
+                      </option>
+
+                      {customers.map(
+                        (item) => (
+                          <option
+                            key={item.id}
+                            value={item.id}
+                          >
+                            {
+                              customerLabel(
+                                item,
+                              )
+                            }
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
+
+                  <Field
+                    label={
+                      c.customerService
+                    }
+                  >
+                    <select
+                      value={
+                        form.customer_service
+                      }
+                      onChange={(event) =>
+                        handleCustomerService(
+                          event.target.value,
+                        )
+                      }
+                      className="ticket-input"
+                    >
+                      <option value="">
+                        {c.select}
+                      </option>
+
+                      {filteredCustomerServices.map(
+                        (item) => (
+                          <option
+                            key={item.id}
+                            value={item.id}
+                          >
+                            {item.customer_name
+                              || ""}
+                            {" — "}
+                            {item.service_identifier
+                              || item.identifier
+                              || item.service_name
+                              || item.id}
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
+
+                  <Field
+                    label={c.service}
+                  >
+                    <select
+                      value={form.service}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            service:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    >
+                      <option value="">
+                        {c.select}
+                      </option>
+
+                      {services.map(
+                        (item) => (
+                          <option
+                            key={item.id}
+                            value={item.id}
+                          >
+                            {
+                              serviceLabel(
+                                item,
+                              )
+                            }
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
+
+                  <Field
+                    label={
+                      c.ticketNumber
+                    }
+                  >
+                    <input
+                      value={
+                        form.ticket_number
+                      }
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            ticket_number:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.subject}
+                    required
+                    span
+                  >
+                    <input
+                      value={form.subject}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            subject:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.category}
+                  >
+                    <select
+                      value={form.category}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            category:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    >
+                      <option value="">
+                        {c.select}
+                      </option>
+
+                      {CATEGORIES.map(
+                        (value) => (
+                          <option
+                            key={value}
+                            value={value}
+                          >
+                            {
+                              choiceLabel(
+                                value,
+                              )
+                            }
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
+
+                  <Field
+                    label={c.priority}
+                  >
+                    <select
+                      value={form.priority}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            priority:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    >
+                      <option value="">
+                        {c.select}
+                      </option>
+
+                      {PRIORITIES.map(
+                        (value) => (
+                          <option
+                            key={value}
+                            value={value}
+                          >
+                            {
+                              choiceLabel(
+                                value,
+                              )
+                            }
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
+
+                  <Field
+                    label={c.status}
+                  >
+                    <select
+                      value={form.status}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            status:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    >
+                      <option value="">
+                        {c.select}
+                      </option>
+
+                      {STATUSES.map(
+                        (value) => (
+                          <option
+                            key={value}
+                            value={value}
+                          >
+                            {
+                              choiceLabel(
+                                value,
+                              )
+                            }
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
+
+                  <Field
+                    label={c.assignedTeam}
+                  >
+                    <input
+                      value={
+                        form.assigned_team
+                      }
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            assigned_team:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.assignedUser}
+                  >
+                    <input
+                      value={
+                        form.assigned_user
+                      }
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            assigned_user:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.openedAt}
+                  >
+                    <input
+                      type="datetime-local"
+                      value={form.opened_at}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            opened_at:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.closedAt}
+                  >
+                    <input
+                      type="datetime-local"
+                      value={form.closed_at}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            closed_at:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.description}
+                    span
+                  >
+                    <textarea
+                      rows={4}
+                      value={form.description}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            description:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.resolution}
+                    span
+                  >
+                    <textarea
+                      rows={3}
+                      value={form.resolution}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            resolution:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+
+                  <Field
+                    label={c.notes}
+                    span
+                  >
+                    <textarea
+                      rows={3}
+                      value={form.notes}
+                      onChange={(event) =>
+                        setForm(
+                          (current) => ({
+                            ...current,
+                            notes:
+                              event.target
+                                .value,
+                          }),
+                        )
+                      }
+                      className="ticket-input"
+                    />
+                  </Field>
+                </div>
+
+                <div className="flex justify-end gap-3 border-t border-slate-700/60 pt-5 dark:border-white/10">
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    disabled={saving}
+                    className="rounded-xl border border-slate-700/60 px-4 py-2 text-sm text-slate-600 dark:border-white/10 dark:text-slate-300"
+                  >
+                    {c.cancel}
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={saving}
+                    className="rounded-xl bg-cyan-500 px-5 py-2 text-sm font-black text-white disabled:opacity-50 dark:text-slate-950"
+                  >
+                    {c.save}
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <style>{`
+              .ticket-input {
+                width: 100%;
+                border-radius: .9rem;
+                border: 1px solid rgba(148,163,184,.25);
+                background: rgba(255,255,255,.72);
+                padding: .72rem .85rem;
+                color: rgb(15 23 42);
+                outline: none;
+              }
+
+              .dark .ticket-input {
+                border-color: rgba(255,255,255,.10);
+                background: rgba(255,255,255,.045);
+                color: rgb(241 245 249);
+              }
+
+              .ticket-input:focus {
+                border-color: rgba(34,211,238,.55);
+                box-shadow: 0 0 0 3px rgba(34,211,238,.08);
+              }
+
+              .dark .ticket-input option {
+                background: rgb(15 23 42);
+                color: rgb(241 245 249);
+              }
+            `}</style>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

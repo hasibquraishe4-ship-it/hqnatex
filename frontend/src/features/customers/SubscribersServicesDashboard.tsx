@@ -1,0 +1,497 @@
+﻿import { ModuleHub } from "../../components/ModuleHub";
+import { PageHeader } from "../../components/PageHeader";
+import { PrimaryButton as SharedPrimaryButton } from "../../components/Interface";
+import { DataTable as SharedDataTable } from "../../components/DataTable";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  Activity,
+  Boxes,
+  ClipboardCheck,
+  Package,
+  RadioTower,
+  Truck,
+  Users,
+  Zap,
+} from "lucide-react";
+
+import {
+  fetchers,
+  type Session,
+} from "../../lib/api";
+
+import { useTranslation } from "../../lib/i18n";
+
+type Props = {
+  session: Session;
+  onOpen: (view: string) => void;
+};
+
+type Summary = {
+  customers: number;
+  customerServices: number;
+  services: number;
+  packages: number;
+};
+
+type RecentCustomer = {
+  id: string;
+  code?: string;
+  customer_code?: string;
+  display_name?: string;
+  phone?: string;
+  branch_name?: string;
+  status?: string;
+};
+
+export function SubscribersServicesDashboard({
+  session,
+  onOpen,
+}: Props) {
+  const { t } = useTranslation();
+
+  const [summary, setSummary] =
+    useState<Summary>({
+      customers: 0,
+      customerServices: 0,
+      services: 0,
+      packages: 0,
+    });
+
+  const [recentCustomers, setRecentCustomers] =
+    useState<RecentCustomer[]>([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState("");
+
+  useEffect(() => {
+    let alive = true;
+
+    const load = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const [
+          customers,
+          customerServices,
+          services,
+          packages,
+        ] = await Promise.all([
+          fetchers.customers(
+            session,
+            "?page=1&page_size=6&ordering=-created_at",
+          ),
+          fetchers.customerServices(
+            session,
+            "?page=1&page_size=1",
+          ),
+          fetchers.services(
+            session,
+            "?status=active&page=1&page_size=1",
+          ),
+          fetchers.packages(
+            session,
+            "?available=1&page=1&page_size=1",
+          ),
+        ]);
+
+        if (!alive) return;
+
+        setSummary({
+          customers:
+            customers.count || 0,
+          customerServices:
+            customerServices.count || 0,
+          services:
+            services.count || 0,
+          packages:
+            packages.count || 0,
+        });
+
+        setRecentCustomers(
+          (customers.results || []).slice(0, 6),
+        );
+      } catch (err) {
+        if (!alive) return;
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : t.common.noRecords,
+        );
+      } finally {
+        if (alive) {
+          setLoading(false);
+        }
+      }
+    };
+
+    load();
+
+    return () => {
+      alive = false;
+    };
+  }, [session, t]);
+
+  const statCards = [
+    {
+      value: summary.customers,
+      label:
+        t.customersServicesUi
+          .summaryCustomers,
+      icon: Users,
+    },
+    {
+      value: summary.customerServices,
+      label:
+        t.customersServicesUi
+          .summaryCustomerServices,
+      icon: Activity,
+    },
+    {
+      value: summary.services,
+      label:
+        t.customersServicesUi
+          .summaryServices,
+      icon: RadioTower,
+    },
+    {
+      value: summary.packages,
+      label:
+        t.customersServicesUi
+          .summaryPackages,
+      icon: Package,
+    },
+  ];
+
+  return (
+    <div
+      className="
+        hq-subscriber-dashboard space-y-5
+        animate-in fade-in
+        duration-300
+      "
+    >
+      <PageHeader title={t.common.subscribersServices} subtitle={t.customersServicesUi.subscribersServicesDashboardDesc} icon={Users} />
+
+<section className="space-y-3">
+        <h2
+          className="
+            px-1 text-sm
+            font-black
+            text-slate-200
+            dark:text-slate-100
+          "
+        >
+          {
+            t.customersServicesUi
+              .subscriberSummary
+          }
+        </h2>
+
+        <div
+          className="
+            subscribers-summary-grid
+              grid gap-3
+              sm:grid-cols-2
+              xl:grid-cols-4
+          "
+        >
+          {statCards.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <div
+                key={item.label}
+                className="hq-visual-panel 
+                  subscriber-summary-card
+                    min-h-[112px]
+                  rounded-2xl
+                  border border-slate-200/70
+                  bg-white/55
+                  p-5
+                  shadow-[0_8px_24px_rgba(15,23,42,0.08),0_5px_0_rgba(148,163,184,0.22)]
+                  backdrop-blur-xl
+                  dark:border-white/10
+                  dark:bg-white/5
+                "
+              >
+                <div
+                  className="
+                    flex h-full
+                    items-center
+                    justify-between
+                    gap-4
+                  "
+                >
+                  <div>
+                    <div
+                      className="
+                        text-2xl
+                        font-black
+                        text-slate-100
+                        dark:text-white
+                      "
+                    >
+                      {loading
+                        ? "…"
+                        : item.value}
+                    </div>
+
+                    <div
+                      className="
+                        mt-2 text-xs
+                        font-bold
+                        text-slate-500
+                        dark:text-slate-400
+                      "
+                    >
+                      {item.label}
+                    </div>
+                  </div>
+
+                  <div
+                    className="
+                      grid h-11 w-11
+                      place-items-center
+                      rounded-2xl
+                      bg-white/80
+                      text-indigo-600
+                      shadow-lg
+                      dark:bg-white/10
+                      dark:text-indigo-300
+                    "
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <ModuleHub
+        title={t.customersServicesUi.subscriberOperations}
+        cards={[
+          { id: "customers", icon: Users, title: t.uiTabs.customers },
+          { id: "activations", icon: Zap, title: t.customersServicesUi.subscriberActivation },
+          { id: "work-orders", icon: Zap, title: t.customersServicesUi.installationWorkOrders },
+          { id: "provisioning-jobs", icon: Zap, title: t.customersServicesUi.provisioningJobs },
+          { id: "ip-assignments", icon: Zap, title: t.customersServicesUi.ipAssignments },
+          { id: "radius-accounts", icon: Zap, title: t.customersServicesUi.radiusAccounts },
+          { id: "technical-tests", icon: Zap, title: t.customersServicesUi.tabTestResults },
+          { id: "field-visits", icon: Truck, title: t.customersServicesUi.tabFieldVisits },
+          { id: "trouble-tickets", icon: ClipboardCheck, title: t.customersServicesUi.tabFaults },
+          { id: "decommission-records", icon: Package, title: t.customersServicesUi.tabDecommission },
+          { id: "customer-equipment", icon: Package, title: t.customersServicesUi.tabEquipment },
+          { id: "service-attachments", icon: Package, title: t.customersServicesUi.tabAttachments },
+          { id: "agency-history", icon: Package, title: t.customersServicesUi.agencyHistory },
+          { id: "change-requests", icon: ClipboardCheck, title: t.customersServicesUi.activationRenewalRequests },
+          { id: "services", icon: Boxes, title: t.customersServicesUi.servicesAndPackages },
+          { id: "activation-checklist", icon: ClipboardCheck, title: t.customersServicesUi.tabChecklist },
+        ]}
+        onOpen={onOpen}
+      />
+
+      <section
+        className="
+          hq-subscriber-recent overflow-hidden
+          rounded-2xl
+          border border-slate-200/80
+          bg-white/55
+          shadow-sm
+          backdrop-blur-xl
+          dark:border-white/10
+          dark:bg-white/5
+        "
+      >
+        <div
+          className="
+            flex items-center
+            justify-between
+            border-b
+            border-slate-200/70
+            px-5 py-4
+            dark:border-white/10
+          "
+        >
+          <div
+            className="
+              text-sm font-black
+              text-slate-200
+              dark:text-white
+            "
+          >
+            {
+              t.customersServicesUi
+                .recentSubscribers
+            }
+          </div>
+
+          <SharedPrimaryButton
+            type="button"
+            onClick={() =>
+              onOpen("customers")
+            }
+            className="
+              rounded-xl
+              border border-cyan-500/20
+              bg-cyan-500/5
+              px-3 py-2
+              text-xs font-bold
+              text-cyan-700
+              transition
+              hover:bg-cyan-500/10
+              dark:text-cyan-300
+            "
+          >
+            {
+              t.customersServicesUi
+                .viewAll
+            }
+          </SharedPrimaryButton>
+        </div>
+
+        {error ? (
+          <div
+            className="
+              p-5 text-sm
+              text-rose-600
+              dark:text-rose-300
+            "
+          >
+            {error}
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <SharedDataTable native
+              className="
+                w-full
+                min-w-[680px]
+                text-xs
+              "
+            >
+              <thead>
+                <tr
+                  className="
+                    bg-slate-50/80
+                    text-slate-500
+                    dark:bg-white/5
+                    dark:text-slate-400
+                  "
+                >
+                  <th className="px-5 py-3 text-start">
+                    {
+                      t.customersServicesUi
+                        .customerCode
+                    }
+                  </th>
+
+                  <th className="px-5 py-3 text-start">
+                    {
+                      t.customersServicesUi
+                        .displayName
+                    }
+                  </th>
+
+                  <th className="px-5 py-3 text-start">
+                    {
+                      t.customersServicesUi
+                        .phone
+                    }
+                  </th>
+
+                  <th className="px-5 py-3 text-start">
+                    {
+                      t.customersServicesUi
+                        .branch
+                    }
+                  </th>
+
+                  <th className="px-5 py-3 text-start">
+                    {
+                      t.customersServicesUi
+                        .status
+                    }
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {recentCustomers.map(
+                  (customer) => (
+                    <tr
+                      key={customer.id}
+                      className="
+                        border-t
+                        border-slate-200/60
+                        text-slate-700
+                        dark:border-white/5
+                        dark:text-slate-300
+                      "
+                    >
+                      <td className="px-5 py-3 font-mono">
+                        {customer.customer_code ||
+                          customer.code ||
+                          "—"}
+                      </td>
+
+                      <td className="px-5 py-3 font-bold">
+                        {customer.display_name ||
+                          "—"}
+                      </td>
+
+                      <td className="px-5 py-3">
+                        {customer.phone ||
+                          "—"}
+                      </td>
+
+                      <td className="px-5 py-3">
+                        {customer.branch_name ||
+                          "—"}
+                      </td>
+
+                      <td className="px-5 py-3">
+                        {customer.status ||
+                          "—"}
+                      </td>
+                    </tr>
+                  ),
+                )}
+
+                {!loading &&
+                  recentCustomers.length ===
+                    0 && (
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="
+                          px-5 py-10
+                          text-center
+                          text-slate-500
+                        "
+                      >
+                        {t.common.noRecords}
+                      </td>
+                    </tr>
+                  )}
+              </tbody>
+            </SharedDataTable>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+
+
+

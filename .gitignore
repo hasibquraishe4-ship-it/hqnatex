@@ -1,0 +1,85 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env
+frontend/.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+backend/.venv/
+.venv/
+
+# Node / frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+*.tsbuildinfo
+
+# Vite generated / old artifacts
+frontend/vite.config.js.old
+frontend/vite.config.d.ts
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+*.bak
+
+.runtime/
+
+# HQNATEX local/generated artifacts
+HQNATEX_BACKUPS/
+HQNATEX_LOGS/
+.runtime/
+.gemini/
+wheelhouse/
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+
+# Temporary / pre-patch files
+*.bak
+*.tmp
+*.old
+*.pre_safe_patch
+*.before_fp_fix
+*.before_postwave2
+*.pre_rls_fix
+
+# Python local environments/caches
+**/__pycache__/
+**/.pytest_cache/
+
+# Local database dumps / secrets
+*.sql.gz
+*.dump
+*.sqlite
+*.sqlite3
+
+# Certificates / private keys
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Generated audit / certification reports
+reports/
+
+# Django/runtime user uploads
+core/media/

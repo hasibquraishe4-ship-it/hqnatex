@@ -1,0 +1,1828 @@
+import { WorkspaceModal } from "../../components/Modal";
+import { getTranslation as getUiTranslation } from "../../i18n";
+import { PageHeader as SharedPageHeader } from "../../components/PageHeader";
+import { PrimaryButton as SharedPrimaryButton, Select as SharedSelect, SecondaryButton as SharedSecondaryButton } from "../../components/Interface";
+import { DataTable as SharedDataTable } from "../../components/DataTable";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+import {
+  collectAllPages,
+  fetchers,
+  installationWorkOrderApi,
+  type Paginated,
+  type Session,
+} from "../../lib/api";
+
+import {
+  useTranslation,
+} from "../../lib/i18n";
+
+
+type WorkOrderStatus =
+  | "draft"
+  | "dispatched"
+  | "on_site"
+  | "completed"
+  | "failed"
+  | "cancelled";
+
+
+type InstallationWorkOrder = {
+  id: string;
+
+  tenant: string;
+  company: string;
+
+  customer_service: string;
+
+  customer_name: string;
+  service_identifier: string;
+  customer_address: string;
+  customer_phone: string;
+
+  activation: string | null;
+
+  order_number: string;
+  work_type: string;
+
+  assigned_team_id: string;
+  technician_name: string;
+  technician_phone: string;
+
+  scheduled_at: string | null;
+  completed_at: string | null;
+
+  status: WorkOrderStatus;
+
+  notes: string;
+
+  created_at: string;
+  updated_at: string;
+};
+
+
+type CustomerServiceOption = {
+  id: string;
+
+  customer_name?: string;
+  service_name?: string;
+  package_name?: string | null;
+
+  identifier?: string;
+  username?: string;
+
+  status?: string;
+};
+
+
+type ActivationOption = {
+  id: string;
+  customer_service: string;
+
+  customer_name?: string;
+  service_identifier?: string;
+  service_name?: string;
+
+  activation_type?: string;
+  status?: string;
+
+  requested_at?: string;
+  scheduled_at?: string | null;
+  activated_at?: string | null;
+};
+
+
+type WorkOrderForm = {
+  customer_service: string;
+  activation: string;
+
+  order_number: string;
+  work_type: string;
+
+  assigned_team_id: string;
+  technician_name: string;
+  technician_phone: string;
+
+  scheduled_at: string;
+  completed_at: string;
+
+  status: WorkOrderStatus;
+
+  notes: string;
+};
+
+
+type ModalMode =
+  | "create"
+  | "view"
+  | "edit"
+  | null;
+
+
+type Notice = {
+  type: "success" | "error";
+  message: string;
+};
+
+
+const PAGE_SIZE = 25;
+
+
+const copy = { en: getUiTranslation("en").featureCopy.customers_InstallationWorkOrderList.copy, fa: getUiTranslation("fa").featureCopy.customers_InstallationWorkOrderList.copy, ps: getUiTranslation("ps").featureCopy.customers_InstallationWorkOrderList.copy };
+
+
+function toDateTimeInput(
+  value?: string | null,
+): string {
+  if (!value) return "";
+
+  const date = new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime(),
+    )
+  ) {
+    return "";
+  }
+
+  const local = new Date(
+    date.getTime() -
+      date.getTimezoneOffset() * 60_000,
+  );
+
+  return local
+    .toISOString()
+    .slice(0, 16);
+}
+
+
+function toApiDateTime(
+  value: string,
+): string | null {
+  if (!value) return null;
+
+  const date = new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime(),
+    )
+  ) {
+    return null;
+  }
+
+  return date.toISOString();
+}
+
+
+function initialForm(): WorkOrderForm {
+  return {
+    customer_service: "",
+    activation: "",
+
+    order_number: "",
+    work_type: "",
+
+    assigned_team_id: "",
+    technician_name: "",
+    technician_phone: "",
+
+    scheduled_at: "",
+    completed_at: "",
+
+    status: "draft",
+
+    notes: "",
+  };
+}
+
+
+function statusClass(
+  status: WorkOrderStatus,
+): string {
+  if (status === "completed") {
+    return "border-emerald-400/20 bg-emerald-400/10 text-emerald-300";
+  }
+
+  if (
+    status === "failed" ||
+    status === "cancelled"
+  ) {
+    return "border-rose-400/20 bg-rose-400/10 text-rose-300";
+  }
+
+  if (status === "on_site") {
+    return "border-cyan-400/20 bg-cyan-400/10 text-cyan-300";
+  }
+
+  if (status === "dispatched") {
+    return "border-blue-400/20 bg-blue-400/10 text-blue-300";
+  }
+
+  return "border-slate-400/20 bg-slate-400/10 text-slate-300";
+}
+
+
+export function InstallationWorkOrderList({
+  session,
+}: {
+  session: Session;
+}) {
+  const {
+    language,
+  } = useTranslation();
+
+  const lang =
+    language === "fa" ||
+    language === "ps"
+      ? language
+      : "en";
+
+  const ui = copy[lang];
+
+
+  const [
+    data,
+    setData,
+  ] =
+    useState<
+      Paginated<InstallationWorkOrder>
+    >({
+      count: 0,
+      next: null,
+      previous: null,
+      results: [],
+    });
+
+
+  const [
+    customerServices,
+    setCustomerServices,
+  ] =
+    useState<CustomerServiceOption[]>(
+      [],
+    );
+
+
+  const [
+    activations,
+    setActivations,
+  ] =
+    useState<ActivationOption[]>([]);
+
+
+  const [
+    page,
+    setPage,
+  ] =
+    useState(1);
+
+
+  const [
+    statusFilter,
+    setStatusFilter,
+  ] =
+    useState("");
+
+
+  const [
+    customerServiceFilter,
+    setCustomerServiceFilter,
+  ] =
+    useState("");
+
+
+  const [
+    modalMode,
+    setModalMode,
+  ] =
+    useState<ModalMode>(null);
+
+
+  const [
+    selected,
+    setSelected,
+  ] =
+    useState<
+      InstallationWorkOrder | null
+    >(null);
+
+
+  const [
+    form,
+    setForm,
+  ] =
+    useState<WorkOrderForm>(
+      initialForm(),
+    );
+
+
+  const [
+    loading,
+    setLoading,
+  ] =
+    useState(false);
+
+
+  const [
+    serviceLoading,
+    setServiceLoading,
+  ] =
+    useState(false);
+
+
+  const [
+    activationLoading,
+    setActivationLoading,
+  ] =
+    useState(false);
+
+
+  const [
+    saving,
+    setSaving,
+  ] =
+    useState(false);
+
+
+  const [
+    error,
+    setError,
+  ] =
+    useState("");
+
+
+  const [
+    notice,
+    setNotice,
+  ] =
+    useState<Notice | null>(
+      null,
+    );
+
+
+  const [
+    refreshKey,
+    setRefreshKey,
+  ] =
+    useState(0);
+
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadServices() {
+      setServiceLoading(true);
+
+      try {
+        const response =
+          await collectAllPages<
+            CustomerServiceOption
+          >(
+            (params) =>
+              fetchers.customerServices(
+                session,
+                params,
+              ),
+            "?ordering=customer__display_name",
+          );
+
+        if (!cancelled) {
+          setCustomerServices(
+            response.results,
+          );
+        }
+      } catch {
+        if (!cancelled) {
+          setCustomerServices([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setServiceLoading(false);
+        }
+      }
+    }
+
+    void loadServices();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    session.access,
+    session.tenantId,
+    session.companyId,
+  ]);
+
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadWorkOrders() {
+      setLoading(true);
+      setError("");
+
+      try {
+        const params =
+          new URLSearchParams();
+
+        params.set(
+          "page",
+          String(page),
+        );
+
+        params.set(
+          "page_size",
+          String(PAGE_SIZE),
+        );
+
+        if (statusFilter) {
+          params.set(
+            "status",
+            statusFilter,
+          );
+        }
+
+        if (
+          customerServiceFilter
+        ) {
+          params.set(
+            "customer_service",
+            customerServiceFilter,
+          );
+        }
+
+        const response =
+          await fetchers
+            .customerServiceWorkOrders(
+              session,
+              `?${params.toString()}`,
+            );
+
+        if (!cancelled) {
+          setData(
+            response as Paginated<
+              InstallationWorkOrder
+            >,
+          );
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : ui.loadFailed,
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void loadWorkOrders();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    session.access,
+    session.tenantId,
+    session.companyId,
+    page,
+    statusFilter,
+    customerServiceFilter,
+    refreshKey,
+    ui.loadFailed,
+  ]);
+
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadActivations() {
+      const customerService =
+        form.customer_service;
+
+      if (!customerService) {
+        setActivations([]);
+        return;
+      }
+
+      setActivationLoading(true);
+
+      try {
+        const response =
+          await collectAllPages<
+            ActivationOption
+          >(
+            (params) =>
+              fetchers
+                .customerServiceActivations(
+                  session,
+                  params,
+                ),
+            `?customer_service=${encodeURIComponent(
+              customerService,
+            )}`,
+          );
+
+        if (!cancelled) {
+          setActivations(
+            response.results,
+          );
+        }
+      } catch {
+        if (!cancelled) {
+          setActivations([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setActivationLoading(
+            false,
+          );
+        }
+      }
+    }
+
+    void loadActivations();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    session.access,
+    session.tenantId,
+    session.companyId,
+    form.customer_service,
+  ]);
+
+
+  const pageCount =
+    Math.max(
+      1,
+      Math.ceil(
+        data.count /
+          PAGE_SIZE,
+      ),
+    );
+
+
+  const selectedService =
+    useMemo(
+      () =>
+        customerServices.find(
+          (row) =>
+            row.id ===
+            form.customer_service,
+        ) || null,
+      [
+        customerServices,
+        form.customer_service,
+      ],
+    );
+
+
+  function statusLabel(
+    status: WorkOrderStatus,
+  ): string {
+    return ui[status];
+  }
+
+
+  function formatDate(
+    value?: string | null,
+  ): string {
+    if (!value) return "—";
+
+    const date =
+      new Date(value);
+
+    if (
+      Number.isNaN(
+        date.getTime(),
+      )
+    ) {
+      return value;
+    }
+
+    try {
+      return new Intl.DateTimeFormat(
+        lang === "fa"
+          ? "fa-AF"
+          : lang === "ps"
+            ? "ps-AF"
+            : "en-GB",
+        {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        },
+      ).format(date);
+    } catch {
+      return date.toLocaleString();
+    }
+  }
+
+
+  function serviceLabel(
+    row: CustomerServiceOption,
+  ): string {
+    return [
+      row.customer_name,
+      row.identifier,
+      row.service_name,
+    ]
+      .filter(Boolean)
+      .join(" — ");
+  }
+
+
+  function activationLabel(
+    row: ActivationOption,
+  ): string {
+    return [
+      row.activation_type,
+      row.status,
+      row.requested_at
+        ? formatDate(
+            row.requested_at,
+          )
+        : null,
+    ]
+      .filter(Boolean)
+      .join(" — ");
+  }
+
+
+  function updateForm<
+    K extends keyof WorkOrderForm,
+  >(
+    key: K,
+    value: WorkOrderForm[K],
+  ) {
+    setForm(
+      (current) => ({
+        ...current,
+        [key]: value,
+      }),
+    );
+  }
+
+
+  function changeCustomerService(
+    customerServiceId: string,
+  ) {
+    setForm(
+      (current) => ({
+        ...current,
+        customer_service:
+          customerServiceId,
+        activation: "",
+      }),
+    );
+  }
+
+
+  function openCreate() {
+    setSelected(null);
+    setForm(
+      initialForm(),
+    );
+    setError("");
+    setNotice(null);
+    setModalMode("create");
+  }
+
+
+  function openView(
+    row: InstallationWorkOrder,
+  ) {
+    setSelected(row);
+    setError("");
+    setNotice(null);
+    setModalMode("view");
+  }
+
+
+  function openEdit(
+    row: InstallationWorkOrder,
+  ) {
+    setSelected(row);
+
+    setForm({
+      customer_service:
+        row.customer_service,
+
+      activation:
+        row.activation || "",
+
+      order_number:
+        row.order_number || "",
+
+      work_type:
+        row.work_type || "",
+
+      assigned_team_id:
+        row.assigned_team_id || "",
+
+      technician_name:
+        row.technician_name || "",
+
+      technician_phone:
+        row.technician_phone || "",
+
+      scheduled_at:
+        toDateTimeInput(
+          row.scheduled_at,
+        ),
+
+      completed_at:
+        toDateTimeInput(
+          row.completed_at,
+        ),
+
+      status:
+        row.status,
+
+      notes:
+        row.notes || "",
+    });
+
+    setError("");
+    setNotice(null);
+    setModalMode("edit");
+  }
+
+
+  function closeModal() {
+    if (saving) return;
+
+    setModalMode(null);
+    setSelected(null);
+    setError("");
+  }
+
+
+  async function submit() {
+    if (
+      !form.customer_service
+    ) {
+      setError(
+        ui.customerServiceRequired,
+      );
+
+      return;
+    }
+
+    setSaving(true);
+    setError("");
+    setNotice(null);
+
+    const payload: Record<
+      string,
+      unknown
+    > = {
+      customer_service:
+        form.customer_service,
+
+      activation:
+        form.activation ||
+        null,
+
+      status:
+        form.status,
+
+      assigned_team_id:
+        form.assigned_team_id
+          .trim(),
+
+      technician_name:
+        form.technician_name
+          .trim(),
+
+      technician_phone:
+        form.technician_phone
+          .trim(),
+
+      scheduled_at:
+        toApiDateTime(
+          form.scheduled_at,
+        ),
+
+      completed_at:
+        toApiDateTime(
+          form.completed_at,
+        ),
+
+      notes:
+        form.notes.trim(),
+    };
+
+
+    if (
+      form.order_number.trim()
+    ) {
+      payload.order_number =
+        form.order_number.trim();
+    }
+
+
+    if (
+      form.work_type.trim()
+    ) {
+      payload.work_type =
+        form.work_type.trim();
+    }
+
+
+    try {
+      if (
+        modalMode ===
+        "create"
+      ) {
+        await installationWorkOrderApi
+          .create(
+            session,
+            payload,
+          );
+
+        setPage(1);
+
+        setNotice({
+          type: "success",
+          message: ui.created,
+        });
+      } else if (
+        modalMode ===
+          "edit" &&
+        selected
+      ) {
+        await installationWorkOrderApi
+          .update(
+            session,
+            selected.id,
+            payload,
+          );
+
+        setNotice({
+          type: "success",
+          message: ui.updated,
+        });
+      }
+
+      setModalMode(null);
+      setSelected(null);
+
+      setRefreshKey(
+        (value) =>
+          value + 1,
+      );
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : ui.saveFailed,
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
+
+
+  return (
+    <div className="space-y-6 subscriber-workspace-page">
+      <SharedPageHeader native as="div" className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div>
+          <h2 className="text-2xl font-black tracking-tight text-white">
+            {ui.title}
+          </h2>
+
+          <p className="mt-1 max-w-3xl text-sm font-medium text-slate-500">
+            {ui.subtitle}
+          </p>
+        </div>
+
+        <SharedPrimaryButton
+          type="button"
+          onClick={openCreate}
+          className="inline-flex h-11 items-center justify-center rounded-xl bg-cyan-500 px-5 text-sm font-black text-slate-950 transition hover:bg-cyan-400 active:scale-[.98]"
+        >
+          {ui.newWorkOrder}
+        </SharedPrimaryButton>
+      </SharedPageHeader>
+
+
+      {notice && (
+        <div
+          className={
+            notice.type ===
+            "success"
+              ? "rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm font-bold text-emerald-300"
+              : "rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm font-bold text-rose-300"
+          }
+        >
+          {notice.message}
+        </div>
+      )}
+
+
+      <div className="hq-visual-panel grid gap-3 rounded-2xl border border-white/10 bg-white/[.03] p-4 lg:grid-cols-2">
+        <label className="space-y-1.5">
+          <span className="text-xs font-bold text-slate-500">
+            {ui.status}
+          </span>
+
+          <SharedSelect
+            value={statusFilter}
+            onChange={(event) => {
+              setStatusFilter(
+                event.target.value,
+              );
+
+              setPage(1);
+            }}
+            className="glass-input w-full"
+          >
+            <option value="">
+              {ui.allStatuses}
+            </option>
+
+            {(
+              [
+                "draft",
+                "dispatched",
+                "on_site",
+                "completed",
+                "failed",
+                "cancelled",
+              ] as WorkOrderStatus[]
+            ).map(
+              (status) => (
+                <option
+                  key={status}
+                  value={status}
+                >
+                  {statusLabel(
+                    status,
+                  )}
+                </option>
+              ),
+            )}
+          </SharedSelect>
+        </label>
+
+
+        <label className="space-y-1.5">
+          <span className="text-xs font-bold text-slate-500">
+            {ui.customerService}
+          </span>
+
+          <SharedSelect
+            value={
+              customerServiceFilter
+            }
+            onChange={(event) => {
+              setCustomerServiceFilter(
+                event.target.value,
+              );
+
+              setPage(1);
+            }}
+            className="glass-input w-full"
+          >
+            <option value="">
+              {ui.allServices}
+            </option>
+
+            {customerServices.map(
+              (row) => (
+                <option
+                  key={row.id}
+                  value={row.id}
+                >
+                  {serviceLabel(
+                    row,
+                  )}
+                </option>
+              ),
+            )}
+          </SharedSelect>
+        </label>
+      </div>
+
+
+      {error &&
+        !modalMode && (
+          <div className="rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm font-bold text-rose-300">
+            {error}
+          </div>
+        )}
+
+
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/40">
+        <div className="overflow-x-auto">
+          <SharedDataTable native className="min-w-[1280px] w-full text-sm">
+            <thead className="border-b border-white/10 bg-white/[.03]">
+              <tr className="text-xs font-black text-slate-500">
+                <th className="px-4 py-4 text-start">
+                  {ui.workOrderNumber}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.customer}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.serviceIdentifier}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.workType}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.technicianName}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.scheduledAt}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.completedAt}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.status}
+                </th>
+
+                <th className="px-4 py-4 text-start">
+                  {ui.actions}
+                </th>
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-white/5">
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan={9}
+                    className="px-4 py-12 text-center font-bold text-slate-500"
+                  >
+                    {ui.loading}
+                  </td>
+                </tr>
+              ) : data.results.length ===
+                0 ? (
+                <tr>
+                  <td
+                    colSpan={9}
+                    className="px-4 py-12 text-center font-bold text-slate-500"
+                  >
+                    {ui.noRecords}
+                  </td>
+                </tr>
+              ) : (
+                data.results.map(
+                  (row) => (
+                    <tr
+                      key={row.id}
+                      className="transition hover:bg-white/[.025]"
+                    >
+                      <td className="px-4 py-4 font-mono text-xs font-bold text-cyan-300">
+                        {row.order_number ||
+                          "—"}
+                      </td>
+
+                      <td className="px-4 py-4 font-bold text-white">
+                        {row.customer_name ||
+                          "—"}
+                      </td>
+
+                      <td className="px-4 py-4 font-mono text-xs text-cyan-300">
+                        {row.service_identifier ||
+                          "—"}
+                      </td>
+
+                      <td className="px-4 py-4 text-slate-300">
+                        {row.work_type ||
+                          "—"}
+                      </td>
+
+                      <td className="px-4 py-4 text-slate-300">
+                        {row.technician_name ||
+                          "—"}
+                      </td>
+
+                      <td className="px-4 py-4 text-slate-400">
+                        {formatDate(
+                          row.scheduled_at,
+                        )}
+                      </td>
+
+                      <td className="px-4 py-4 text-slate-400">
+                        {formatDate(
+                          row.completed_at,
+                        )}
+                      </td>
+
+                      <td className="px-4 py-4">
+                        <span
+                          className={`inline-flex rounded-lg border px-2.5 py-1 text-xs font-black ${statusClass(
+                            row.status,
+                          )}`}
+                        >
+                          {statusLabel(
+                            row.status,
+                          )}
+                        </span>
+                      </td>
+
+                      <td className="px-4 py-4">
+                        <div className="flex gap-2">
+                          <SharedSecondaryButton
+                            type="button"
+                            onClick={() =>
+                              openView(
+                                row,
+                              )
+                            }
+                            className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-300 transition hover:bg-white/10"
+                          >
+                            {ui.view}
+                          </SharedSecondaryButton>
+
+                          <SharedSecondaryButton
+                            type="button"
+                            onClick={() =>
+                              openEdit(
+                                row,
+                              )
+                            }
+                            className="rounded-lg border border-cyan-400/20 bg-cyan-400/10 px-3 py-1.5 text-xs font-bold text-cyan-300 transition hover:bg-cyan-400/15"
+                          >
+                            {ui.edit}
+                          </SharedSecondaryButton>
+                        </div>
+                      </td>
+                    </tr>
+                  ),
+                )
+              )}
+            </tbody>
+          </SharedDataTable>
+        </div>
+
+
+        <div className="flex flex-col gap-3 border-t border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="text-xs font-bold text-slate-500">
+            {ui.page}{" "}
+            {page} /{" "}
+            {pageCount}
+            {" · "}
+            {data.count}{" "}
+            {ui.records}
+          </div>
+
+          <div className="flex gap-2">
+            <SharedSecondaryButton
+              type="button"
+              disabled={
+                !data.previous ||
+                loading
+              }
+              onClick={() =>
+                setPage(
+                  (value) =>
+                    Math.max(
+                      1,
+                      value - 1,
+                    ),
+                )
+              }
+              className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold text-slate-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {ui.previous}
+            </SharedSecondaryButton>
+
+            <SharedSecondaryButton
+              type="button"
+              disabled={
+                !data.next ||
+                loading
+              }
+              onClick={() =>
+                setPage(
+                  (value) =>
+                    value + 1,
+                )
+              }
+              className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold text-slate-300 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {ui.next}
+            </SharedSecondaryButton>
+          </div>
+        </div>
+      </div>
+
+
+      {modalMode && (
+        <WorkspaceModal header={<>
+
+<div>
+                <h3 className="text-xl font-black text-white">
+                  {modalMode ===
+                  "create"
+                    ? ui.createWorkOrder
+                    : modalMode ===
+                        "edit"
+                      ? ui.editWorkOrder
+                      : ui.workOrderDetails}
+                </h3>
+
+                {selected && (
+                  <p className="mt-1 text-xs font-medium text-slate-500">
+                    {selected.order_number}
+                    {" · "}
+                    {selected.customer_name}
+                    {" · "}
+                    {selected.service_identifier}
+                  </p>
+                )}
+              </div>
+
+<SharedSecondaryButton
+                type="button"
+                onClick={closeModal}
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold text-slate-300"
+              >
+                {ui.close}
+              </SharedSecondaryButton>
+
+</>} onClose={closeModal} footer={<>
+
+{modalMode ===
+              "view" ? (
+                <>
+                  <SharedSecondaryButton
+                    type="button"
+                    onClick={closeModal}
+                    className="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-slate-300"
+                  >
+                    {ui.close}
+                  </SharedSecondaryButton>
+
+                  {selected && (
+                    <SharedPrimaryButton
+                      type="button"
+                      onClick={() =>
+                        openEdit(
+                          selected,
+                        )
+                      }
+                      className="rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-black text-slate-950"
+                    >
+                      {ui.edit}
+                    </SharedPrimaryButton>
+                  )}
+                </>
+              ) : (
+                <>
+                  <SharedSecondaryButton
+                    type="button"
+                    onClick={closeModal}
+                    disabled={saving}
+                    className="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-slate-300 disabled:opacity-50"
+                  >
+                    {ui.cancel}
+                  </SharedSecondaryButton>
+
+                  <SharedPrimaryButton
+                    type="button"
+                    onClick={() =>
+                      void submit()
+                    }
+                    disabled={saving}
+                    className="rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-black text-slate-950 disabled:opacity-50"
+                  >
+                    {saving
+                      ? ui.loading
+                      : ui.save}
+                  </SharedPrimaryButton>
+                </>
+              )}
+
+</>}>
+{error && (
+              <div className="mb-5 rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm font-bold text-rose-300">
+                {error}
+              </div>
+            )}
+{modalMode ===
+            "view" ? (
+              selected && (
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Info
+                    label={
+                      ui.workOrderNumber
+                    }
+                    value={
+                      selected.order_number
+                    }
+                  />
+
+                  <Info
+                    label={ui.status}
+                    value={statusLabel(
+                      selected.status,
+                    )}
+                  />
+
+                  <Info
+                    label={ui.customer}
+                    value={
+                      selected.customer_name
+                    }
+                  />
+
+                  <Info
+                    label={
+                      ui.serviceIdentifier
+                    }
+                    value={
+                      selected.service_identifier
+                    }
+                  />
+
+                  <Info
+                    label={ui.address}
+                    value={
+                      selected.customer_address ||
+                      "—"
+                    }
+                  />
+
+                  <Info
+                    label={ui.phone}
+                    value={
+                      selected.customer_phone ||
+                      "—"
+                    }
+                  />
+
+                  <Info
+                    label={ui.workType}
+                    value={
+                      selected.work_type ||
+                      "—"
+                    }
+                  />
+
+                  <Info
+                    label={ui.teamId}
+                    value={
+                      selected.assigned_team_id ||
+                      "—"
+                    }
+                  />
+
+                  <Info
+                    label={
+                      ui.technicianName
+                    }
+                    value={
+                      selected.technician_name ||
+                      "—"
+                    }
+                  />
+
+                  <Info
+                    label={
+                      ui.technicianPhone
+                    }
+                    value={
+                      selected.technician_phone ||
+                      "—"
+                    }
+                  />
+
+                  <Info
+                    label={
+                      ui.scheduledAt
+                    }
+                    value={formatDate(
+                      selected.scheduled_at,
+                    )}
+                  />
+
+                  <Info
+                    label={
+                      ui.completedAt
+                    }
+                    value={formatDate(
+                      selected.completed_at,
+                    )}
+                  />
+
+                  <Info
+                    label={
+                      ui.activation
+                    }
+                    value={
+                      selected.activation ||
+                      ui.noActivation
+                    }
+                  />
+
+                  <div className="md:col-span-2">
+                    <Info
+                      label={ui.notes}
+                      value={
+                        selected.notes ||
+                        "—"
+                      }
+                    />
+                  </div>
+                </div>
+              )
+            ) : (
+              <div className="grid gap-5 md:grid-cols-2">
+                <label className="space-y-1.5 md:col-span-2">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.customerService}
+                  </span>
+
+                  <SharedSelect
+                    value={
+                      form.customer_service
+                    }
+                    disabled={
+                      modalMode ===
+                        "edit" ||
+                      serviceLoading
+                    }
+                    onChange={(event) =>
+                      changeCustomerService(
+                        event.target.value,
+                      )
+                    }
+                    className="glass-input w-full disabled:opacity-60"
+                  >
+                    <option value="">
+                      {serviceLoading
+                        ? ui.loadingServices
+                        : ui.selectCustomerService}
+                    </option>
+
+                    {customerServices.map(
+                      (row) => (
+                        <option
+                          key={row.id}
+                          value={row.id}
+                        >
+                          {serviceLabel(
+                            row,
+                          )}
+                        </option>
+                      ),
+                    )}
+                  </SharedSelect>
+
+                  {!serviceLoading &&
+                    customerServices.length ===
+                      0 && (
+                      <p className="text-xs font-medium text-amber-300">
+                        {ui.noServices}
+                      </p>
+                    )}
+
+                  {selectedService && (
+                    <p className="text-xs font-medium text-cyan-300">
+                      {serviceLabel(
+                        selectedService,
+                      )}
+                    </p>
+                  )}
+                </label>
+
+
+                <label className="space-y-1.5 md:col-span-2">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.activation}{" "}
+                    ({ui.optional})
+                  </span>
+
+                  <SharedSelect
+                    value={
+                      form.activation
+                    }
+                    disabled={
+                      !form.customer_service ||
+                      activationLoading
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "activation",
+                        event.target.value,
+                      )
+                    }
+                    className="glass-input w-full disabled:opacity-60"
+                  >
+                    <option value="">
+                      {activationLoading
+                        ? ui.loadingActivations
+                        : ui.noActivation}
+                    </option>
+
+                    {activations.map(
+                      (row) => (
+                        <option
+                          key={row.id}
+                          value={row.id}
+                        >
+                          {activationLabel(
+                            row,
+                          )}
+                        </option>
+                      ),
+                    )}
+                  </SharedSelect>
+
+                  {form.customer_service &&
+                    !activationLoading &&
+                    activations.length ===
+                      0 && (
+                      <p className="text-xs font-medium text-slate-500">
+                        {ui.noActivations}
+                      </p>
+                    )}
+                </label>
+
+
+                <label className="space-y-1.5">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.workOrderNumber}
+                  </span>
+
+                  <input
+                    value={
+                      form.order_number
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "order_number",
+                        event.target.value,
+                      )
+                    }
+                    placeholder={
+                      ui.autoGenerated
+                    }
+                    className="hq-input glass-input w-full"
+                  />
+
+                  <p className="text-[11px] font-medium text-slate-600">
+                    {ui.autoGenerated}
+                  </p>
+                </label>
+
+
+                <label className="space-y-1.5">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.workType}
+                  </span>
+
+                  <input
+                    value={
+                      form.work_type
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "work_type",
+                        event.target.value,
+                      )
+                    }
+                    className="hq-input glass-input w-full"
+                  />
+                </label>
+
+
+                <label className="space-y-1.5">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.teamId}
+                  </span>
+
+                  <input
+                    value={
+                      form.assigned_team_id
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "assigned_team_id",
+                        event.target.value,
+                      )
+                    }
+                    className="hq-input glass-input w-full"
+                  />
+                </label>
+
+
+                <label className="space-y-1.5">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.status}
+                  </span>
+
+                  <SharedSelect
+                    value={
+                      form.status
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "status",
+                        event.target
+                          .value as WorkOrderStatus,
+                      )
+                    }
+                    className="glass-input w-full"
+                  >
+                    {(
+                      [
+                        "draft",
+                        "dispatched",
+                        "on_site",
+                        "completed",
+                        "failed",
+                        "cancelled",
+                      ] as WorkOrderStatus[]
+                    ).map(
+                      (status) => (
+                        <option
+                          key={status}
+                          value={status}
+                        >
+                          {statusLabel(
+                            status,
+                          )}
+                        </option>
+                      ),
+                    )}
+                  </SharedSelect>
+                </label>
+
+
+                <label className="space-y-1.5">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.technicianName}
+                  </span>
+
+                  <input
+                    value={
+                      form.technician_name
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "technician_name",
+                        event.target.value,
+                      )
+                    }
+                    className="hq-input glass-input w-full"
+                  />
+                </label>
+
+
+                <label className="space-y-1.5">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.technicianPhone}
+                  </span>
+
+                  <input
+                    value={
+                      form.technician_phone
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "technician_phone",
+                        event.target.value,
+                      )
+                    }
+                    className="hq-input glass-input w-full"
+                  />
+                </label>
+
+
+                <DateTimeField
+                  label={`${ui.scheduledAt} (${ui.optional})`}
+                  value={
+                    form.scheduled_at
+                  }
+                  onChange={(value) =>
+                    updateForm(
+                      "scheduled_at",
+                      value,
+                    )
+                  }
+                />
+
+
+                <DateTimeField
+                  label={`${ui.completedAt} (${ui.optional})`}
+                  value={
+                    form.completed_at
+                  }
+                  onChange={(value) =>
+                    updateForm(
+                      "completed_at",
+                      value,
+                    )
+                  }
+                />
+
+
+                <label className="space-y-1.5 md:col-span-2">
+                  <span className="text-xs font-bold text-slate-500">
+                    {ui.notes}
+                  </span>
+
+                  <textarea
+                    value={
+                      form.notes
+                    }
+                    onChange={(event) =>
+                      updateForm(
+                        "notes",
+                        event.target.value,
+                      )
+                    }
+                    rows={4}
+                    className="hq-input glass-input w-full resize-y"
+                  />
+                </label>
+              </div>
+            )}
+
+</WorkspaceModal>
+      )}
+    </div>
+  );
+}
+
+
+function Info({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="hq-visual-panel rounded-xl border border-white/10 bg-white/[.03] p-4">
+      <div className="text-xs font-bold text-slate-500">
+        {label}
+      </div>
+
+      <div className="mt-2 break-words text-sm font-bold text-slate-100">
+        {value || "—"}
+      </div>
+    </div>
+  );
+}
+
+
+function DateTimeField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (
+    value: string,
+  ) => void;
+}) {
+  return (
+    <label className="space-y-1.5">
+      <span className="text-xs font-bold text-slate-500">
+        {label}
+      </span>
+
+      <input
+        type="datetime-local"
+        value={value}
+        onChange={(event) =>
+          onChange(
+            event.target.value,
+          )
+        }
+        className="hq-input glass-input w-full"
+      />
+    </label>
+  );
+}

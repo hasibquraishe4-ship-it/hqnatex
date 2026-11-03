@@ -1,0 +1,1693 @@
+import { getTranslation as getUiTranslation } from "../../i18n";
+import { PageHeader as SharedPageHeader } from "../../components/PageHeader";
+import { SecondaryButton as SharedSecondaryButton, FilterBar as SharedFilterBar, DatePicker as SharedDatePicker, Select as SharedSelect } from "../../components/Interface";
+import { DataTable as SharedDataTable } from "../../components/DataTable";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+import {
+  accountingApi,
+  fetchers,
+} from "../../lib/api";
+
+type ApiSession =
+  Parameters<
+    typeof accountingApi.journals
+  >[0];
+
+type JournalEntriesViewProps = {
+  session: ApiSession;
+  filters?: unknown;
+  onNavigateTab?: (...args: any[]) => void;
+};
+
+type Direction =
+  | "debit"
+  | "credit";
+
+type JournalLine = {
+  id?: string;
+  journal_entry?: string;
+  account_code?: string;
+  amount?: string | number;
+  direction?: Direction | string;
+};
+
+type JournalEntry = {
+  id: string;
+  entry_number?: string;
+  entry_date?: string;
+  description?: string;
+  status?: string;
+  debit_total?: string | number;
+  credit_total?: string | number;
+  is_balanced?: boolean;
+  lines?: JournalLine[];
+};
+
+type AccountRow = {
+  id?: string;
+  code?: string;
+  name?: string;
+  account_code?: string;
+  account_name?: string;
+  is_active?: boolean;
+  is_posting?: boolean;
+  status?: string;
+};
+
+type DraftLine = {
+  accountCode: string;
+  direction: Direction;
+  amount: string;
+};
+
+type RecoveryState = {
+  entryId: string | null;
+  createAttempted: boolean;
+};
+
+const copy = { en: getUiTranslation("en").featureCopy.finance_JournalEntriesView.copy, fa: getUiTranslation("fa").featureCopy.finance_JournalEntriesView.copy, ps: getUiTranslation("ps").featureCopy.finance_JournalEntriesView.copy };
+
+function currentLanguage():
+  | "en"
+  | "fa"
+  | "ps" {
+  const value =
+    typeof document !== "undefined"
+      ? (
+          document.documentElement.lang
+          || "en"
+        ).toLowerCase()
+      : "en";
+
+  if (
+    value.startsWith("fa")
+    || value.startsWith("dr")
+  ) {
+    return "fa";
+  }
+
+  if (value.startsWith("ps")) {
+    return "ps";
+  }
+
+  return "en";
+}
+
+function today(): string {
+  const now =
+    new Date();
+
+  const year =
+    now.getFullYear();
+
+  const month =
+    String(
+      now.getMonth() + 1,
+    ).padStart(
+      2,
+      "0",
+    );
+
+  const day =
+    String(
+      now.getDate(),
+    ).padStart(
+      2,
+      "0",
+    );
+
+  return `${year}-${month}-${day}`;
+}
+
+function numeric(
+  value:
+    | string
+    | number
+    | null
+    | undefined,
+): number {
+  const result =
+    Number(
+      value ?? 0,
+    );
+
+  return Number.isFinite(
+    result,
+  )
+    ? result
+    : 0;
+}
+
+function money(
+  value:
+    | string
+    | number
+    | null
+    | undefined,
+): string {
+  return new Intl.NumberFormat(
+    "en-US",
+    {
+      maximumFractionDigits: 2,
+    },
+  ).format(
+    numeric(value),
+  );
+}
+
+function unwrap<T>(
+  value: unknown,
+): T[] {
+  if (Array.isArray(value)) {
+    return value as T[];
+  }
+
+  if (
+    value
+    && typeof value
+      === "object"
+  ) {
+    const record =
+      value as {
+        results?: unknown;
+      };
+
+    if (
+      Array.isArray(
+        record.results,
+      )
+    ) {
+      return record.results as T[];
+    }
+  }
+
+  return [];
+}
+
+function accountCode(
+  account: AccountRow,
+): string {
+  return String(
+    account.code
+    ?? account.account_code
+    ?? "",
+  );
+}
+
+function accountName(
+  account: AccountRow,
+): string {
+  return String(
+    account.name
+    ?? account.account_name
+    ?? accountCode(account),
+  );
+}
+
+function blankLine(
+  direction:
+    Direction = "debit",
+): DraftLine {
+  return {
+    accountCode: "",
+    direction,
+    amount: "",
+  };
+}
+
+function normalizedAmount(
+  value:
+    | string
+    | number,
+): string {
+  return numeric(
+    value,
+  ).toFixed(2);
+}
+
+function lineSignature(
+  account:
+    | string
+    | undefined,
+  direction:
+    | string
+    | undefined,
+  amount:
+    | string
+    | number
+    | undefined,
+): string {
+  return [
+    String(
+      account ?? "",
+    ),
+    String(
+      direction ?? "",
+    ).toLowerCase(),
+    normalizedAmount(
+      amount ?? 0,
+    ),
+  ].join("|");
+}
+
+function permissionList(
+  session: ApiSession,
+): string[] | null {
+  const raw =
+    (
+      session as unknown as {
+        permissions?: unknown;
+      }
+    ).permissions;
+
+  if (!Array.isArray(raw)) {
+    return null;
+  }
+
+  return raw.map(
+    String,
+  );
+}
+
+export function JournalEntriesView({
+  session,
+  filters,
+  onNavigateTab,
+}: JournalEntriesViewProps) {
+  void filters;
+  void onNavigateTab;
+
+  const lang =
+    currentLanguage();
+
+  const t =
+    copy[lang];
+
+  const rtl =
+    lang !== "en";
+
+  const [
+    entries,
+    setEntries,
+  ] =
+    useState<JournalEntry[]>([]);
+
+  const [
+    accounts,
+    setAccounts,
+  ] =
+    useState<AccountRow[]>([]);
+
+  const [
+    loading,
+    setLoading,
+  ] =
+    useState(true);
+
+  const [
+    loadError,
+    setLoadError,
+  ] =
+    useState(false);
+
+  const [
+    reloadNonce,
+    setReloadNonce,
+  ] =
+    useState(0);
+
+  const [
+    search,
+    setSearch,
+  ] =
+    useState("");
+
+  const [
+    modalOpen,
+    setModalOpen,
+  ] =
+    useState(false);
+
+  const [
+    entryDate,
+    setEntryDate,
+  ] =
+    useState(
+      today(),
+    );
+
+  const [
+    description,
+    setDescription,
+  ] =
+    useState("");
+
+  const [
+    lines,
+    setLines,
+  ] =
+    useState<DraftLine[]>([
+      blankLine(
+        "debit",
+      ),
+      blankLine(
+        "credit",
+      ),
+    ]);
+
+  const [
+    recovery,
+    setRecovery,
+  ] =
+    useState<RecoveryState>({
+      entryId: null,
+      createAttempted: false,
+    });
+
+  const [
+    createUncertain,
+    setCreateUncertain,
+  ] =
+    useState(false);
+
+  const [
+    submitting,
+    setSubmitting,
+  ] =
+    useState(false);
+
+  const [
+    workflowError,
+    setWorkflowError,
+  ] =
+    useState<string | null>(
+      null,
+    );
+
+  const [
+    workflowInfo,
+    setWorkflowInfo,
+  ] =
+    useState<string | null>(
+      null,
+    );
+
+  const [
+    success,
+    setSuccess,
+  ] =
+    useState(false);
+
+  const permissions =
+    permissionList(
+      session,
+    );
+
+  const canManage =
+    permissions === null
+    || permissions.includes(
+      "accounting.journals.manage",
+    );
+
+  const canPost =
+    permissions === null
+    || permissions.includes(
+      "accounting.journals.post",
+    );
+
+  const canCreate =
+    canManage
+    && canPost;
+
+  useEffect(
+    () => {
+      let active = true;
+
+      async function load(): Promise<void> {
+        setLoading(true);
+        setLoadError(false);
+
+        try {
+          const [
+            journalResponse,
+            accountResponse,
+          ] =
+            await Promise.all([
+              accountingApi.journals(
+                session,
+                "?page_size=100",
+              ),
+
+              fetchers.accounts(
+                session,
+                "?page_size=1000",
+              ),
+            ]);
+
+          if (!active) {
+            return;
+          }
+
+          setEntries(
+            unwrap<JournalEntry>(
+              journalResponse,
+            ),
+          );
+
+          const realAccounts =
+            unwrap<AccountRow>(
+              accountResponse,
+            ).filter(
+              (
+                account,
+              ) => {
+                const code =
+                  accountCode(
+                    account,
+                  );
+
+                if (!code) {
+                  return false;
+                }
+
+                if (
+                  account.is_active
+                  === false
+                ) {
+                  return false;
+                }
+
+                if (
+                  String(
+                    account.status
+                    ?? "",
+                  ).toLowerCase()
+                  === "inactive"
+                ) {
+                  return false;
+                }
+
+                if (
+                  account.is_posting
+                  === false
+                ) {
+                  return false;
+                }
+
+                return true;
+              },
+            );
+
+          setAccounts(
+            realAccounts,
+          );
+        } catch {
+          if (active) {
+            setEntries([]);
+            setAccounts([]);
+            setLoadError(
+              true,
+            );
+          }
+        } finally {
+          if (active) {
+            setLoading(
+              false,
+            );
+          }
+        }
+      }
+
+      void load();
+
+      return () => {
+        active = false;
+      };
+    },
+    [
+      session,
+      reloadNonce,
+    ],
+  );
+
+  const totals =
+    useMemo(
+      () => {
+        let debit = 0;
+        let credit = 0;
+
+        for (
+          const line
+          of lines
+        ) {
+          const amount =
+            numeric(
+              line.amount,
+            );
+
+          if (
+            line.direction
+            === "debit"
+          ) {
+            debit += amount;
+          } else {
+            credit += amount;
+          }
+        }
+
+        return {
+          debit,
+          credit,
+          balanced:
+            debit > 0
+            && credit > 0
+            && Math.abs(
+              debit
+              - credit,
+            ) < 0.005,
+        };
+      },
+      [
+        lines,
+      ],
+    );
+
+  const visibleEntries =
+    useMemo(
+      () => {
+        const needle =
+          search
+            .trim()
+            .toLowerCase();
+
+        if (!needle) {
+          return entries;
+        }
+
+        return entries.filter(
+          (
+            entry,
+          ) =>
+            [
+              entry.entry_number,
+              entry.entry_date,
+              entry.description,
+              entry.status,
+            ].some(
+              (
+                value,
+              ) =>
+                String(
+                  value ?? "",
+                )
+                  .toLowerCase()
+                  .includes(
+                    needle,
+                  ),
+            ),
+        );
+      },
+      [
+        entries,
+        search,
+      ],
+    );
+
+  function resetDraft(): void {
+    setEntryDate(
+      today(),
+    );
+
+    setDescription("");
+
+    setLines([
+      blankLine(
+        "debit",
+      ),
+      blankLine(
+        "credit",
+      ),
+    ]);
+
+    setRecovery({
+      entryId: null,
+      createAttempted: false,
+    });
+
+    setCreateUncertain(
+      false,
+    );
+
+    setWorkflowError(
+      null,
+    );
+
+    setWorkflowInfo(
+      null,
+    );
+
+    setSuccess(
+      false,
+    );
+  }
+
+  function openCreate(): void {
+    resetDraft();
+    setModalOpen(
+      true,
+    );
+  }
+
+  function closeCreate(): void {
+    if (submitting) {
+      return;
+    }
+
+    if (
+      recovery.entryId
+      && !success
+    ) {
+      return;
+    }
+
+    setModalOpen(
+      false,
+    );
+
+    resetDraft();
+  }
+
+  function updateLine(
+    index: number,
+    patch:
+      Partial<DraftLine>,
+  ): void {
+    if (
+      recovery.entryId
+      || createUncertain
+    ) {
+      return;
+    }
+
+    setLines(
+      (
+        current,
+      ) =>
+        current.map(
+          (
+            line,
+            lineIndex,
+          ) =>
+            lineIndex
+              === index
+              ? {
+                  ...line,
+                  ...patch,
+                }
+              : line,
+        ),
+    );
+  }
+
+  function addLine(): void {
+    if (
+      recovery.entryId
+      || createUncertain
+    ) {
+      return;
+    }
+
+    setLines(
+      (
+        current,
+      ) => [
+        ...current,
+        blankLine(
+          "debit",
+        ),
+      ],
+    );
+  }
+
+  function removeLine(
+    index: number,
+  ): void {
+    if (
+      recovery.entryId
+      || createUncertain
+      || lines.length <= 2
+    ) {
+      return;
+    }
+
+    setLines(
+      (
+        current,
+      ) =>
+        current.filter(
+          (
+            _line,
+            lineIndex,
+          ) =>
+            lineIndex
+            !== index,
+        ),
+    );
+  }
+
+  function validateDraft():
+    | string
+    | null {
+    if (
+      lines.length < 2
+    ) {
+      return t.needTwo;
+    }
+
+    if (
+      lines.some(
+        (
+          line,
+        ) =>
+          !line.accountCode,
+      )
+    ) {
+      return t.accountRequired;
+    }
+
+    if (
+      lines.some(
+        (
+          line,
+        ) => {
+          const amount =
+            Number(
+              line.amount,
+            );
+
+          return (
+            !Number.isFinite(
+              amount,
+            )
+            || amount <= 0
+          );
+        },
+      )
+    ) {
+      return t.invalidAmount;
+    }
+
+    if (!totals.balanced) {
+      return t.unbalanced;
+    }
+
+    return null;
+  }
+
+  async function existingLineCounts(
+    entryId: string,
+  ): Promise<Map<string, number>> {
+    const response =
+      await accountingApi.journalLines(
+        session,
+        "?page_size=1000",
+      );
+
+    const serverLines =
+      unwrap<JournalLine>(
+        response,
+      ).filter(
+        (
+          line,
+        ) =>
+          String(
+            line.journal_entry
+            ?? "",
+          )
+          === entryId,
+      );
+
+    const counts =
+      new Map<
+        string,
+        number
+      >();
+
+    for (
+      const line
+      of serverLines
+    ) {
+      const signature =
+        lineSignature(
+          line.account_code,
+          line.direction,
+          line.amount,
+        );
+
+      counts.set(
+        signature,
+        (
+          counts.get(
+            signature,
+          )
+          ?? 0
+        ) + 1,
+      );
+    }
+
+    return counts;
+  }
+
+  async function createMissingLines(
+    entryId: string,
+  ): Promise<void> {
+    const existing =
+      await existingLineCounts(
+        entryId,
+      );
+
+    const consumed =
+      new Map<
+        string,
+        number
+      >();
+
+    for (
+      const line
+      of lines
+    ) {
+      const signature =
+        lineSignature(
+          line.accountCode,
+          line.direction,
+          line.amount,
+        );
+
+      const alreadyExisting =
+        existing.get(
+          signature,
+        )
+        ?? 0;
+
+      const alreadyConsumed =
+        consumed.get(
+          signature,
+        )
+        ?? 0;
+
+      if (
+        alreadyConsumed
+        < alreadyExisting
+      ) {
+        consumed.set(
+          signature,
+          alreadyConsumed + 1,
+        );
+
+        continue;
+      }
+
+      await accountingApi.createJournalLine(
+        session,
+        {
+          journal_entry:
+            entryId,
+
+          account_code:
+            line.accountCode,
+
+          amount:
+            normalizedAmount(
+              line.amount,
+            ),
+
+          direction:
+            line.direction,
+        } as any,
+      );
+
+      consumed.set(
+        signature,
+        alreadyConsumed + 1,
+      );
+    }
+  }
+
+  async function submitJournal(): Promise<void> {
+    setWorkflowError(
+      null,
+    );
+
+    setWorkflowInfo(
+      null,
+    );
+
+    setSuccess(
+      false,
+    );
+
+    if (!canCreate) {
+      setWorkflowError(
+        t.permission,
+      );
+
+      return;
+    }
+
+    if (createUncertain) {
+      setWorkflowError(
+        t.ambiguousCreate,
+      );
+
+      return;
+    }
+
+    const validationError =
+      validateDraft();
+
+    if (
+      validationError
+    ) {
+      setWorkflowError(
+        validationError,
+      );
+
+      return;
+    }
+
+    let entryId =
+      recovery.entryId;
+
+    setSubmitting(
+      true,
+    );
+
+    try {
+      if (!entryId) {
+        /*
+         * Important:
+         * once create request begins, automatic second create
+         * is never attempted if the response becomes ambiguous.
+         */
+        setRecovery({
+          entryId: null,
+          createAttempted: true,
+        });
+
+        try {
+          const created =
+            await accountingApi.createJournal(
+              session,
+              {
+                entry_date:
+                  entryDate,
+
+                description:
+                  description.trim(),
+              } as any,
+            );
+
+          entryId =
+            String(
+              (
+                created as any
+              )?.id
+              ?? "",
+            );
+
+          if (!entryId) {
+            setCreateUncertain(
+              true,
+            );
+
+            throw new Error(
+              "JOURNAL_CREATE_RESULT_UNCERTAIN",
+            );
+          }
+
+          setRecovery({
+            entryId,
+            createAttempted: true,
+          });
+        } catch (
+          error
+        ) {
+          if (!entryId) {
+            setCreateUncertain(
+              true,
+            );
+
+            setWorkflowError(
+              t.ambiguousCreate,
+            );
+
+            return;
+          }
+
+          throw error;
+        }
+      }
+
+      if (!entryId) {
+        setWorkflowError(
+          t.ambiguousCreate,
+        );
+
+        return;
+      }
+
+      setWorkflowInfo(
+        t.lineRecovery,
+      );
+
+      await createMissingLines(
+        entryId,
+      );
+
+      setWorkflowInfo(
+        t.draftRecovery,
+      );
+
+      await accountingApi.postJournal(
+        session,
+        entryId,
+      );
+
+      setSuccess(
+        true,
+      );
+
+      setWorkflowError(
+        null,
+      );
+
+      setWorkflowInfo(
+        null,
+      );
+
+      setReloadNonce(
+        (
+          value,
+        ) =>
+          value + 1,
+      );
+    } catch {
+      setWorkflowError(
+        t.failure,
+      );
+    } finally {
+      setSubmitting(
+        false,
+      );
+    }
+  }
+
+  return (
+    <section
+      dir={
+        rtl
+          ? "rtl"
+          : "ltr"
+      }
+      className="space-y-4"
+    >
+      <div className="hq-visual-panel rounded-2xl border border-white/10 bg-white/[0.05] p-4 backdrop-blur-xl">
+        <SharedPageHeader native as="div" className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <div className="mb-2 inline-flex rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-100">
+              {t.real}
+            </div>
+
+            <h2 className="text-xl font-semibold text-white">
+              {t.title}
+            </h2>
+
+            <p className="mt-1 text-sm text-white/50">
+              {t.subtitle}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <SharedSecondaryButton
+              type="button"
+              disabled={loading}
+              onClick={() =>
+                setReloadNonce(
+                  (
+                    value,
+                  ) =>
+                    value + 1,
+                )
+              }
+              className="h-10 rounded-xl border border-white/10 bg-white/[0.05] px-4 text-sm text-white/70 disabled:opacity-40"
+            >
+              {t.refresh}
+            </SharedSecondaryButton>
+
+            <SharedSecondaryButton
+              type="button"
+              disabled={
+                !canCreate
+                || loading
+                || accounts.length
+                  === 0
+              }
+              onClick={
+                openCreate
+              }
+              className="h-10 rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-white disabled:opacity-35"
+            >
+              {t.newEntry}
+            </SharedSecondaryButton>
+          </div>
+        </SharedPageHeader>
+
+        {!canCreate ? (
+          <div className="mt-3 rounded-xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-100">
+            {t.permission}
+          </div>
+        ) : null}
+
+        {!loading
+        && !loadError
+        && accounts.length === 0 ? (
+          <div className="mt-3 rounded-xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-100">
+            {t.noAccounts}
+          </div>
+        ) : null}
+      </div>
+
+      <div className="hq-visual-panel rounded-2xl border border-white/10 bg-white/[0.045] p-3">
+        <input
+          value={search}
+          onChange={
+            (
+              event,
+            ) =>
+              setSearch(
+                event.target.value,
+              )
+          }
+          placeholder={
+            t.search
+          }
+          className="hq-input h-10 w-full rounded-xl border border-white/10 bg-black/10 px-3 text-sm text-white outline-none"
+        />
+      </div>
+
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.045]">
+        {loading ? (
+          <div className="p-10 text-center text-sm text-white/55">
+            {t.loading}
+          </div>
+        ) : loadError ? (
+          <div className="p-10 text-center text-sm text-rose-200">
+            {t.loadError}
+          </div>
+        ) : visibleEntries.length === 0 ? (
+          <div className="p-10 text-center text-sm text-white/55">
+            {t.empty}
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <SharedDataTable native className="w-full min-w-[900px] border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.03] text-xs text-white/45">
+                  <th className="px-3 py-3 text-start">
+                    {t.number}
+                  </th>
+
+                  <th className="px-3 py-3 text-start">
+                    {t.date}
+                  </th>
+
+                  <th className="px-3 py-3 text-start">
+                    {t.description}
+                  </th>
+
+                  <th className="px-3 py-3 text-start">
+                    {t.debit}
+                  </th>
+
+                  <th className="px-3 py-3 text-start">
+                    {t.credit}
+                  </th>
+
+                  <th className="px-3 py-3 text-start">
+                    {t.balanced}
+                  </th>
+
+                  <th className="px-3 py-3 text-start">
+                    {t.status}
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {visibleEntries.map(
+                  (
+                    entry,
+                  ) => (
+                    <tr
+                      key={
+                        entry.id
+                      }
+                      className="border-b border-white/[0.06] text-white/70 last:border-0"
+                    >
+                      <td className="px-3 py-3 font-medium text-white">
+                        {entry.entry_number
+                          || "—"}
+                      </td>
+
+                      <td className="px-3 py-3">
+                        {entry.entry_date
+                          || "—"}
+                      </td>
+
+                      <td className="max-w-[320px] truncate px-3 py-3">
+                        {entry.description
+                          || "—"}
+                      </td>
+
+                      <td className="px-3 py-3">
+                        {money(
+                          entry.debit_total,
+                        )}
+                      </td>
+
+                      <td className="px-3 py-3">
+                        {money(
+                          entry.credit_total,
+                        )}
+                      </td>
+
+                      <td className="px-3 py-3">
+                        {entry.is_balanced
+                          ? "✓"
+                          : "—"}
+                      </td>
+
+                      <td className="px-3 py-3">
+                        <span className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-1 text-xs">
+                          {String(
+                            entry.status
+                            ?? "",
+                          ).toLowerCase()
+                          === "posted"
+                            ? t.posted
+                            : t.draft}
+                        </span>
+                      </td>
+                    </tr>
+                  ),
+                )}
+              </tbody>
+            </SharedDataTable>
+          </div>
+        )}
+      </div>
+
+      {modalOpen ? (
+        <SharedFilterBar as="div" className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-white/10 bg-slate-950 shadow-2xl">
+            <div className="border-b border-white/10 p-5">
+              <h3 className="text-lg font-semibold text-white">
+                {t.newEntry}
+              </h3>
+
+              <p className="mt-1 text-xs text-white/45">
+                {t.serverNumber}
+              </p>
+            </div>
+
+            <div className="space-y-4 p-5">
+              <div className="grid gap-3 md:grid-cols-2">
+                <div>
+                  <label className="mb-1 block text-xs text-white/45">
+                    {t.date}
+                  </label>
+
+                  <SharedDatePicker
+                    type="date"
+                    value={
+                      entryDate
+                    }
+                    disabled={
+                      submitting
+                      || Boolean(
+                        recovery.entryId,
+                      )
+                      || createUncertain
+                    }
+                    onChange={
+                      (
+                        event,
+                      ) =>
+                        setEntryDate(
+                          event.target.value,
+                        )
+                    }
+                    className="h-10 w-full rounded-xl border border-white/10 bg-white/[0.05] px-3 text-sm text-white outline-none disabled:opacity-40"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-xs text-white/45">
+                    {t.description}
+                  </label>
+
+                  <input
+                    value={
+                      description
+                    }
+                    disabled={
+                      submitting
+                      || Boolean(
+                        recovery.entryId,
+                      )
+                      || createUncertain
+                    }
+                    onChange={
+                      (
+                        event,
+                      ) =>
+                        setDescription(
+                          event.target.value,
+                        )
+                    }
+                    className="hq-input h-10 w-full rounded-xl border border-white/10 bg-white/[0.05] px-3 text-sm text-white outline-none disabled:opacity-40"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                {lines.map(
+                  (
+                    line,
+                    index,
+                  ) => (
+                    <div
+                      key={
+                        `journal-line-${index}`
+                      }
+                      className="hq-visual-panel grid gap-2 rounded-xl border border-white/10 bg-white/[0.035] p-3 md:grid-cols-[1.8fr_0.8fr_1fr_auto]"
+                    >
+                      <SharedSelect
+                        value={
+                          line.accountCode
+                        }
+                        disabled={
+                          submitting
+                          || Boolean(
+                            recovery.entryId,
+                          )
+                          || createUncertain
+                        }
+                        onChange={
+                          (
+                            event,
+                          ) =>
+                            updateLine(
+                              index,
+                              {
+                                accountCode:
+                                  event.target.value,
+                              },
+                            )
+                        }
+                        className="h-10 rounded-xl border border-white/10 bg-slate-900 px-3 text-sm text-white"
+                      >
+                        <option value="">
+                          {t.account}
+                        </option>
+
+                        {accounts.map(
+                          (
+                            account,
+                          ) => {
+                            const code =
+                              accountCode(
+                                account,
+                              );
+
+                            return (
+                              <option
+                                key={
+                                  account.id
+                                  ?? code
+                                }
+                                value={
+                                  code
+                                }
+                              >
+                                {code}
+                                {" — "}
+                                {accountName(
+                                  account,
+                                )}
+                              </option>
+                            );
+                          },
+                        )}
+                      </SharedSelect>
+
+                      <SharedSelect
+                        value={
+                          line.direction
+                        }
+                        disabled={
+                          submitting
+                          || Boolean(
+                            recovery.entryId,
+                          )
+                          || createUncertain
+                        }
+                        onChange={
+                          (
+                            event,
+                          ) =>
+                            updateLine(
+                              index,
+                              {
+                                direction:
+                                  event.target.value
+                                  === "credit"
+                                    ? "credit"
+                                    : "debit",
+                              },
+                            )
+                        }
+                        className="h-10 rounded-xl border border-white/10 bg-slate-900 px-3 text-sm text-white"
+                      >
+                        <option value="debit">
+                          {t.debit}
+                        </option>
+
+                        <option value="credit">
+                          {t.credit}
+                        </option>
+                      </SharedSelect>
+
+                      <input
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        value={
+                          line.amount
+                        }
+                        disabled={
+                          submitting
+                          || Boolean(
+                            recovery.entryId,
+                          )
+                          || createUncertain
+                        }
+                        placeholder={
+                          t.amount
+                        }
+                        onChange={
+                          (
+                            event,
+                          ) =>
+                            updateLine(
+                              index,
+                              {
+                                amount:
+                                  event.target.value,
+                              },
+                            )
+                        }
+                        className="hq-input h-10 rounded-xl border border-white/10 bg-white/[0.05] px-3 text-sm text-white outline-none disabled:opacity-40"
+                      />
+
+                      <button
+                        type="button"
+                        disabled={
+                          submitting
+                          || Boolean(
+                            recovery.entryId,
+                          )
+                          || createUncertain
+                          || lines.length <= 2
+                        }
+                        onClick={() =>
+                          removeLine(
+                            index,
+                          )
+                        }
+                        className="h-10 rounded-xl border border-rose-400/20 px-3 text-xs text-rose-200 disabled:opacity-25"
+                      >
+                        {t.remove}
+                      </button>
+                    </div>
+                  ),
+                )}
+              </div>
+
+              <SharedSecondaryButton
+                type="button"
+                disabled={
+                  submitting
+                  || Boolean(
+                    recovery.entryId,
+                  )
+                  || createUncertain
+                }
+                onClick={
+                  addLine
+                }
+                className="h-9 rounded-xl border border-white/10 px-3 text-xs text-white/70 disabled:opacity-30"
+              >
+                {t.addLine}
+              </SharedSecondaryButton>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="hq-visual-panel rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                  <div className="text-xs text-white/40">
+                    {t.debit}
+                  </div>
+
+                  <div className="mt-1 font-semibold text-white">
+                    {money(
+                      totals.debit,
+                    )}
+                  </div>
+                </div>
+
+                <div className="hq-visual-panel rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                  <div className="text-xs text-white/40">
+                    {t.credit}
+                  </div>
+
+                  <div className="mt-1 font-semibold text-white">
+                    {money(
+                      totals.credit,
+                    )}
+                  </div>
+                </div>
+
+                <div className="hq-visual-panel rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                  <div className="text-xs text-white/40">
+                    {t.balanced}
+                  </div>
+
+                  <div className="mt-1 font-semibold text-white">
+                    {totals.balanced
+                      ? "✓"
+                      : "—"}
+                  </div>
+                </div>
+              </div>
+
+              {recovery.entryId
+              && !success ? (
+                <div className="rounded-xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-100">
+                  {t.draftRecovery}
+                </div>
+              ) : null}
+
+              {createUncertain ? (
+                <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 p-3 text-sm text-rose-100">
+                  {t.ambiguousCreate}
+                </div>
+              ) : null}
+
+              {workflowInfo ? (
+                <div className="rounded-xl border border-sky-400/20 bg-sky-500/10 p-3 text-sm text-sky-100">
+                  {workflowInfo}
+                </div>
+              ) : null}
+
+              {workflowError ? (
+                <div className="rounded-xl border border-rose-400/20 bg-rose-500/10 p-3 text-sm text-rose-100">
+                  {workflowError}
+                </div>
+              ) : null}
+
+              {success ? (
+                <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-3 text-sm text-emerald-100">
+                  {t.success}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="flex flex-col-reverse gap-2 border-t border-white/10 p-4 sm:flex-row sm:justify-end">
+              {success ? (
+                <SharedSecondaryButton
+                  type="button"
+                  onClick={
+                    closeCreate
+                  }
+                  className="h-10 rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-white"
+                >
+                  {t.close}
+                </SharedSecondaryButton>
+              ) : (
+                <>
+                  <SharedSecondaryButton
+                    type="button"
+                    disabled={
+                      submitting
+                      || Boolean(
+                        recovery.entryId,
+                      )
+                    }
+                    onClick={
+                      closeCreate
+                    }
+                    className="h-10 rounded-xl border border-white/10 px-4 text-sm text-white/70 disabled:opacity-30"
+                  >
+                    {t.cancel}
+                  </SharedSecondaryButton>
+
+                  <SharedSecondaryButton
+                    type="button"
+                    disabled={
+                      submitting
+                      || createUncertain
+                    }
+                    onClick={() => {
+                      void submitJournal();
+                    }}
+                    className="h-10 rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-white disabled:opacity-40"
+                  >
+                    {submitting
+                      ? t.processing
+                      : recovery.entryId
+                        ? t.retry
+                        : t.createPost}
+                  </SharedSecondaryButton>
+                </>
+              )}
+            </div>
+          </div>
+        </SharedFilterBar>
+      ) : null}
+    </section>
+  );
+}

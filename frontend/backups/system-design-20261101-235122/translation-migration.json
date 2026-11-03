@@ -1,0 +1,178 @@
+[
+  {
+    "file": "src\\features\\customers\\ActivationChecklistList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\CustomerEquipmentAssignmentList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\DecommissionRecordList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\FieldVisitList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\InstallationWorkOrderList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\IPAssignmentList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\ProvisioningJobList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\RadiusAccountList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\ServiceActivationList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\ServiceAgencyHistoryList.tsx",
+    "dictionaries": [
+      "COPY"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\TechnicalAttachmentList.tsx",
+    "dictionaries": [
+      "COPY"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\TechnicalTestResultList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\customers\\TroubleTicketList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\dashboard\\Dashboard.tsx",
+    "dictionaries": [
+      "UI"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\equipment\\EquipmentAssetsModule.tsx",
+    "dictionaries": [
+      "COPY"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\finance\\AccountsReceivableView.tsx",
+    "dictionaries": [
+      "text"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\finance\\JournalEntriesView.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\hr\\HRPayrollModule.tsx",
+    "dictionaries": [
+      "COPY"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "dictionaries": [
+      "fieldLabels"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\revenue\\AgencySettlementList.tsx",
+    "dictionaries": [
+      "copy"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "dictionaries": [],
+    "phrases": 13
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "dictionaries": [],
+    "phrases": 21
+  },
+  {
+    "file": "src\\features\\warehouse\\WarehouseProcurementModule.tsx",
+    "dictionaries": [
+      "COPY"
+    ],
+    "phrases": 0
+  },
+  {
+    "file": "src\\features\\workspace\\ProjectsModule.tsx",
+    "dictionaries": [],
+    "phrases": 51
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "dictionaries": [
+      "titles"
+    ],
+    "phrases": 18
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceModule.tsx",
+    "dictionaries": [
+      "words"
+    ],
+    "phrases": 0
+  }
+]

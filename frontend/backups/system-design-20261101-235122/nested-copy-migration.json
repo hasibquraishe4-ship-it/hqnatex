@@ -1,0 +1,46 @@
+[
+  {
+    "file": "src\\features\\finance\\AccountsPayableView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\ExpensesView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\FinanceCommandCenter.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "count": 1
+  },
+  {
+    "file": "src\\features\\finance\\TaxesView.tsx",
+    "count": 1
+  }
+]

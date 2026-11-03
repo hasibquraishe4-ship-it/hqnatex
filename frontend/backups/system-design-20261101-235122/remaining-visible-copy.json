@@ -1,0 +1,4190 @@
+[
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 94,
+    "kind": "property",
+    "text": "Period"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 105,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 123,
+    "kind": "property",
+    "text": "Journal"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 136,
+    "kind": "property",
+    "text": "Date"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 140,
+    "kind": "property",
+    "text": "Debit"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 148,
+    "kind": "property",
+    "text": "Credit"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 156,
+    "kind": "property",
+    "text": "Balance"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 161,
+    "kind": "text",
+    "text": "Balanced"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 165,
+    "kind": "text",
+    "text": "Unbalanced"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 170,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 182,
+    "kind": "property",
+    "text": "Accounting Periods"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 188,
+    "kind": "property",
+    "text": "Journal Entries"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 190,
+    "kind": "property",
+    "text": "All journal entries"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 194,
+    "kind": "property",
+    "text": "Draft Journals"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 196,
+    "kind": "property",
+    "text": "Awaiting posting"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 200,
+    "kind": "property",
+    "text": "Posted Journals"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 202,
+    "kind": "property",
+    "text": "Finalized"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 216,
+    "kind": "text",
+    "text": "حسابداری"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 220,
+    "kind": "text",
+    "text": "دوره‌های مالی، اسناد روزنامه و توازن بدهکار و بستانکار"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 267,
+    "kind": "attribute",
+    "text": "Accounting Periods"
+  },
+  {
+    "file": "src\\features\\accounting\\AccountingModule.tsx",
+    "line": 278,
+    "kind": "attribute",
+    "text": "Journal Entries"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 172,
+    "kind": "property",
+    "text": "Sale"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 206,
+    "kind": "property",
+    "text": "Items"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 247,
+    "kind": "text",
+    "text": "Invoices"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 251,
+    "kind": "text",
+    "text": "Read-only invoices generated automatically when a sale is posted"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 257,
+    "kind": "text",
+    "text": "Invoice creation and editing are intentionally disabled. Source of truth: Posted Sale."
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 305,
+    "kind": "text",
+    "text": "Invoice"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 309,
+    "kind": "text",
+    "text": "Read-only billing document"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 327,
+    "kind": "attribute",
+    "text": "Sale"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 332,
+    "kind": "attribute",
+    "text": "Customer"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 337,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 342,
+    "kind": "attribute",
+    "text": "Issue Date"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 347,
+    "kind": "attribute",
+    "text": "Due Date"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 355,
+    "kind": "attribute",
+    "text": "Subtotal"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 360,
+    "kind": "attribute",
+    "text": "Discount"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 365,
+    "kind": "attribute",
+    "text": "Total"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 377,
+    "kind": "text",
+    "text": "Type"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 378,
+    "kind": "text",
+    "text": "Description"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 379,
+    "kind": "text",
+    "text": "Qty"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 380,
+    "kind": "text",
+    "text": "Unit Price"
+  },
+  {
+    "file": "src\\features\\billing\\InvoiceList.tsx",
+    "line": 381,
+    "kind": "text",
+    "text": "Total"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 647,
+    "kind": "property",
+    "text": "Posted payments are immutable."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 695,
+    "kind": "property",
+    "text": "Select an active company first."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 704,
+    "kind": "property",
+    "text": "Customer is required."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 719,
+    "kind": "property",
+    "text": "Payment amount must be greater than zero."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 946,
+    "kind": "property",
+    "text": "Receivable is required."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 958,
+    "kind": "property",
+    "text": "Allocation amount must be greater than zero."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1012,
+    "kind": "property",
+    "text": "Payment allocation saved."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1061,
+    "kind": "property",
+    "text": "Allocation removed."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1118,
+    "kind": "property",
+    "text": "Payment must have at least one allocation before posting."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1225,
+    "kind": "property",
+    "text": "Method"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1231,
+    "kind": "property",
+    "text": "Reference"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1239,
+    "kind": "property",
+    "text": "Treasury"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1292,
+    "kind": "text",
+    "text": "Payments"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1296,
+    "kind": "text",
+    "text": "Draft → Allocate → Post → Receipt"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1307,
+    "kind": "text",
+    "text": "New Payment"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1367,
+    "kind": "attribute",
+    "text": "Allocations"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1380,
+    "kind": "attribute",
+    "text": "Post Payment"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1424,
+    "kind": "attribute",
+    "text": "Payment Number"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1431,
+    "kind": "attribute",
+    "text": "Customer"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1438,
+    "kind": "attribute",
+    "text": "Amount"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1443,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1450,
+    "kind": "attribute",
+    "text": "Method"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1457,
+    "kind": "attribute",
+    "text": "Reference"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1465,
+    "kind": "attribute",
+    "text": "Treasury Status"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1472,
+    "kind": "attribute",
+    "text": "Posted At"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1484,
+    "kind": "text",
+    "text": "Receipt"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1508,
+    "kind": "text",
+    "text": "View Allocations"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1523,
+    "kind": "text",
+    "text": "Edit Payment"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1536,
+    "kind": "text",
+    "text": "Post Payment"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1553,
+    "kind": "attribute",
+    "text": "Customer"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1570,
+    "kind": "text",
+    "text": "Select Customer"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1596,
+    "kind": "attribute",
+    "text": "Branch"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1611,
+    "kind": "text",
+    "text": "No Branch"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1631,
+    "kind": "attribute",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1647,
+    "kind": "text",
+    "text": "No Agency"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1668,
+    "kind": "attribute",
+    "text": "Payment Date"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1689,
+    "kind": "attribute",
+    "text": "Amount"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1712,
+    "kind": "attribute",
+    "text": "Currency"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1733,
+    "kind": "attribute",
+    "text": "Method"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1750,
+    "kind": "text",
+    "text": "Cash"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1751,
+    "kind": "text",
+    "text": "Bank"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1752,
+    "kind": "text",
+    "text": "Electronic"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1753,
+    "kind": "text",
+    "text": "Other"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1757,
+    "kind": "attribute",
+    "text": "Reference"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1791,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1802,
+    "kind": "text",
+    "text": "Saving..."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1853,
+    "kind": "text",
+    "text": "Payment Allocations"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1882,
+    "kind": "attribute",
+    "text": "Payment"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1887,
+    "kind": "attribute",
+    "text": "Allocated"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1892,
+    "kind": "attribute",
+    "text": "Remaining"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1909,
+    "kind": "text",
+    "text": "Add Allocation"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1921,
+    "kind": "text",
+    "text": "Invoice"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1924,
+    "kind": "text",
+    "text": "Amount"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1927,
+    "kind": "text",
+    "text": "Actions"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 1940,
+    "kind": "text",
+    "text": "No allocations."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2028,
+    "kind": "text",
+    "text": "Post Payment"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2042,
+    "kind": "attribute",
+    "text": "Receivable / Invoice"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2064,
+    "kind": "text",
+    "text": "Select Receivable"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2080,
+    "kind": "text",
+    "text": "— Outstanding"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2094,
+    "kind": "attribute",
+    "text": "Allocation Amount"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2139,
+    "kind": "text",
+    "text": "Back"
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2150,
+    "kind": "text",
+    "text": "Saving..."
+  },
+  {
+    "file": "src\\features\\billing\\PaymentList.tsx",
+    "line": 2155,
+    "kind": "text",
+    "text": "Save Allocation"
+  },
+  {
+    "file": "src\\features\\billing\\ReceivableList.tsx",
+    "line": 204,
+    "kind": "text",
+    "text": "Receivables"
+  },
+  {
+    "file": "src\\features\\billing\\ReceivableList.tsx",
+    "line": 208,
+    "kind": "text",
+    "text": "Read-only outstanding balances generated from posted sales"
+  },
+  {
+    "file": "src\\features\\billing\\ReceivableList.tsx",
+    "line": 214,
+    "kind": "text",
+    "text": "Receivable status and balances are controlled automatically by posted payment allocations."
+  },
+  {
+    "file": "src\\features\\callcenter\\CallCenterModule.tsx",
+    "line": 1583,
+    "kind": "attribute",
+    "text": "HH:mm:ss"
+  },
+  {
+    "file": "src\\features\\customers\\ActiveServiceCatalogExplorer.tsx",
+    "line": 892,
+    "kind": "text",
+    "text": "NOC"
+  },
+  {
+    "file": "src\\features\\customers\\FieldVisitList.tsx",
+    "line": 435,
+    "kind": "attribute",
+    "text": "Refresh"
+  },
+  {
+    "file": "src\\features\\customers\\ServiceChangeRequestList.tsx",
+    "line": 892,
+    "kind": "attribute",
+    "text": "{\"package\": \"...\", \"status\": \"active\"}"
+  },
+  {
+    "file": "src\\features\\customers\\TechnicalTestResultList.tsx",
+    "line": 136,
+    "kind": "property",
+    "text": "Pass"
+  },
+  {
+    "file": "src\\features\\customers\\TechnicalTestResultList.tsx",
+    "line": 140,
+    "kind": "property",
+    "text": "Fail"
+  },
+  {
+    "file": "src\\features\\customers\\TechnicalTestResultList.tsx",
+    "line": 144,
+    "kind": "property",
+    "text": "Warning"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 371,
+    "kind": "property",
+    "text": "An active company must be selected."
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 408,
+    "kind": "property",
+    "text": "Account code is required."
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 418,
+    "kind": "property",
+    "text": "Account name is required."
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 431,
+    "kind": "property",
+    "text": "An account cannot be its own parent."
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 494,
+    "kind": "property",
+    "text": "Account Code"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 502,
+    "kind": "property",
+    "text": "Account Name"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 510,
+    "kind": "property",
+    "text": "Type"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 520,
+    "kind": "property",
+    "text": "Normal Balance"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 530,
+    "kind": "property",
+    "text": "Parent"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 538,
+    "kind": "property",
+    "text": "Posting"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 549,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 592,
+    "kind": "text",
+    "text": "Chart of Accounts"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 596,
+    "kind": "text",
+    "text": "Company-scoped financial account hierarchy"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 609,
+    "kind": "text",
+    "text": "New Account"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 614,
+    "kind": "text",
+    "text": "Balances are not displayed because the current Finance backend contains Chart of Accounts only; no Journal/Ledger balance engine is implemented yet."
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 658,
+    "kind": "attribute",
+    "text": "View"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 669,
+    "kind": "attribute",
+    "text": "Edit"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 697,
+    "kind": "text",
+    "text": "Company is taken automatically from the active company context."
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 723,
+    "kind": "attribute",
+    "text": "Account Code"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 730,
+    "kind": "attribute",
+    "text": "Account Name"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 737,
+    "kind": "attribute",
+    "text": "Account Type"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 744,
+    "kind": "attribute",
+    "text": "Normal Balance"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 751,
+    "kind": "attribute",
+    "text": "Parent Account"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 760,
+    "kind": "attribute",
+    "text": "Account Mode"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 769,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 776,
+    "kind": "attribute",
+    "text": "Account ID"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 785,
+    "kind": "attribute",
+    "text": "Description"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 804,
+    "kind": "text",
+    "text": "Edit Account"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 819,
+    "kind": "attribute",
+    "text": "Account Code"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 835,
+    "kind": "attribute",
+    "text": "Example: 1100"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 841,
+    "kind": "attribute",
+    "text": "Account Name"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 857,
+    "kind": "attribute",
+    "text": "Example: Cash"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 863,
+    "kind": "attribute",
+    "text": "Account Type"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 882,
+    "kind": "text",
+    "text": "Asset"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 886,
+    "kind": "text",
+    "text": "Liability"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 890,
+    "kind": "text",
+    "text": "Equity"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 894,
+    "kind": "text",
+    "text": "Revenue"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 898,
+    "kind": "text",
+    "text": "Expense"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 904,
+    "kind": "attribute",
+    "text": "Normal Balance"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 923,
+    "kind": "text",
+    "text": "Debit"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 927,
+    "kind": "text",
+    "text": "Credit"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 932,
+    "kind": "attribute",
+    "text": "Parent Account"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 950,
+    "kind": "text",
+    "text": "Root Account"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 971,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 990,
+    "kind": "text",
+    "text": "Active"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 994,
+    "kind": "text",
+    "text": "Inactive"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 1020,
+    "kind": "text",
+    "text": "Posting Account"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 1024,
+    "kind": "text",
+    "text": "Enabled: future journal entries may post directly to this account. Disabled: this account acts as a summary/category node."
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 1029,
+    "kind": "attribute",
+    "text": "Description"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 1066,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\finance\\AccountList.tsx",
+    "line": 1079,
+    "kind": "text",
+    "text": "Saving..."
+  },
+  {
+    "file": "src\\features\\finance\\AccountsPayableView.tsx",
+    "line": 40,
+    "kind": "property",
+    "text": "حساب‌های پرداختنی"
+  },
+  {
+    "file": "src\\features\\finance\\AccountsPayableView.tsx",
+    "line": 42,
+    "kind": "property",
+    "text": "این بخش فقط بدهی‌ها و پرداخت‌های واقعی و تأییدشده سیستم را نمایش می‌دهد."
+  },
+  {
+    "file": "src\\features\\finance\\AccountsPayableView.tsx",
+    "line": 68,
+    "kind": "property",
+    "text": "د اداینې وړ حسابونه"
+  },
+  {
+    "file": "src\\features\\finance\\AccountsPayableView.tsx",
+    "line": 70,
+    "kind": "property",
+    "text": "دا برخه یوازې د سیسټم واقعي او تایید شوي پورونه او تادیات ښيي."
+  },
+  {
+    "file": "src\\features\\finance\\AccountsPayableView.tsx",
+    "line": 96,
+    "kind": "property",
+    "text": "Accounts Payable"
+  },
+  {
+    "file": "src\\features\\finance\\AccountsPayableView.tsx",
+    "line": 98,
+    "kind": "property",
+    "text": "This area displays only real and verified payable obligations and payments from the system."
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "line": 20,
+    "kind": "property",
+    "text": "تصفیه حساب نمایندگی‌ها (Agency Settlements)"
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "line": 21,
+    "kind": "property",
+    "text": "محاسبه خودکار سهم ناخالص، کسر مالیات موضوعی، صدور سند تسویه AGS و پرداخت خزانه‌داری"
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "line": 34,
+    "kind": "property",
+    "text": "د استازولیو د حسابونو تصفیه (Agency Settlements)"
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "line": 35,
+    "kind": "property",
+    "text": "د ناخالصې ونډې اتومات محاسبه، د قانوني مالیې وضع کول، د AGS تصفیې سند او بانکي تادیه"
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "line": 48,
+    "kind": "property",
+    "text": "Agency Settlements"
+  },
+  {
+    "file": "src\\features\\finance\\AgencySettlementsView.tsx",
+    "line": 49,
+    "kind": "property",
+    "text": "Automated share calculation, withholding tax deduction, sequential AGS numbering & treasury payout"
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "line": 45,
+    "kind": "property",
+    "text": "نقد و بانک"
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "line": 46,
+    "kind": "property",
+    "text": "نمایش اطلاعات واقعی نقد و بانک از API سیستم"
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "line": 67,
+    "kind": "property",
+    "text": "نغدي او بانک"
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "line": 68,
+    "kind": "property",
+    "text": "د سیسټم له واقعي API څخه د نغدو او بانک معلومات"
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "line": 89,
+    "kind": "property",
+    "text": "Cash & Bank"
+  },
+  {
+    "file": "src\\features\\finance\\CashBankView.tsx",
+    "line": 90,
+    "kind": "property",
+    "text": "Real Cash & Bank information from the system API"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 19,
+    "kind": "property",
+    "text": "جدول حساب‌ها (Chart of Accounts)"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 20,
+    "kind": "property",
+    "text": "کدینگ استاندارد ۵ سطحی: دارایی‌ها (۱۰۰۰)، بدهی‌ها (۲۰۰۰)، حقوق مالکان (۳۰۰۰)، عواید (۴۰۰۰)، مصارف (۵۰۰۰)"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 30,
+    "kind": "property",
+    "text": "د حسابونو جدول (Chart of Accounts)"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 31,
+    "kind": "property",
+    "text": "د ۵ کچو معیاري کوډینګ: شتمنۍ (۱۰۰۰)، پورونه (۲۰۰۰)، حقوق (۳۰۰۰)، عواید (۴۰۰۰)، لګښتونه (۵۰۰۰)"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 41,
+    "kind": "property",
+    "text": "Chart of Accounts"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 42,
+    "kind": "property",
+    "text": "5-Tier Standard ERP Structure: Assets (1000), Liabilities (2000), Equity (3000), Revenue (4000), Expenses (5000)"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 59,
+    "kind": "text",
+    "text": "Normal: Debit"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 64,
+    "kind": "text",
+    "text": "Normal: Credit"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 69,
+    "kind": "text",
+    "text": "Normal: Credit"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 74,
+    "kind": "text",
+    "text": "Normal: Credit"
+  },
+  {
+    "file": "src\\features\\finance\\ChartOfAccountsView.tsx",
+    "line": 79,
+    "kind": "text",
+    "text": "Normal: Debit"
+  },
+  {
+    "file": "src\\features\\finance\\ExpensesView.tsx",
+    "line": 39,
+    "kind": "property",
+    "text": "مدیریت مصارف"
+  },
+  {
+    "file": "src\\features\\finance\\ExpensesView.tsx",
+    "line": 41,
+    "kind": "property",
+    "text": "این بخش فقط اطلاعات مصارف واقعی و تأییدشده سیستم را نمایش می‌دهد."
+  },
+  {
+    "file": "src\\features\\finance\\ExpensesView.tsx",
+    "line": 64,
+    "kind": "property",
+    "text": "د لګښتونو مدیریت"
+  },
+  {
+    "file": "src\\features\\finance\\ExpensesView.tsx",
+    "line": 66,
+    "kind": "property",
+    "text": "دا برخه یوازې د سیسټم واقعي او تایید شوي لګښت معلومات ښيي."
+  },
+  {
+    "file": "src\\features\\finance\\ExpensesView.tsx",
+    "line": 89,
+    "kind": "property",
+    "text": "Expense Management"
+  },
+  {
+    "file": "src\\features\\finance\\ExpensesView.tsx",
+    "line": 91,
+    "kind": "property",
+    "text": "This area displays only real and verified expense information from the system."
+  },
+  {
+    "file": "src\\features\\finance\\FinanceCommandCenter.tsx",
+    "line": 288,
+    "kind": "text",
+    "text": "HQNATEX ERP"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceCommandCenter.tsx",
+    "line": 291,
+    "kind": "text",
+    "text": "Ledger Live"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 255,
+    "kind": "text",
+    "text": "ERP Core"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 284,
+    "kind": "text",
+    "text": "Last 6 months operating trend"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 290,
+    "kind": "text",
+    "text": "Revenue"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 294,
+    "kind": "text",
+    "text": "Expenses"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 298,
+    "kind": "text",
+    "text": "Net Profit"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 344,
+    "kind": "text",
+    "text": "Avg Monthly Revenue"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 345,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 348,
+    "kind": "text",
+    "text": "Avg Monthly Expense"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 349,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 352,
+    "kind": "text",
+    "text": "Operating Margin"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 381,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 396,
+    "kind": "text",
+    "text": "Total Active Agencies:"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 397,
+    "kind": "text",
+    "text": "19 Agencies"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 416,
+    "kind": "text",
+    "text": "Post balanced debit/credit voucher"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 431,
+    "kind": "text",
+    "text": "Record bandwidth & operations overhead"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 446,
+    "kind": "text",
+    "text": "Create & approve AGS settlement"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceDashboardView.tsx",
+    "line": 461,
+    "kind": "text",
+    "text": "Trial Balance, P&L, Balance Sheet"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 36,
+    "kind": "property",
+    "text": "نقشه ارتباطات ساختاری و روابط مالی ERP"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 37,
+    "kind": "property",
+    "text": "روابط یکپارچه بین ساختار سازمانی، اسناد حسابداری، عواید، مصارف و خزانه‌داری"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 43,
+    "kind": "property",
+    "text": "ساختار سازمانی: شرکت → شعبه → نمایندگی"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 57,
+    "kind": "property",
+    "text": "حساب‌ها و اسناد: حساب کل → سند روزنامچه → سطرهای سند"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 71,
+    "kind": "property",
+    "text": "فروش و درآمد: فروش بسته/سرویس → شناسایی عاید"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 85,
+    "kind": "property",
+    "text": "دریافت‌ها: صورت‌حساب مشتری → پرداخت → وصولی خزانه‌داری"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 99,
+    "kind": "property",
+    "text": "تصفیه سهم نمایندگی: سهم ناخالص → کسر مالیات → پرداخت وجه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 113,
+    "kind": "property",
+    "text": "هزینه‌ها: فاکتور هزینه → حساب معین مصرفی → پرداخت خزانه‌داری"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 127,
+    "kind": "property",
+    "text": "مالیات‌ها: مالیات نمایندگی و معاشات → بدهی مالیاتی → تادیات به وزارت مالیه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 141,
+    "kind": "property",
+    "text": "دوره‌های مالی: دوره باز/بسته → محدودیت ثبت اسناد قطعی"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 156,
+    "kind": "property",
+    "text": "د ERP مالي اړیکو او بنسټیز جوړښت نقشه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 157,
+    "kind": "property",
+    "text": "د اداري جوړښت، محاسباتي اسنادو، عوایدو، لګښتونو او خزانې ترمنځ بشپړه همغږي"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 163,
+    "kind": "property",
+    "text": "اداري جوړښت: شرکت → څانګه → استازولي (Agency)"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 177,
+    "kind": "property",
+    "text": "حسابونه او اسناد: ټول حساب → د ژورنال سند → ليکې"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 191,
+    "kind": "property",
+    "text": "پلور او عاید: د کڅوړې پلور → د عاید پېژندنه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 205,
+    "kind": "property",
+    "text": "ترلاسه کول: د پیرودونکي بل → تادیه → د خزانې راټولونه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 219,
+    "kind": "property",
+    "text": "د استازولۍ تصفیه: ټوله ونډه → د مالیې کسر → خالص ورکړه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 233,
+    "kind": "property",
+    "text": "لګښتونه: د لګښت بل → د لګښت حساب → د خزانې ورکړه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 247,
+    "kind": "property",
+    "text": "مالیات: د استازولۍ او معاشاتو مالیه → مالیاتي پور → مالیې وزارت ته اداینه"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 261,
+    "kind": "property",
+    "text": "مالي دورې: خلاصه/بنده دوره → د اسنادو ثبت او قفل کول"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 276,
+    "kind": "property",
+    "text": "ERP Financial Architecture & Entity Relationships"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 277,
+    "kind": "property",
+    "text": "Unified cross-module linkages between Organization, Accounting, Revenue, Expenses & Treasury"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 283,
+    "kind": "property",
+    "text": "Organization Hierarchy: Company → Branch → Agency"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 297,
+    "kind": "property",
+    "text": "Ledger Pipeline: Chart of Accounts → Journal Entry → Journal Lines"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 311,
+    "kind": "property",
+    "text": "Revenue Recognition: Service Sale → Revenue Transaction → Allocations"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 325,
+    "kind": "property",
+    "text": "Receivables & Treasury: Invoice → Customer Payment → Cash/Bank Collection"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 339,
+    "kind": "property",
+    "text": "Agency Settlements: Gross Share → Withholding Tax → Net Payable Payout"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 353,
+    "kind": "property",
+    "text": "Expenses & Payables: Expense Voucher → Expense Account → Cash/Bank Outflow"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 367,
+    "kind": "property",
+    "text": "Tax Ledger: Withheld Agency & Payroll Tax → Tax Payable → Remittance"
+  },
+  {
+    "file": "src\\features\\finance\\FinanceRelationshipsModal.tsx",
+    "line": 381,
+    "kind": "property",
+    "text": "Period Governance: Fiscal Period → Lock State → General Ledger Finality"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "line": 47,
+    "kind": "property",
+    "text": "دوره‌های مالی و حاکمیت دفاتر (Financial Periods)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "line": 48,
+    "kind": "property",
+    "text": "کنترل باز بودن دوره برای ثبت اسناد، بستن دوره‌های ماهانه و قفل نهایی حساب‌ها جهت ممیزی"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "line": 75,
+    "kind": "property",
+    "text": "مالي دورې (Financial Periods)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "line": 76,
+    "kind": "property",
+    "text": "د مالي معاملو د ثبت لپاره د میاشتنۍ دورې کنټرول، قفل کول او د تفتیش چمتووالی"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "line": 103,
+    "kind": "property",
+    "text": "Financial Periods & Governance"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialPeriodsView.tsx",
+    "line": 104,
+    "kind": "property",
+    "text": "Controlling transaction posting permissions, monthly period closing & fiscal lockouts"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 37,
+    "kind": "property",
+    "text": "صورت‌های مالی و گزارش‌های تحلیلی (Financial Reports)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 38,
+    "kind": "property",
+    "text": "تولید تراز آزمایشی، سود و زیان، ترازنامه، جریان وجوه نقد و گزارش‌های تفکیکی بر اساس استانداردهای بین‌المللی"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 62,
+    "kind": "property",
+    "text": "مالي راپورونه او تحلیلونه (Financial Reports)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 63,
+    "kind": "property",
+    "text": "د ازمایښتي تراز، ګټې او تاوان، بېلانس شېټ او د نغدو پیسو جریان راپورونه"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 87,
+    "kind": "property",
+    "text": "Financial Statements & Analytics"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 88,
+    "kind": "property",
+    "text": "IFRS-compliant Trial Balance, Profit & Loss, Balance Sheet, Cash Flow & Aging schedules"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 331,
+    "kind": "text",
+    "text": "As of October 4, 2026 — Fiscal Year 1405"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 335,
+    "kind": "text",
+    "text": "Balanced (0.00 Diff)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 366,
+    "kind": "text",
+    "text": "Total Balanced Ledger Verification"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 381,
+    "kind": "text",
+    "text": "Statement of Comprehensive Income for Year-to-Date 2026"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 388,
+    "kind": "text",
+    "text": "Operating Revenue"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 389,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 392,
+    "kind": "text",
+    "text": "Broadband Internet Subscriptions (B2C & SOHO)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 393,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 396,
+    "kind": "text",
+    "text": "Dedicated Leased Lines & Enterprise Bandwidth"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 397,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 404,
+    "kind": "text",
+    "text": "Operating & Infrastructure Costs"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 405,
+    "kind": "text",
+    "text": ") AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 408,
+    "kind": "text",
+    "text": "Upstream Bandwidth & IP Transit (Afghan Telecom / DABS)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 409,
+    "kind": "text",
+    "text": ") AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 412,
+    "kind": "text",
+    "text": "Transmitter Site Fuel, Generators & Solar Grid"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 413,
+    "kind": "text",
+    "text": ") AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 416,
+    "kind": "text",
+    "text": "Technical Engineering & NOC Payroll Overhead"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 417,
+    "kind": "text",
+    "text": ") AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 420,
+    "kind": "text",
+    "text": "Optical Fiber Maintenance & Repair Parts"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 421,
+    "kind": "text",
+    "text": ") AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 424,
+    "kind": "text",
+    "text": "HQ Facility Rent & Municipal Dues"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 425,
+    "kind": "text",
+    "text": ") AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 432,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 442,
+    "kind": "text",
+    "text": "Statement of Financial Position as of October 4, 2026"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 449,
+    "kind": "text",
+    "text": "Total Assets"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 450,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 454,
+    "kind": "text",
+    "text": "Cash on Hand (Drawers)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 458,
+    "kind": "text",
+    "text": "Bank Operating Accounts"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 462,
+    "kind": "text",
+    "text": "Accounts Receivable"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 466,
+    "kind": "text",
+    "text": "Inventory & Splicing Spares"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 470,
+    "kind": "text",
+    "text": "Fixed Telecom Equipment & Core Routers"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 479,
+    "kind": "text",
+    "text": "Liabilities & Equity"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 480,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 484,
+    "kind": "text",
+    "text": "Agency Settlement Payables"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 488,
+    "kind": "text",
+    "text": "Statutory Withholding Taxes"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 492,
+    "kind": "text",
+    "text": "Vendor Payables (Fiber Transit)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 496,
+    "kind": "text",
+    "text": "Shareholder Paid-in Capital"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 500,
+    "kind": "text",
+    "text": "Retained Earnings & Current Net Margin"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 512,
+    "kind": "text",
+    "text": "4,326,851.50 = 4,326,851.50 AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 521,
+    "kind": "text",
+    "text": "Cash Flow Statement for Year-to-Date 2026"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 526,
+    "kind": "text",
+    "text": "Cash Receipts from Customers (Collections)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 527,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 530,
+    "kind": "text",
+    "text": "Cash Paid to Upstream Providers & Operations"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 531,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 534,
+    "kind": "text",
+    "text": "Cash Paid for Agency Settlements"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 535,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 538,
+    "kind": "text",
+    "text": "Cash Paid for Statutory Taxes"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 539,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 543,
+    "kind": "text",
+    "text": "Net Increase in Cash & Bank Liquidity"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 544,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 557,
+    "kind": "text",
+    "text": "Maturity and aging distribution"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 563,
+    "kind": "text",
+    "text": "Manage Detail Records"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 570,
+    "kind": "text",
+    "text": "Current (0-30d)"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 571,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 574,
+    "kind": "text",
+    "text": "1-30d Past"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 575,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 578,
+    "kind": "text",
+    "text": "31-60d Past"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 579,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 582,
+    "kind": "text",
+    "text": "61-90d Past"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 583,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 586,
+    "kind": "text",
+    "text": "90d+ Past"
+  },
+  {
+    "file": "src\\features\\finance\\FinancialReportsView.tsx",
+    "line": 587,
+    "kind": "text",
+    "text": "AFN"
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "line": 231,
+    "kind": "property",
+    "text": "دفتر کل حسابداری (General Ledger)"
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "line": 233,
+    "kind": "property",
+    "text": "نمایش واقعی خطوط ثبت‌شده ژورنال برای شرکت فعال؛ اطلاعات مستقیماً از سیستم حسابداری دریافت می‌شود"
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "line": 298,
+    "kind": "property",
+    "text": "د حسابدارۍ دفتر کل (General Ledger)"
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "line": 300,
+    "kind": "property",
+    "text": "د فعال شرکت د ثبت شوو ژورنال کرښو حقیقي لید؛ معلومات مستقیم له حسابدارۍ سیستم څخه راځي"
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "line": 365,
+    "kind": "property",
+    "text": "General Ledger"
+  },
+  {
+    "file": "src\\features\\finance\\GeneralLedgerView.tsx",
+    "line": 367,
+    "kind": "property",
+    "text": "Real posted journal lines for the active company, loaded directly from the accounting backend"
+  },
+  {
+    "file": "src\\features\\finance\\TaxesView.tsx",
+    "line": 39,
+    "kind": "property",
+    "text": "مدیریت مالیات"
+  },
+  {
+    "file": "src\\features\\finance\\TaxesView.tsx",
+    "line": 41,
+    "kind": "property",
+    "text": "نمایش این بخش فقط بر مبنای اطلاعات واقعی سیستم انجام می‌شود."
+  },
+  {
+    "file": "src\\features\\finance\\TaxesView.tsx",
+    "line": 61,
+    "kind": "property",
+    "text": "د مالیاتو مدیریت"
+  },
+  {
+    "file": "src\\features\\finance\\TaxesView.tsx",
+    "line": 63,
+    "kind": "property",
+    "text": "دا برخه یوازې د سیسټم پر واقعي معلوماتو ولاړه ده."
+  },
+  {
+    "file": "src\\features\\finance\\TaxesView.tsx",
+    "line": 83,
+    "kind": "property",
+    "text": "Tax Management"
+  },
+  {
+    "file": "src\\features\\finance\\TaxesView.tsx",
+    "line": 85,
+    "kind": "property",
+    "text": "This area displays information only when it comes from a real system source."
+  },
+  {
+    "file": "src\\features\\hr\\HRPayrollModule.tsx",
+    "line": 5845,
+    "kind": "attribute",
+    "text": "Close"
+  },
+  {
+    "file": "src\\features\\hr\\HRPayrollModule.tsx",
+    "line": 6902,
+    "kind": "text",
+    "text": "HR"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 22,
+    "kind": "property",
+    "text": "Label"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 23,
+    "kind": "property",
+    "text": "IP / CIDR"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 23,
+    "kind": "property",
+    "text": "Example: 192.0.2.0/24"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 24,
+    "kind": "property",
+    "text": "Rule type"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 25,
+    "kind": "property",
+    "text": "Purpose"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 26,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 27,
+    "kind": "property",
+    "text": "Valid from"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 28,
+    "kind": "property",
+    "text": "Valid to"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 31,
+    "kind": "property",
+    "text": "Name"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 32,
+    "kind": "property",
+    "text": "IP / CIDR"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 32,
+    "kind": "property",
+    "text": "Example: 10.20.0.0/16"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 33,
+    "kind": "property",
+    "text": "Tunnel type"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 34,
+    "kind": "property",
+    "text": "Gateway"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 34,
+    "kind": "property",
+    "text": "Provider"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 35,
+    "kind": "property",
+    "text": "Secret reference"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 35,
+    "kind": "property",
+    "text": "Reference only; do not enter a password or key."
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 36,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 39,
+    "kind": "property",
+    "text": "Device code"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 39,
+    "kind": "property",
+    "text": "Name"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 40,
+    "kind": "property",
+    "text": "Device type"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 41,
+    "kind": "property",
+    "text": "Management IP / CIDR"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 41,
+    "kind": "property",
+    "text": "Vendor"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 42,
+    "kind": "property",
+    "text": "Model"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 42,
+    "kind": "property",
+    "text": "Serial number"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 43,
+    "kind": "property",
+    "text": "Access mode"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 44,
+    "kind": "property",
+    "text": "Secret reference"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 44,
+    "kind": "property",
+    "text": "Reference only; no credentials are stored here."
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 45,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 48,
+    "kind": "property",
+    "text": "Client name"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 48,
+    "kind": "property",
+    "text": "Client ID"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 49,
+    "kind": "property",
+    "text": "Key fingerprint"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 50,
+    "kind": "property",
+    "text": "Secret reference"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 50,
+    "kind": "property",
+    "text": "Reference only; never paste a secret key."
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 51,
+    "kind": "property",
+    "text": "Allowed CIDRs"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 51,
+    "kind": "property",
+    "text": "One IP or CIDR per line."
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 52,
+    "kind": "property",
+    "text": "Scopes"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 52,
+    "kind": "property",
+    "text": "One scope per line."
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 53,
+    "kind": "property",
+    "text": "Rate limit / minute"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 54,
+    "kind": "property",
+    "text": "Expires at"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 55,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 58,
+    "kind": "property",
+    "text": "Integration code"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 58,
+    "kind": "property",
+    "text": "Name"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 59,
+    "kind": "property",
+    "text": "Type"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 60,
+    "kind": "property",
+    "text": "Host"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 60,
+    "kind": "property",
+    "text": "Port"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 61,
+    "kind": "property",
+    "text": "Base URL"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 61,
+    "kind": "property",
+    "text": "Authentication mode"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 62,
+    "kind": "property",
+    "text": "Secret reference"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 62,
+    "kind": "property",
+    "text": "Reference only; no credentials are stored here."
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 63,
+    "kind": "property",
+    "text": "Execution mode"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 64,
+    "kind": "property",
+    "text": "Enabled"
+  },
+  {
+    "file": "src\\features\\network\\NetworkReadiness.tsx",
+    "line": 65,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\noc\\ResourceList.tsx",
+    "line": 66,
+    "kind": "property",
+    "text": "Capacity"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 277,
+    "kind": "property",
+    "text": "Company, partner code and legal name are required."
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 296,
+    "kind": "property",
+    "text": "Partner created successfully."
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 311,
+    "kind": "property",
+    "text": "Partner updated successfully."
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 349,
+    "kind": "property",
+    "text": "Company"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 378,
+    "kind": "property",
+    "text": "Phone"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 428,
+    "kind": "text",
+    "text": "New Partner"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 450,
+    "kind": "attribute",
+    "text": "View partner"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 459,
+    "kind": "attribute",
+    "text": "Edit partner"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 491,
+    "kind": "text",
+    "text": "Tenant-scoped partner management"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 510,
+    "kind": "attribute",
+    "text": "Code"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 511,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 512,
+    "kind": "attribute",
+    "text": "Legal Name"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 513,
+    "kind": "attribute",
+    "text": "Trade Name"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 514,
+    "kind": "attribute",
+    "text": "Company"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 515,
+    "kind": "attribute",
+    "text": "Tax ID"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 516,
+    "kind": "attribute",
+    "text": "Registration No."
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 517,
+    "kind": "attribute",
+    "text": "Phone"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 518,
+    "kind": "attribute",
+    "text": "Email"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 519,
+    "kind": "attribute",
+    "text": "Partner ID"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 523,
+    "kind": "attribute",
+    "text": "Address"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 536,
+    "kind": "text",
+    "text": "Edit Partner"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 546,
+    "kind": "attribute",
+    "text": "Company"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 558,
+    "kind": "text",
+    "text": "Select Company"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 576,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 587,
+    "kind": "text",
+    "text": "Active"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 588,
+    "kind": "text",
+    "text": "Inactive"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 589,
+    "kind": "text",
+    "text": "Suspended"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 593,
+    "kind": "attribute",
+    "text": "Partner Code"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 603,
+    "kind": "attribute",
+    "text": "Example: PT001"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 608,
+    "kind": "attribute",
+    "text": "Legal Name"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 618,
+    "kind": "attribute",
+    "text": "Official legal name"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 623,
+    "kind": "attribute",
+    "text": "Trade Name"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 633,
+    "kind": "attribute",
+    "text": "Trade name"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 638,
+    "kind": "attribute",
+    "text": "Tax ID"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 648,
+    "kind": "attribute",
+    "text": "Tax identification"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 653,
+    "kind": "attribute",
+    "text": "Registration No."
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 663,
+    "kind": "attribute",
+    "text": "Registration number"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 668,
+    "kind": "attribute",
+    "text": "Phone"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 678,
+    "kind": "attribute",
+    "text": "Phone number"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 683,
+    "kind": "attribute",
+    "text": "Email"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 693,
+    "kind": "attribute",
+    "text": "email@example.com"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 699,
+    "kind": "attribute",
+    "text": "Address"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 709,
+    "kind": "attribute",
+    "text": "Partner address"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 729,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\partners\\PartnerList.tsx",
+    "line": 740,
+    "kind": "text",
+    "text": "Saving..."
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 135,
+    "kind": "property",
+    "text": "Revenue Transaction"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 146,
+    "kind": "property",
+    "text": "Allocation Type"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 158,
+    "kind": "property",
+    "text": "Percent"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 168,
+    "kind": "property",
+    "text": "Amount"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 178,
+    "kind": "property",
+    "text": "Share Rule"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 190,
+    "kind": "property",
+    "text": "Created"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 214,
+    "kind": "text",
+    "text": "Revenue Allocations"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 218,
+    "kind": "text",
+    "text": "Read-only allocation snapshots generated from effective share rules"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueAllocationList.tsx",
+    "line": 224,
+    "kind": "text",
+    "text": "Allocation records are financial snapshots. Manual create, edit and delete actions are intentionally unavailable."
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 190,
+    "kind": "property",
+    "text": "Revenue Number"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 199,
+    "kind": "property",
+    "text": "Date"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 209,
+    "kind": "property",
+    "text": "Customer"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 218,
+    "kind": "property",
+    "text": "Sale"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 226,
+    "kind": "property",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 233,
+    "kind": "property",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 240,
+    "kind": "property",
+    "text": "Type"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 249,
+    "kind": "property",
+    "text": "Gross Amount"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 260,
+    "kind": "property",
+    "text": "Revenue Status"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 276,
+    "kind": "property",
+    "text": "Share Status"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 305,
+    "kind": "text",
+    "text": "Revenue Transactions"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 309,
+    "kind": "text",
+    "text": "Read-only financial revenue evidence generated from posted sales"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 315,
+    "kind": "text",
+    "text": "Revenue transactions and their allocation snapshots are generated by the backend. Manual create, edit and delete actions are intentionally unavailable."
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 357,
+    "kind": "attribute",
+    "text": "View"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 374,
+    "kind": "text",
+    "text": "Revenue"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 378,
+    "kind": "text",
+    "text": "Read-only transaction and allocation snapshot"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 396,
+    "kind": "attribute",
+    "text": "Revenue Number"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 403,
+    "kind": "attribute",
+    "text": "Sale Number"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 410,
+    "kind": "attribute",
+    "text": "Customer"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 417,
+    "kind": "attribute",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 425,
+    "kind": "attribute",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 433,
+    "kind": "attribute",
+    "text": "Revenue Type"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 440,
+    "kind": "attribute",
+    "text": "Recognition Date"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 447,
+    "kind": "attribute",
+    "text": "Gross Amount"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 452,
+    "kind": "attribute",
+    "text": "Revenue Status"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 459,
+    "kind": "attribute",
+    "text": "Share Status"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 466,
+    "kind": "attribute",
+    "text": "Share Rule ID"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 474,
+    "kind": "attribute",
+    "text": "Customer Service ID"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 485,
+    "kind": "text",
+    "text": "Allocation Snapshot"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 495,
+    "kind": "text",
+    "text": "Type"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 499,
+    "kind": "text",
+    "text": "Percent"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 503,
+    "kind": "text",
+    "text": "Amount"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 507,
+    "kind": "text",
+    "text": "Rule"
+  },
+  {
+    "file": "src\\features\\revenue\\RevenueList.tsx",
+    "line": 521,
+    "kind": "text",
+    "text": "No allocation snapshot."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 425,
+    "kind": "property",
+    "text": "An active company must be selected."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 434,
+    "kind": "property",
+    "text": "Rule code is required."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 443,
+    "kind": "property",
+    "text": "Service is required."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 452,
+    "kind": "property",
+    "text": "Effective From is required."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 465,
+    "kind": "property",
+    "text": "Effective To cannot be before Effective From."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 493,
+    "kind": "property",
+    "text": "All share percentages must be between 0 and 100."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 524,
+    "kind": "property",
+    "text": "Agency tax must be between 0 and 100."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 609,
+    "kind": "property",
+    "text": "Code"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 617,
+    "kind": "property",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 626,
+    "kind": "property",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 633,
+    "kind": "property",
+    "text": "Partner %"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 641,
+    "kind": "property",
+    "text": "Company %"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 649,
+    "kind": "property",
+    "text": "Agency Gross %"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 657,
+    "kind": "property",
+    "text": "Agency Tax"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 667,
+    "kind": "property",
+    "text": "Effective"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 679,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 722,
+    "kind": "text",
+    "text": "Revenue Share Rules"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 726,
+    "kind": "text",
+    "text": "Effective-dated company, partner and agency revenue distribution"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 737,
+    "kind": "text",
+    "text": "Create Rule"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 742,
+    "kind": "text",
+    "text": "Partner + Company Base + Agency Gross must equal 100%. Agency Tax is deducted after Agency Gross and is outside the 100% split."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 778,
+    "kind": "attribute",
+    "text": "View"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 789,
+    "kind": "attribute",
+    "text": "Edit"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 817,
+    "kind": "text",
+    "text": "Company is taken from the active company context."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 843,
+    "kind": "attribute",
+    "text": "Code"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 850,
+    "kind": "attribute",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 857,
+    "kind": "attribute",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 865,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 872,
+    "kind": "attribute",
+    "text": "Partner Share"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 877,
+    "kind": "attribute",
+    "text": "Company Base"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 882,
+    "kind": "attribute",
+    "text": "Agency Gross"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 887,
+    "kind": "attribute",
+    "text": "Agency Tax"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 896,
+    "kind": "attribute",
+    "text": "Effective From"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 903,
+    "kind": "attribute",
+    "text": "Effective To"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 912,
+    "kind": "attribute",
+    "text": "Source Note"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 920,
+    "kind": "text",
+    "text": "If this rule has already been used by a financial transaction, protected financial fields are immutable. Create a new effective-dated rule instead."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 935,
+    "kind": "text",
+    "text": "Edit Rule"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 950,
+    "kind": "attribute",
+    "text": "Rule Code"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 971,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 991,
+    "kind": "text",
+    "text": "Active"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 995,
+    "kind": "text",
+    "text": "Inactive"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1001,
+    "kind": "attribute",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1019,
+    "kind": "text",
+    "text": "Select Service"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1039,
+    "kind": "attribute",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1057,
+    "kind": "text",
+    "text": "Central / No Agency"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1078,
+    "kind": "attribute",
+    "text": "Effective From"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1098,
+    "kind": "attribute",
+    "text": "Effective To"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1119,
+    "kind": "attribute",
+    "text": "Partner Share %"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1134,
+    "kind": "attribute",
+    "text": "Company Base %"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1149,
+    "kind": "attribute",
+    "text": "Agency Gross %"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1166,
+    "kind": "text",
+    "text": "Split Total"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1207,
+    "kind": "text",
+    "text": "Agency Tax Enabled"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1211,
+    "kind": "text",
+    "text": "Tax is deducted after Agency Gross."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1218,
+    "kind": "attribute",
+    "text": "Agency Tax %"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1233,
+    "kind": "attribute",
+    "text": "Source Note"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1255,
+    "kind": "text",
+    "text": "Used financial rules cannot have their company, agency, service, dates, split percentages or agency tax settings changed. Backend enforcement remains authoritative."
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1278,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\revenue\\ShareRuleList.tsx",
+    "line": 1295,
+    "kind": "text",
+    "text": "Saving..."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 667,
+    "kind": "property",
+    "text": "Posted sales are immutable."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 722,
+    "kind": "property",
+    "text": "An active company must be selected before creating a sale."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 731,
+    "kind": "property",
+    "text": "Customer is required."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 740,
+    "kind": "property",
+    "text": "Sale date is required."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 757,
+    "kind": "property",
+    "text": "Discount amount cannot be negative."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1054,
+    "kind": "property",
+    "text": "Items can only be changed while the sale is draft."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1065,
+    "kind": "property",
+    "text": "Item description is required."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1078,
+    "kind": "property",
+    "text": "Package item requires a package."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1090,
+    "kind": "property",
+    "text": "Share-eligible item requires a service."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1112,
+    "kind": "property",
+    "text": "Quantity must be greater than zero."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1124,
+    "kind": "property",
+    "text": "Unit price cannot be negative."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1157,
+    "kind": "property",
+    "text": "Metadata must be a valid JSON object."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1251,
+    "kind": "property",
+    "text": "Sale item saved successfully."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1305,
+    "kind": "property",
+    "text": "Draft sale item deleted."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1436,
+    "kind": "property",
+    "text": "Items"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1523,
+    "kind": "text",
+    "text": "New Sale"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1568,
+    "kind": "attribute",
+    "text": "View"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1583,
+    "kind": "attribute",
+    "text": "Edit"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1595,
+    "kind": "attribute",
+    "text": "Sale Items"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1608,
+    "kind": "attribute",
+    "text": "Post Sale"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1625,
+    "kind": "attribute",
+    "text": "Invoice Reference"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1654,
+    "kind": "text",
+    "text": "Draft → Items → Post"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1680,
+    "kind": "attribute",
+    "text": "Sale Number"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1687,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1694,
+    "kind": "attribute",
+    "text": "Sale Type"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1701,
+    "kind": "attribute",
+    "text": "Date"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1708,
+    "kind": "attribute",
+    "text": "Company"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1716,
+    "kind": "attribute",
+    "text": "Branch"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1724,
+    "kind": "attribute",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1732,
+    "kind": "attribute",
+    "text": "Customer"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1739,
+    "kind": "attribute",
+    "text": "Customer Service"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1747,
+    "kind": "attribute",
+    "text": "Subtotal"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1752,
+    "kind": "attribute",
+    "text": "Discount"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1757,
+    "kind": "attribute",
+    "text": "Total"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1762,
+    "kind": "attribute",
+    "text": "Posted At"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1770,
+    "kind": "attribute",
+    "text": "Invoice ID"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1779,
+    "kind": "attribute",
+    "text": "Notes"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1798,
+    "kind": "text",
+    "text": "Manage Items"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1813,
+    "kind": "text",
+    "text": "Edit Sale"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1829,
+    "kind": "text",
+    "text": "Post Sale"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1845,
+    "kind": "attribute",
+    "text": "Customer"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1863,
+    "kind": "text",
+    "text": "Select Customer"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1889,
+    "kind": "attribute",
+    "text": "Customer Service"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1909,
+    "kind": "text",
+    "text": "No Customer Service"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1938,
+    "kind": "attribute",
+    "text": "Branch"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1954,
+    "kind": "text",
+    "text": "No Branch"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1980,
+    "kind": "attribute",
+    "text": "Agency"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 1997,
+    "kind": "text",
+    "text": "No Agency"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2024,
+    "kind": "attribute",
+    "text": "Sale Type"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2043,
+    "kind": "text",
+    "text": "New"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2047,
+    "kind": "text",
+    "text": "Renewal"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2051,
+    "kind": "text",
+    "text": "Change"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2055,
+    "kind": "text",
+    "text": "Mixed"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2061,
+    "kind": "attribute",
+    "text": "Sale Date"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2083,
+    "kind": "attribute",
+    "text": "Currency"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2104,
+    "kind": "attribute",
+    "text": "Discount Amount"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2126,
+    "kind": "attribute",
+    "text": "Notes"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2164,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2177,
+    "kind": "text",
+    "text": "Saving..."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2230,
+    "kind": "text",
+    "text": "Sale Items"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2263,
+    "kind": "attribute",
+    "text": "Subtotal"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2268,
+    "kind": "attribute",
+    "text": "Discount"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2273,
+    "kind": "attribute",
+    "text": "Total"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2278,
+    "kind": "attribute",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2297,
+    "kind": "text",
+    "text": "Add Item"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2312,
+    "kind": "text",
+    "text": "Type"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2315,
+    "kind": "text",
+    "text": "Description"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2318,
+    "kind": "text",
+    "text": "Qty"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2321,
+    "kind": "text",
+    "text": "Unit Price"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2324,
+    "kind": "text",
+    "text": "Total"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2327,
+    "kind": "text",
+    "text": "Share"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2330,
+    "kind": "text",
+    "text": "Actions"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2344,
+    "kind": "text",
+    "text": "No sale items."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2463,
+    "kind": "text",
+    "text": "Post Sale"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2479,
+    "kind": "attribute",
+    "text": "Item Type"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2498,
+    "kind": "text",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2502,
+    "kind": "text",
+    "text": "Package"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2506,
+    "kind": "text",
+    "text": "Installation"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2510,
+    "kind": "text",
+    "text": "Rental"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2514,
+    "kind": "text",
+    "text": "Fee"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2519,
+    "kind": "attribute",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2535,
+    "kind": "text",
+    "text": "No Service"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2568,
+    "kind": "attribute",
+    "text": "Package"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2589,
+    "kind": "text",
+    "text": "No Package"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2616,
+    "kind": "attribute",
+    "text": "Description"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2638,
+    "kind": "attribute",
+    "text": "Quantity"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2662,
+    "kind": "attribute",
+    "text": "Unit Price"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2705,
+    "kind": "text",
+    "text": "Share Eligible"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2709,
+    "kind": "attribute",
+    "text": "Metadata JSON"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2730,
+    "kind": "text",
+    "text": "Equipment sale is intentionally unavailable in this stage until Warehouse Product / Stock / Serial becomes canonical."
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2754,
+    "kind": "text",
+    "text": "Back"
+  },
+  {
+    "file": "src\\features\\sales\\SaleList.tsx",
+    "line": 2767,
+    "kind": "text",
+    "text": "Saving..."
+  },
+  {
+    "file": "src\\features\\services\\PackageList.tsx",
+    "line": 844,
+    "kind": "attribute",
+    "text": "نام دری"
+  },
+  {
+    "file": "src\\features\\services\\PackageList.tsx",
+    "line": 845,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\PackageList.tsx",
+    "line": 956,
+    "kind": "attribute",
+    "text": "نام دری"
+  },
+  {
+    "file": "src\\features\\services\\PackageList.tsx",
+    "line": 971,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\PackageList.tsx",
+    "line": 1098,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\services\\PackageList.tsx",
+    "line": 1356,
+    "kind": "text",
+    "text": "Back"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 313,
+    "kind": "property",
+    "text": "نام دری"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 318,
+    "kind": "property",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 517,
+    "kind": "attribute",
+    "text": "نام دری"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 525,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 650,
+    "kind": "attribute",
+    "text": "نام کتگوری به دری"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 655,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 671,
+    "kind": "attribute",
+    "text": "د کتګورۍ نوم"
+  },
+  {
+    "file": "src\\features\\services\\ServiceCategoryList.tsx",
+    "line": 697,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 714,
+    "kind": "attribute",
+    "text": "نام دری"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 722,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 937,
+    "kind": "attribute",
+    "text": "نام خدمات به دری"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 942,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 958,
+    "kind": "attribute",
+    "text": "د خدمت نوم"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1058,
+    "kind": "text",
+    "text": "Not specified"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1062,
+    "kind": "text",
+    "text": "Yes"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1066,
+    "kind": "text",
+    "text": "No"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1088,
+    "kind": "text",
+    "text": "Not specified"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1092,
+    "kind": "text",
+    "text": "Yes"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1096,
+    "kind": "text",
+    "text": "No"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1138,
+    "kind": "attribute",
+    "text": "{\"example\": true}"
+  },
+  {
+    "file": "src\\features\\services\\ServiceList.tsx",
+    "line": 1167,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\services\\TechnicalFieldList.tsx",
+    "line": 309,
+    "kind": "property",
+    "text": "Choice fields require at least one option."
+  },
+  {
+    "file": "src\\features\\services\\TechnicalFieldList.tsx",
+    "line": 542,
+    "kind": "attribute",
+    "text": "نام دری"
+  },
+  {
+    "file": "src\\features\\services\\TechnicalFieldList.tsx",
+    "line": 546,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\TechnicalFieldList.tsx",
+    "line": 663,
+    "kind": "attribute",
+    "text": "نوم پښتو"
+  },
+  {
+    "file": "src\\features\\services\\TechnicalFieldList.tsx",
+    "line": 778,
+    "kind": "text",
+    "text": "Cancel"
+  },
+  {
+    "file": "src\\features\\settings\\BackgroundBrandingPanel.tsx",
+    "line": 806,
+    "kind": "text",
+    "text": "HQNATEX"
+  },
+  {
+    "file": "src\\features\\settings\\BackgroundBrandingPanel.tsx",
+    "line": 850,
+    "kind": "text",
+    "text": "PNG · JPEG · WEBP"
+  },
+  {
+    "file": "src\\features\\settings\\BackgroundBrandingPanel.tsx",
+    "line": 852,
+    "kind": "text",
+    "text": "12 MB"
+  },
+  {
+    "file": "src\\features\\settings\\PermissionList.tsx",
+    "line": 47,
+    "kind": "property",
+    "text": "Key"
+  },
+  {
+    "file": "src\\features\\settings\\PermissionList.tsx",
+    "line": 53,
+    "kind": "property",
+    "text": "Name"
+  },
+  {
+    "file": "src\\features\\settings\\PermissionList.tsx",
+    "line": 59,
+    "kind": "property",
+    "text": "Description"
+  },
+  {
+    "file": "src\\features\\settings\\PermissionList.tsx",
+    "line": 69,
+    "kind": "text",
+    "text": "Canonical Permissions"
+  },
+  {
+    "file": "src\\features\\settings\\PermissionList.tsx",
+    "line": 70,
+    "kind": "text",
+    "text": "System-wide atomic permission registry."
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "line": 185,
+    "kind": "property",
+    "text": "Key"
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "line": 191,
+    "kind": "property",
+    "text": "Name"
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "line": 197,
+    "kind": "property",
+    "text": "System"
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "line": 199,
+    "kind": "text",
+    "text": "System"
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "line": 200,
+    "kind": "text",
+    "text": "Custom"
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "line": 204,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\settings\\RoleList.tsx",
+    "line": 214,
+    "kind": "property",
+    "text": "Permissions"
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "line": 135,
+    "kind": "property",
+    "text": "User"
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "line": 139,
+    "kind": "property",
+    "text": "Name"
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "line": 140,
+    "kind": "property",
+    "text": "Tenant"
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "line": 142,
+    "kind": "property",
+    "text": "Roles"
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "line": 154,
+    "kind": "property",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\settings\\UserList.tsx",
+    "line": 163,
+    "kind": "property",
+    "text": "Scope"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 31,
+    "kind": "attribute",
+    "text": "API status"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 34,
+    "kind": "text",
+    "text": "Checking backend liveness"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 42,
+    "kind": "attribute",
+    "text": "API status"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 46,
+    "kind": "text",
+    "text": "Backend is not reachable from the browser."
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 55,
+    "kind": "attribute",
+    "text": "API status"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 59,
+    "kind": "text",
+    "text": "Backend liveness confirmed"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 62,
+    "kind": "text",
+    "text": "Service"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 66,
+    "kind": "text",
+    "text": "Version"
+  },
+  {
+    "file": "src\\features\\system\\SystemStatus.tsx",
+    "line": 70,
+    "kind": "text",
+    "text": "Status"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 394,
+    "kind": "attribute",
+    "text": "Close"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 470,
+    "kind": "text",
+    "text": "Projects / پروژه‌ها"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 471,
+    "kind": "text",
+    "text": "Tasks / وظایف"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 472,
+    "kind": "text",
+    "text": "Documents / اسناد"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 473,
+    "kind": "text",
+    "text": "Contracts / قراردادها"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 474,
+    "kind": "text",
+    "text": "Correspondence / مکاتبات"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 481,
+    "kind": "text",
+    "text": "PDF / Print"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 486,
+    "kind": "text",
+    "text": "Excel / CSV"
+  },
+  {
+    "file": "src\\features\\workspace\\WorkspaceExtraModule.tsx",
+    "line": 487,
+    "kind": "text",
+    "text": "PDF / Print"
+  }
+]

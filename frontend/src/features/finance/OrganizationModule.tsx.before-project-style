@@ -1,0 +1,71 @@
+﻿import { useState } from "react";
+import { ArrowLeft, Building2, Handshake, Network } from "lucide-react";
+
+import {
+  ModuleHub,
+  type ModuleHubCard,
+} from "../../components/ModuleHub";
+
+import { CompanyList } from "./CompanyList";
+import { BranchList } from "./BranchList";
+import { AgencyList } from "./AgencyList";
+
+import type { Session } from "../../lib/api";
+import { useTranslation } from "../../lib/i18n";
+
+type Props = {
+  session: Session;
+};
+
+type View = "hub" | "companies" | "branches" | "agencies";
+
+export function OrganizationModule({ session }: Props) {
+  const { t } = useTranslation();
+  const [view, setView] = useState<View>("hub");
+
+  const cards: ModuleHubCard[] = [
+    {
+      id: "companies",
+      title: t.organizationModule.companies,
+      icon: Building2,
+    },
+    {
+      id: "branches",
+      title: t.organizationModule.branches,
+      icon: Network,
+    },
+    {
+      id: "agencies",
+      title: t.organizationModule.agencies,
+      icon: Handshake,
+    },
+  ];
+
+  if (view === "hub") {
+    return (
+      <ModuleHub
+        title={t.organizationModule.title}
+        cards={cards}
+        onOpen={(id) => setView(id as View)}
+      />
+    );
+  }
+
+  return (
+    <div className="space-y-5">
+      <button
+        type="button"
+        onClick={() => setView("hub")}
+        className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold text-slate-400 transition-all hover:border-cyan-400/20 hover:bg-cyan-400/5 hover:text-cyan-400"
+      >
+        <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
+        {t.organizationModule.back}
+      </button>
+
+      {view === "companies" && <CompanyList session={session} />}
+      {view === "branches" && <BranchList session={session} />}
+      {view === "agencies" && <AgencyList session={session} />}
+    </div>
+  );
+}
+

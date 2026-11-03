@@ -1,0 +1,19 @@
+{
+  "files": {
+    "models.py": true,
+    "runtime.py": true,
+    "router.py": true,
+    "rls.py": true,
+    "api.py": true,
+    "views.py": true,
+    "management/commands/provision_tenant_database.py": true,
+    "management/commands/migrate_tenant_databases.py": true,
+    "management/commands/backup_tenant_database.py": true,
+    "management/commands/apply_company_rls.py": true
+  },
+  "checks": {
+    "django_check": true,
+    "pending_migrations": 0
+  },
+  "status": "PASS"
+}

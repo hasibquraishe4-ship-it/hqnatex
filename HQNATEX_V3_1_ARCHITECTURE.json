@@ -1,0 +1,10 @@
+{
+  "version": "3.1.0",
+  "default": "database-per-tenant",
+  "control_plane_only_app": "platform_tenancy_v3",
+  "tenant_db_schema": "normal HQNATEX schema except platform_tenancy_v3",
+  "reason": "current business models may FK to tenancy/company/IAM; PostgreSQL has no cross-database FKs",
+  "rls": "tenant + company FORCE RLS",
+  "tenant_role": "NOSUPERUSER + NOBYPASSRLS",
+  "global_router": "disabled until cutover"
+}
